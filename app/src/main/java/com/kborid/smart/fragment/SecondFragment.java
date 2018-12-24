@@ -1,8 +1,5 @@
 package com.kborid.smart.fragment;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -65,63 +62,6 @@ public class SecondFragment extends Fragment implements View.OnClickListener {
         UIHandler.removeCallbacks(runnable);
     }
 
-    private void startTargetBigScaleAnim(final View view) {
-
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 1f, 1.07f, 1.03f, 1.1f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 1f, 1.07f, 1.03f, 1.1f);
-
-        AnimatorSet set = new AnimatorSet();
-        set.setDuration(350);
-        set.playTogether(scaleX, scaleY);
-        set.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                startTargetSmallScaleAnim(view);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
-        set.start();
-    }
-
-    private void startTargetSmallScaleAnim(final View view) {
-
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 1.1f, 1f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 1.1f, 1f);
-
-        AnimatorSet set = new AnimatorSet();
-        set.setDuration(250);
-        set.playTogether(scaleX, scaleY);
-        set.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
-        set.start();
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -138,7 +78,6 @@ public class SecondFragment extends Fragment implements View.OnClickListener {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            startTargetBigScaleAnim(iv_voice);
             UIHandler.postDelayed(runnable, 900);
         }
     };

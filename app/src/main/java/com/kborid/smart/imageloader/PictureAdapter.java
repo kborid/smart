@@ -1,4 +1,4 @@
-package com.kborid.smart.adapter;
+package com.kborid.smart.imageloader;
 
 import android.content.Context;
 import android.view.LayoutInflater;

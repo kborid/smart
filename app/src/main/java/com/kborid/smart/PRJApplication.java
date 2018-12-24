@@ -3,6 +3,7 @@ package com.kborid.smart;
 import android.app.Application;
 import android.graphics.Bitmap;
 
+import com.kborid.smart.service.LocationService;
 import com.kborid.smart.util.ScreenUtils;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -36,5 +37,7 @@ public class PRJApplication extends Application {
                 .threadPoolSize(5)
                 .build();
         ImageLoader.getInstance().init(configuration);
+
+        LocationService.startLocationService(this);
     }
 }
