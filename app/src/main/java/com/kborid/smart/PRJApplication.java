@@ -3,8 +3,6 @@ package com.kborid.smart;
 import android.app.Application;
 import android.graphics.Bitmap;
 
-import com.kborid.library.common.LogUtils;
-import com.kborid.library.common.UIHandler;
 import com.kborid.smart.util.ScreenUtils;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -23,7 +21,6 @@ public class PRJApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-
         ScreenUtils.init();
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnFail(R.mipmap.ic_launcher)
@@ -39,23 +36,5 @@ public class PRJApplication extends Application {
                 .threadPoolSize(5)
                 .build();
         ImageLoader.getInstance().init(configuration);
-
-        initFunc1();
-        initFunc2();
-    }
-
-    private void initFunc1() {
-        LogUtils.i(TAG, "initFunc1: ");
-        LogUtils.i(TAG, "initFunc1: threadName = " + Thread.currentThread().getName());
-    }
-
-    private void initFunc2() {
-        LogUtils.i(TAG, "initFunc2: ");
-        UIHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                LogUtils.i(TAG, "initFunc2: threadName = " + Thread.currentThread().getName());
-            }
-        });
     }
 }

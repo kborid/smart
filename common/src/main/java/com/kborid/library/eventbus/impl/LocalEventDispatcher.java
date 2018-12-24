@@ -1,4 +1,4 @@
-package com.kborid.library.event.impl;
+package com.kborid.library.eventbus.impl;
 
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 
-import com.kborid.library.event.Event;
-import com.kborid.library.event.IDispatcher;
-import com.kborid.library.event.utils.ArrayUtils;
-import com.kborid.library.event.utils.Precondition;
+import com.kborid.library.eventbus.Event;
+import com.kborid.library.eventbus.IDispatcher;
+import com.kborid.library.eventbus.utils.ArrayUtils;
+import com.kborid.library.eventbus.utils.Precondition;
 
 
 public class LocalEventDispatcher implements IDispatcher {

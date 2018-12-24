@@ -1,4 +1,4 @@
-package com.kborid.smart.util;
+package com.kborid.smart.test;
 
 import java.util.Arrays;
 

@@ -1,10 +1,10 @@
-package com.kborid.smart.interpolator;
+package com.kborid.smart.test;
 
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Looper;
 
-import com.kborid.library.common.LogUtils;
+import com.kborid.library.util.LogUtils;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class CustomThread extends Thread {

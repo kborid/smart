@@ -1,4 +1,4 @@
-package com.kborid.library.event.utils;
+package com.kborid.library.eventbus.utils;
 
 public class Precondition {
 

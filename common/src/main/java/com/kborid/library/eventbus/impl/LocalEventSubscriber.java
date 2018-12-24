@@ -1,12 +1,12 @@
-package com.kborid.library.event.impl;
+package com.kborid.library.eventbus.impl;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.kborid.library.event.Event;
-import com.kborid.library.event.ISubscriber;
+import com.kborid.library.eventbus.Event;
+import com.kborid.library.eventbus.ISubscriber;
 
 
 public abstract class LocalEventSubscriber implements ISubscriber {

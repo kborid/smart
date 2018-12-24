@@ -1,8 +1,8 @@
-package com.kborid.smart.interpolator;
+package com.kborid.smart.test;
 
 import android.view.animation.Interpolator;
 
-import com.kborid.library.common.LogUtils;
+import com.kborid.library.util.LogUtils;
 
 public class CustomInterpolator implements Interpolator {
     @Override

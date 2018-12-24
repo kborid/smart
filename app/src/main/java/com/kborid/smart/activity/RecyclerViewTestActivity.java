@@ -10,7 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.kborid.library.common.LogUtils;
+import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
 import com.kborid.smart.adapter.StringItemAdapter;
 import com.kborid.smart.listener.RecyclerItemClickListener;

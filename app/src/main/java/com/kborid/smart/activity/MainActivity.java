@@ -22,17 +22,16 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.kborid.library.common.LogUtils;
 import com.kborid.library.common.MultiTaskHandler;
 import com.kborid.library.common.UIHandler;
-import com.kborid.library.common.ViewUtils;
 import com.kborid.library.sample.TestSettings;
+import com.kborid.library.util.LogUtils;
+import com.kborid.library.util.ViewUtils;
 import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
-import com.kborid.smart.interpolator.CustomInterpolator;
-import com.kborid.smart.interpolator.CustomThread;
+import com.kborid.smart.test.CustomInterpolator;
+import com.kborid.smart.test.CustomThread;
 import com.kborid.smart.service.SmartCounterServiceConnection;
-import com.kborid.smart.service.SmartTestServiceConnection;
 import com.kborid.smart.util.ToastUtils;
 
 import java.lang.reflect.Method;
@@ -48,7 +47,6 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
 
     private SmartCounterServiceConnection counterConn = null;
-    private SmartTestServiceConnection testConn = null;
     private static Drawable mDrawable;
 
     @Override
@@ -306,12 +304,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void bindServiceInner() {
-        bindTestService();
         bindCounterService();
     }
 
     private void unBindServiceInner() {
-        unBindTestService();
         unBindCounterService();
     }
 
@@ -334,20 +330,6 @@ public class MainActivity extends AppCompatActivity {
         if (null != counterConn) {
             counterConn.unBindService();
             counterConn = null;
-        }
-    }
-
-    private void bindTestService() {
-        if (null == testConn) {
-            testConn = new SmartTestServiceConnection();
-        }
-        testConn.bindService();
-    }
-
-    private void unBindTestService() {
-        if (null != testConn) {
-            testConn.unBindService();
-            testConn = null;
         }
     }
 

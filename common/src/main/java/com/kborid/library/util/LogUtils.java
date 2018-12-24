@@ -1,4 +1,4 @@
-package com.kborid.library.common;
+package com.kborid.library.util;
 
 import android.util.Log;
 

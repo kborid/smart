@@ -37,15 +37,7 @@
         <activity android:name="com.kborid.smart.activity.UniversalActivity"/>
         <activity android:name="com.kborid.smart.activity.PicassoActivity"/>
         <activity android:name="com.kborid.smart.activity.GlideActivity"/>
-
-        <service android:name="com.kborid.smart.service.SmartTestService"/>
         <service android:name="com.kborid.smart.service.SmartCounterService"/>
-        <service android:name="com.kborid.smart.service.RemoteViewService"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.service.RemoteViewService"/>
-            </intent-filter>
-        </service>
         <provider
             android:authorities="com.kborid.smart.provider.TestProvider"
             android:name=".provider.TestProvider"

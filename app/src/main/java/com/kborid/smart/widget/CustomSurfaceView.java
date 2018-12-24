@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.kborid.library.common.LogUtils;
+import com.kborid.library.util.LogUtils;
 
 public class CustomSurfaceView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
 

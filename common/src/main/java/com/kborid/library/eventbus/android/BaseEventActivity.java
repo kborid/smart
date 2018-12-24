@@ -1,15 +1,15 @@
-package com.kborid.library.event.android;
+package com.kborid.library.eventbus.android;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.kborid.library.event.Event;
-import com.kborid.library.event.IDispatcher;
-import com.kborid.library.event.ISubscriber;
-import com.kborid.library.event.impl.LocalEventDispatcher;
-import com.kborid.library.event.impl.LocalEventSubscriber;
-import com.kborid.library.event.utils.ArrayUtils;
+import com.kborid.library.eventbus.Event;
+import com.kborid.library.eventbus.IDispatcher;
+import com.kborid.library.eventbus.ISubscriber;
+import com.kborid.library.eventbus.impl.LocalEventDispatcher;
+import com.kborid.library.eventbus.impl.LocalEventSubscriber;
+import com.kborid.library.eventbus.utils.ArrayUtils;
 
 public class BaseEventActivity extends Activity implements IDispatcher, ISubscriber {
 

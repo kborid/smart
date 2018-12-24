@@ -1,4 +1,4 @@
-package com.kborid.library.event;
+package com.kborid.library.eventbus;
 
 
 public interface IPublisher {

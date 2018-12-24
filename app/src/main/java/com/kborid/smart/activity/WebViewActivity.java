@@ -23,7 +23,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.kborid.library.common.LogUtils;
+import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
 import com.kborid.smart.util.ToastUtils;
 

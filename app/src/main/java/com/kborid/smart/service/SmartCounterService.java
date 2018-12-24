@@ -10,7 +10,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 
-import com.kborid.library.common.LogUtils;
+import com.kborid.library.util.LogUtils;
 
 public class SmartCounterService extends Service {
 

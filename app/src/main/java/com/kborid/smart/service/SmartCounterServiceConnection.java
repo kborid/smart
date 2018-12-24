@@ -9,7 +9,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 
-import com.kborid.library.common.LogUtils;
+import com.kborid.library.util.LogUtils;
 import com.kborid.smart.PRJApplication;
 
 public class SmartCounterServiceConnection implements ServiceConnection {
