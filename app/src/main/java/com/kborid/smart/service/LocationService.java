@@ -3,7 +3,6 @@ package com.kborid.smart.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.media.SoundPool;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
@@ -21,6 +20,7 @@ import com.kborid.smart.manager.LocationManager;
  */
 public class LocationService extends Service implements AMapLocationListener {
     private static final String TAG = "LocationService";
+    private static final int DURING_CHECK = 8000;
     private static final int DELAY_TIME = 8000;
     private AMapLocationClient mLocationClient = null;
     private AMapLocation location;
@@ -58,17 +58,20 @@ public class LocationService extends Service implements AMapLocationListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
         mLocationClient.startLocation();
         //8秒后，检查GPS信号
-        UIHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (location != null){
-                    LogUtils.d(TAG, "检查GPS信号");
-                    parseGPSStatusString(location.getLocationQualityReport().getGPSStatus());
-                }
-            }
-        }, DELAY_TIME);
+        UIHandler.postDelayed(checkGpsRunnable, DELAY_TIME);
         return super.onStartCommand(intent, flags, startId);
     }
+
+    private Runnable checkGpsRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (location != null){
+                LogUtils.d(TAG, "检查GPS信号");
+                parseGPSStatusString(location.getLocationQualityReport().getGPSStatus());
+                UIHandler.postDelayed(checkGpsRunnable, DURING_CHECK);
+            }
+        }
+    };
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
@@ -77,6 +80,8 @@ public class LocationService extends Service implements AMapLocationListener {
             LocationManager.lon = aMapLocation.getLongitude();
             LocationManager.lat = aMapLocation.getLatitude();
             LocationManager.cityCode = aMapLocation.getCityCode();
+            LogUtils.d(TAG, aMapLocation.toString());
+            LogUtils.d(TAG, LocationManager.print());
         }
     }
 
@@ -85,16 +90,8 @@ public class LocationService extends Service implements AMapLocationListener {
         context.startService(intent);
     }
 
-
-
-    /**
-     * 文字转语音
-     * @param text
-     */
     public void speck(String text){
-//        VoiceCenterProcessor.Builder.mInstance.speakVoice(text);
     }
-
 
     /**
      * 解析GPS状态的

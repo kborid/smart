@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
@@ -21,10 +22,12 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
+import com.kborid.smart.test.TestTitleView;
 import com.kborid.smart.util.ToastUtils;
 
 public class WebViewActivity extends AppCompatActivity {
@@ -36,6 +39,7 @@ public class WebViewActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private WebView mWebView;
     private ValueCallback<Uri[]> uploadMessage;
+    private TestTitleView testTitleView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,10 +47,18 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_webview);
         initViews();
         initParams();
-        mWebView.loadUrl("http://www.hao123.com");
+        mWebView.loadUrl("http://t66y.com");
     }
 
     private void initViews() {
+        testTitleView = (TestTitleView) LayoutInflater.from(this).inflate(R.layout.layout_test_title, null);
+        ((LinearLayout)findViewById(R.id.title)).addView(testTitleView);
+        testTitleView.setOnTitleListener(new TestTitleView.OnTitleListener() {
+            @Override
+            public void onBack() {
+                onBackPressed();
+            }
+        });
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mWebView = (WebView) findViewById(R.id.web_view);
     }
@@ -165,6 +177,7 @@ public class WebViewActivity extends AppCompatActivity {
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
             LogUtils.i("onReceivedTitle() title = " + title);
+            testTitleView.setTitle(title);
         }
 
         @Override

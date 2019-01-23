@@ -1,17 +1,20 @@
 package com.kborid.smart;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Bitmap;
 
+import com.kborid.library.util.LogUtils;
 import com.kborid.smart.service.LocationService;
 import com.kborid.smart.util.ScreenUtils;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.squareup.leakcanary.LeakCanary;
 
 public class PRJApplication extends Application {
-    private static final String TAG = "PRJApplication";
+    private static final String TAG = PRJApplication.class.getSimpleName();
     private static PRJApplication instance = null;
 
     public static PRJApplication getInstance(){
@@ -19,9 +22,15 @@ public class PRJApplication extends Application {
     }
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        instance = this;
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
+        LogUtils.d(TAG, "onCreate()");
         ScreenUtils.init();
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnFail(R.mipmap.ic_launcher)
@@ -39,5 +48,16 @@ public class PRJApplication extends Application {
         ImageLoader.getInstance().init(configuration);
 
         LocationService.startLocationService(this);
+
+        initLeakCanary();
+    }
+
+    private void initLeakCanary() {
+        if (BuildConfig.DEBUG) {
+            if (LeakCanary.isInAnalyzerProcess(this)) {
+                return;
+            }
+            LeakCanary.install(this);
+        }
     }
 }

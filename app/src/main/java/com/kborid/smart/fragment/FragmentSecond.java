@@ -15,7 +15,7 @@ import com.kborid.library.common.UIHandler;
 import com.kborid.smart.R;
 import com.kborid.smart.activity.RecyclerViewTestActivity;
 
-public class SecondFragment extends Fragment implements View.OnClickListener {
+public class FragmentSecond extends Fragment implements View.OnClickListener {
 
     private static final String KEY = "Fragment";
 
@@ -23,7 +23,7 @@ public class SecondFragment extends Fragment implements View.OnClickListener {
     private Button btn_click1, btn_click2;
 
     public static Fragment newInstance(String index) {
-        SecondFragment fragment = new SecondFragment();
+        FragmentSecond fragment = new FragmentSecond();
         Bundle bundle = new Bundle();
         bundle.putString(KEY, index);
         fragment.setArguments(bundle);
@@ -46,12 +46,12 @@ public class SecondFragment extends Fragment implements View.OnClickListener {
         super.onActivityCreated(savedInstanceState);
         View view = getView();
         if (null != view) {
-            TextView tv_test = view.findViewById(R.id.test);
+            TextView tv_test = (TextView) view.findViewById(R.id.test);
             tv_test.setText(getArguments().getString(KEY));
-            iv_voice = view.findViewById(R.id.iv_voice);
-            btn_click1 = view.findViewById(R.id.btn_click1);
+            iv_voice = (ImageView) view.findViewById(R.id.iv_voice);
+            btn_click1 = (Button) view.findViewById(R.id.btn_click1);
             btn_click1.setOnClickListener(this);
-            btn_click2 = view.findViewById(R.id.btn_click2);
+            btn_click2 = (Button) view.findViewById(R.id.btn_click2);
             btn_click2.setOnClickListener(this);
         }
     }
