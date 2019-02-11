@@ -1,28 +1,19 @@
 package com.kborid.smart.activity;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.LabeledIntent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
-import android.support.v7.app.AppCompatActivity;
 import android.view.ContextThemeWrapper;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.kborid.library.common.MultiTaskHandler;
 import com.kborid.library.common.UIHandler;
 import com.kborid.library.sample.TestSettings;
@@ -34,44 +25,52 @@ import com.kborid.smart.imageloader.GlideActivity;
 import com.kborid.smart.imageloader.PicassoActivity;
 import com.kborid.smart.imageloader.UniversalActivity;
 import com.kborid.smart.service.SmartCounterServiceConnection;
-import com.kborid.smart.test.CustomInterpolator;
 import com.kborid.smart.test.CustomThread;
 import com.kborid.smart.util.ToastUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private SmartCounterServiceConnection counterConn = null;
-    private static Drawable mDrawable;
+    /*
+     *  private static Drawable mDrawable;
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogUtils.d("onCreate()");
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-        setContentView(R.layout.activity_main);
-        LayoutInflater.from(this).inflate(R.layout.activity_main, null);
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initParams() {
+        super.initParams();
         printTest();
         bindServiceInner();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LogUtils.d("onStart()");
+        /*
+         *  内存泄漏
+         *  原因：mDrawable是一个静态对象，常驻内存，通过ImageView方法setImageDrawable时，会导致mDrawable引用ImageView（Drawable.setCallBack），
+         *  同时，ImageView又对activity有引用，所以导致mDrawable间接引用activity，使activity无法被回收。
+         *
+         *  ImageView iv = new ImageView(this);
+         *  mDrawable = getResources().getDrawable(R.mipmap.ic_launcher);
+         *  iv.setImageDrawable(mDrawable);
+         */
     }
 
     @Override
@@ -81,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onShare(View v) {
-        ToastUtils.showToast("share");
         Intent targetIntent = new Intent(Intent.ACTION_SEND);
         targetIntent.setType("text/plain");
         targetIntent.putExtra(Intent.EXTRA_TEXT, "Hello World!!!");
@@ -104,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onJump(View v) {
-        ToastUtils.showToast("jump");
         UIHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -115,55 +112,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onReflect(View v) {
-        ToastUtils.showToast("reflect");
         reflectInvokeTest();
         counterConn.startCount();
         idleHandler();
-        ObjectAnimator animator = ObjectAnimator.ofFloat(v, "scaleX", 1f, 0.5f, 1f);
-        ObjectAnimator animator1 = ObjectAnimator.ofFloat(v, "scaleY", 1f, 0.5f, 1f);
-        AnimatorSet set = new AnimatorSet();
-        set.playTogether(animator, animator1);
-        set.setInterpolator(new CustomInterpolator());
-        set.setDuration(500);
-        set.start();
 
         CustomThread customThread = new CustomThread();
         customThread.start();
-
-
-        Integer value1 = 56;
-        Integer value2 = 56;
-        LogUtils.d(String.valueOf(value1 == value2));
-        LogUtils.d(String.valueOf(value1.equals(value2)));
-
-        Integer value11 = 128;
-        Integer value22 = 128;
-        LogUtils.d(String.valueOf(value11 == value22));
-        LogUtils.d(String.valueOf(value11.equals(value22)));
-
-        Integer value111 = 256;
-        Integer value222 = 256;
-        LogUtils.d(String.valueOf(value111 == value222));
-        LogUtils.d(String.valueOf(value111.equals(value222)));
-
         sendBroadcast(new Intent());
-
     }
 
     public void onPrintContext(View v) {
         printContextType(getBaseContext());         //Context
         printContextType(getApplicationContext());  //ContextWrapper
-        printContextType(getActivityContext());     //ContextThemeWrapper
-        /**
-         *  内存泄漏
-         *  原因：mDrawable是一个静态对象，常驻内存，通过ImageView方法setImageDrawable时，会导致mDrawable引用ImageView（Drawable.setCallBack），
-         *  同时，ImageView又对activity有引用，所以导致mDrawable间接引用activity，使activity无法被回收。
-         */
-        ImageView iv = new ImageView(this);
-        mDrawable = getResources().getDrawable(R.mipmap.ic_launcher);
-        iv.setImageDrawable(mDrawable);
-
-        testForEach();
+        printContextType(this);     //ContextThemeWrapper
     }
 
     public void onUniversal(View v) {
@@ -179,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void printContextType(Context context) {
-        outputConsoleTextView("Type is ["+context+"]");
+        outputConsoleTextView("Type is [" + context + "]");
         outputConsoleTextView("It is Context!");
         if (context instanceof ContextWrapper) {
             outputConsoleTextView("It is ContextWrapper too!");
@@ -187,25 +148,6 @@ public class MainActivity extends AppCompatActivity {
         if (context instanceof ContextThemeWrapper) {
             outputConsoleTextView("It is ContextThemeWrapper too!");
         }
-    }
-
-    private void testForEach() {
-        ArrayList<String> temp = getStringData();
-        for (String str : temp) {
-            outputConsoleTextView("str = " + str);
-        }
-    }
-
-    private ArrayList<String> getStringData() {
-        ArrayList<String> temp = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            temp.add(String.valueOf(i));
-        }
-        return temp;
-    }
-
-    private Activity getActivityContext() {
-        return this;
     }
 
     private void idleHandler() {
@@ -278,128 +220,6 @@ public class MainActivity extends AppCompatActivity {
         view3_h3 = ViewUtils.getSupposeHeightNoFixWidth(test);
         outputConsoleTextView("[test]:height1 = " + view3_h1 + ", height2 = " + view3_h2 + ", height3 = " + view3_h3);
         outputConsoleTextView("[test]:myTestHeight = " + ViewUtils.getMyTestHeight(test));
-
-//        String cityCode = "101030100";
-//        Api.getWeather(cityCode, new Callback<Object>() {
-//            @Override
-//            public void onResponse(@NonNull Call<Object> call, Response<Object> response) {
-//                LogUtils.d("onResponse call = " + call + ", response = " + response);
-//                LogUtils.d(response.body().toString());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Object> call, Throwable t) {
-//                LogUtils.d("onFailure call = " + call);
-//            }
-//        });
-//        RequestBeanBuilder b = RequestBeanBuilder.create(false);
-//        ResponseData data = new ResponseData();
-//        data.data = b.syncRequest(b);
-//        data.type = "POST";
-//        data.path = "http://www.zaichengdu.com/cd_portal/service/CW0005";
-//        Api.getNews(data, new Callback<Object>() {
-//            @Override
-//            public void onResponse(Call<Object> call, Response<Object> response) {
-//                LogUtils.d(response.body().toString());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Object> call, Throwable t) {
-//                LogUtils.d("onFailure call = " + call);
-//            }
-//        });
-
-        Observable<String> observable = Observable.fromArray("he", "wor", "appe", "duanwei");
-        observable
-                .subscribeOn(Schedulers.io())
-                .map(new Function<String, Integer>() {
-
-                    @Override
-                    public Integer apply(String s) throws Exception {
-                        int length = s.length();
-                        LogUtils.d("map() s = " + s + ", length = " + length);
-                        return length;
-                    }
-                })
-                .flatMap(new Function<Integer, ObservableSource<Integer>>() {
-                    @Override
-                    public ObservableSource<Integer> apply(final Integer integer) throws Exception {
-                        LogUtils.d("flatMap() apply() int = " + integer);
-                        return Observable.create(new ObservableOnSubscribe<Integer>() {
-                            @Override
-                            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
-                                LogUtils.d("flatMap() subscribe()");
-                                emitter.onNext(integer * 2);
-                            }
-                        });
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Integer>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        LogUtils.d("onSubscribe()");
-                    }
-
-                    @Override
-                    public void onNext(Integer integer) {
-                        LogUtils.d("onNext() int = " + integer);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        LogUtils.d("onError");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        LogUtils.d("onComplete");
-                    }
-                });
-
-        Observable<String> stringObservable = Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-                emitter.onNext("1");
-                emitter.onNext("3");
-                emitter.onComplete();
-            }
-        }).subscribeOn(Schedulers.io());
-        stringObservable.subscribe(new Observer<String>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(String s) {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-    }
-
-    public String toJson() {
-        HashMap<String, Object> json = new HashMap<String, Object>();
-        HashMap head = new HashMap();
-        json.put("head", head);
-        json.put("body", new HashMap<>());
-
-        head.put("appid", "ARD-023-0001");
-        head.put("sign", "ac5d75069a9d970fe8ea594a8f0eabcbbae457d9cf69e9fc0114c69511d1d6bb5944481529aadb47");
-        head.put("version", "2.0");
-        head.put("siteid", "500000");
-        head.put("appversion", "4.0.4");
-        return JSON.toJSONString(json);
     }
 
     private void printTest() {
@@ -441,14 +261,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void bindServiceInner() {
-        bindCounterService();
-    }
-
-    private void unBindServiceInner() {
-        unBindCounterService();
-    }
-
-    private void bindCounterService() {
         if (null == counterConn) {
             counterConn = new SmartCounterServiceConnection();
         }
@@ -456,31 +268,19 @@ public class MainActivity extends AppCompatActivity {
         counterConn.setCountChangedListener(countChangedListener);
     }
 
-    private SmartCounterServiceConnection.CountChangedListener countChangedListener = new SmartCounterServiceConnection.CountChangedListener() {
-        @Override
-        public void onCountChanged(int value) {
-            ((TextView)findViewById(R.id.tv_counter)).setText(String.valueOf(value));
-        }
-    };
-
-    private void unBindCounterService() {
+    private void unBindServiceInner() {
         if (null != counterConn) {
             counterConn.unBindService();
             counterConn = null;
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        LogUtils.d("onPause()");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        LogUtils.d("onStop()");
-    }
+    private SmartCounterServiceConnection.CountChangedListener countChangedListener = new SmartCounterServiceConnection.CountChangedListener() {
+        @Override
+        public void onCountChanged(int value) {
+            ((TextView) findViewById(R.id.tv_counter)).setText(String.valueOf(value));
+        }
+    };
 
     @Override
     protected void onDestroy() {
@@ -534,21 +334,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        new ThreadPoolExecutor(2, 5, 60, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>(100));
-        ExecutorService single = Executors.newSingleThreadExecutor();
-        ExecutorService fix = Executors.newFixedThreadPool(2);
-        ExecutorService cache = Executors.newCachedThreadPool();
-        ScheduledExecutorService schedule = Executors.newScheduledThreadPool(2);
-        schedule.schedule(new Runnable() {
-            @Override
-            public void run() {
-                LogUtils.d("test");
-            }
-        }, 1, TimeUnit.SECONDS);
-        return super.dispatchTouchEvent(ev);
-    }
-
 }

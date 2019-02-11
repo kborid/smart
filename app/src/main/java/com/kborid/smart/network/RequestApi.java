@@ -13,5 +13,5 @@ public interface RequestApi {
     Call<Object> getWeather(@Path("cityCode") String cityCode);
 
     @POST("CW0005")
-    Call<Object> getNews(@Body ResponseData data);
+    Call<Object> getNews(@Body Object data);
 }

@@ -10,53 +10,106 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+
     sourceSets {
         main {
             assets.srcDirs = ['assets']
+        }
+    }
+
+    signingConfigs {
+        config {
+            keyAlias 'kborid'
+            keyPassword '123456'
+            storeFile file('../sign/sign.jks')
+            storePassword '123456'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+
+    flavorDimensions("smart")
+
+    productFlavors {
+        FlavorTest {
+            dimension "smart"
         }
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation project(':common')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation project(':common')
+
+    //support
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
     //glide
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+
     //universal
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+
     //picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
     //AMap
     implementation 'com.amap.api:navi-3dmap:6.5.0_3dmap6.5.0'
     implementation 'com.amap.api:location:4.4.0'
     implementation 'com.amap.api:search:6.5.0.1'
-    //leak canary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    //fastjson
+
+    //Fastjson
     implementation 'com.alibaba:fastjson:1.2.51'
-    //gson
+
+    //Gson
     implementation 'com.google.code.gson:gson:2.8.2'
+
+    //rxAndroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    //rxJava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
+
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    //下面两个是RxJava 和 RxAndroid
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+    //File Download
+    implementation 'com.liulishuo.filedownloader:library:1.4.3'
+
+    //ButterKnife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    //logger
+    implementation 'com.orhanobut:logger:2.1.1'
+
+    //SmartRefreshLayout
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5.1'
+
+    //leak canary
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+//    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+//    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 }

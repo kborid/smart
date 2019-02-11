@@ -39,7 +39,6 @@
         </activity>
 
         <activity android:name="com.kborid.smart.activity.FragmentContainerActivity"/>
-        <activity android:name="com.kborid.smart.activity.RecyclerViewTestActivity"/>
         <activity android:name="com.kborid.smart.imageloader.UniversalActivity"/>
         <activity android:name="com.kborid.smart.imageloader.PicassoActivity"/>
         <activity android:name="com.kborid.smart.imageloader.GlideActivity"/>

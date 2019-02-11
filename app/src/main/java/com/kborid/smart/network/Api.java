@@ -17,14 +17,14 @@ public class Api {
                 .build();
     }
 
-    private static RequestApi getApi(){
-        if (requestApi == null){
+    private static RequestApi getApi() {
+        if (requestApi == null) {
             requestApi = getRetrofit().create(RequestApi.class);
         }
         return requestApi;
     }
 
-    public static void getNews(ResponseData data, Callback<Object> callback) {
+    public static void getNews(Object data, Callback<Object> callback) {
         Call<Object> call = getApi().getNews(data);
         call.enqueue(callback);
     }

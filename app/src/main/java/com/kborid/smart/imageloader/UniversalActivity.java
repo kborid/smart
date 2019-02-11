@@ -1,21 +1,22 @@
 package com.kborid.smart.imageloader;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
 
 import com.kborid.smart.R;
+import com.kborid.smart.activity.BaseActivity;
 
-public class UniversalActivity extends AppCompatActivity {
+public class UniversalActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_imageloader);
+    protected int getLayoutResId() {
+        return R.layout.activity_imageloader;
+    }
 
+    @Override
+    protected void initParams() {
+        super.initParams();
         GridView mGridView = findViewById(R.id.gridview);
-        PictureAdapter adapter = new PictureAdapter(this, PictureAdapter.TYPE_UNIVERSAL);
+        PictureAdapter adapter = new PictureAdapter(this, PictureAdapter.TYPE_GLIDE);
         mGridView.setAdapter(adapter);
     }
 }

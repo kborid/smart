@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_mask">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:textSize="20sp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
+    <ProgressBar
+        android:id="@+id/process"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:max="100" />
 
-
-    <ImageView
-        android:id="@+id/iv_voice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/select_contact_voice"/>
-
-    <LinearLayout
+    <Button
+        android:id="@+id/btn_click1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true">
-        <Button
-            android:id="@+id/btn_click1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:text="click1"
-            android:layout_gravity="bottom"/>
+        android:text="start"
+        android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btn_click2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:text="click2"
-            android:layout_gravity="bottom"/>
-    </LinearLayout>
-</RelativeLayout>
+    <Button
+        android:id="@+id/btn_click2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="stop"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_click3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="install"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_click4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="remove"
+        android:textAllCaps="false" />
+</LinearLayout>

@@ -8,9 +8,7 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,24 +28,22 @@ import com.kborid.smart.R;
 import com.kborid.smart.test.TestTitleView;
 import com.kborid.smart.util.ToastUtils;
 
-public class WebViewActivity extends AppCompatActivity {
+import butterknife.BindView;
+
+public class WebViewActivity extends BaseActivity {
 
     private static final long DURATION_PRESS_TWO = 1000;
     private static final int REQUEST_CHOOSE_FILE = 1000;
     private boolean isFirst = false;
     private long mFirstPressStamp = 0;
-    private ProgressBar mProgressBar;
-    private WebView mWebView;
+    @BindView(R.id.progress_bar) ProgressBar mProgressBar;
+    @BindView(R.id.web_view) WebView mWebView;
     private ValueCallback<Uri[]> uploadMessage;
     private TestTitleView testTitleView;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_webview);
-        initViews();
-        initParams();
-        mWebView.loadUrl("http://t66y.com");
+    protected int getLayoutResId() {
+        return R.layout.activity_webview;
     }
 
     private void initViews() {
@@ -59,18 +55,21 @@ public class WebViewActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        mWebView = (WebView) findViewById(R.id.web_view);
     }
 
-    private void initParams() {
-        initIntent();
+    @Override
+    public void initParams() {
+        super.initParams();
+        initViews();
         setUpWebView();
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.setWebChromeClient(new MyWebChromeClient());
+        mWebView.loadUrl("http://t66y.com");
     }
 
-    private void initIntent() {
+    @Override
+    protected void dealIntent() {
+        super.dealIntent();
         Bundle bundle = getIntent().getExtras();
         String from = bundle.getString("from");
         isFirst = TextUtils.isEmpty(from);
