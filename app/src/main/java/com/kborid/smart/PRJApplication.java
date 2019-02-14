@@ -2,15 +2,11 @@ package com.kborid.smart;
 
 import android.app.Application;
 import android.content.Context;
-import android.graphics.Bitmap;
 
 import com.kborid.library.util.LogUtils;
 import com.kborid.smart.service.LocationService;
 import com.kborid.smart.util.ScreenUtils;
-import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -34,25 +30,10 @@ public class PRJApplication extends Application {
     public void onCreate() {
         super.onCreate();
         LogUtils.d(TAG, "onCreate()");
-        LogUtils.d(TAG, "buildType = " + BuildConfig.DEBUG);
         initLog();
         ScreenUtils.init();
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnFail(R.mipmap.ic_launcher)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-//                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-                .build();
-        ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(this)
-                .defaultDisplayImageOptions(options)
-                .memoryCache(new LruMemoryCache(1024 * 1024 * 4))
-                .writeDebugLogs()
-                .threadPoolSize(5)
-                .build();
-        ImageLoader.getInstance().init(configuration);
-
-        LocationService.startLocationService(this);
+//        LocationService.startLocationService(this);
+        FileDownloader.init(PRJApplication.getInstance());
     }
 
     private void initLog() {

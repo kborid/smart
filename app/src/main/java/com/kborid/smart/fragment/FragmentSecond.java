@@ -57,7 +57,6 @@ public class FragmentSecond extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        FileDownloader.init(PRJApplication.getInstance());
         mDirStr = getActivity().getExternalCacheDir().getPath() + File.separator;
         mFileStr = "ss.apk";
     }

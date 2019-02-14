@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.LabeledIntent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
@@ -21,9 +22,8 @@ import com.kborid.library.util.LogUtils;
 import com.kborid.library.util.ViewUtils;
 import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
-import com.kborid.smart.imageloader.GlideActivity;
-import com.kborid.smart.imageloader.PicassoActivity;
-import com.kborid.smart.imageloader.UniversalActivity;
+import com.kborid.smart.imageloader.PictureActivity;
+import com.kborid.smart.imageloader.PictureAdapter;
 import com.kborid.smart.service.SmartCounterServiceConnection;
 import com.kborid.smart.test.CustomThread;
 import com.kborid.smart.util.ToastUtils;
@@ -128,15 +128,21 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onUniversal(View v) {
-        startActivity(new Intent(this, UniversalActivity.class));
+        Intent intent = new Intent(this, PictureActivity.class);
+        intent.putExtra("imageType", PictureAdapter.TYPE_UNIVERSAL);
+        startActivity(intent);
     }
 
     public void onPicasso(View v) {
-        startActivity(new Intent(this, PicassoActivity.class));
+        Intent intent = new Intent(this, PictureActivity.class);
+        intent.putExtra("imageType", PictureAdapter.TYPE_PICASSO);
+        startActivity(intent);
     }
 
     public void onGlide(View v) {
-        startActivity(new Intent(this, GlideActivity.class));
+        Intent intent = new Intent(this, PictureActivity.class);
+        intent.putExtra("imageType", PictureAdapter.TYPE_GLIDE);
+        startActivity(intent);
     }
 
     private void printContextType(Context context) {
