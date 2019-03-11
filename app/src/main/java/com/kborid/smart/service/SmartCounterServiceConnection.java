@@ -19,15 +19,15 @@ public class SmartCounterServiceConnection implements ServiceConnection {
     private SmartCounterService.CounterBinder binder;
     private SmartCounterService service = null;
 
-    public SmartCounterServiceConnection(){
+    public SmartCounterServiceConnection() {
         mContext = PRJApplication.getInstance();
     }
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder iBinder) {
         LogUtils.d("onServiceConnected()");
-        if (null != iBinder){
-            binder = (SmartCounterService.CounterBinder)iBinder;
+        if (null != iBinder) {
+            binder = (SmartCounterService.CounterBinder) iBinder;
             service = binder.getService();
         }
     }
@@ -42,7 +42,7 @@ public class SmartCounterServiceConnection implements ServiceConnection {
 
     }
 
-    public void bindService(){
+    public void bindService() {
         if (!isConn) {
             Intent intent = new Intent();
             intent.setComponent(new ComponentName("com.kborid.smart", "com.kborid.smart.service.SmartCounterService"));
@@ -67,20 +67,20 @@ public class SmartCounterServiceConnection implements ServiceConnection {
     }
 
     public void unBindService() {
-        if (isConn){
+        if (isConn) {
             mContext.unbindService(this);
             isConn = false;
         }
     }
 
-    public void setCounter(int counter){
-        if (null != service){
+    public void setCounter(int counter) {
+        if (null != service) {
             service.setCountValue(counter);
         }
     }
 
-    public void startCount(){
-        if (null != service){
+    public void startCount() {
+        if (null != service) {
             service.start();
         }
     }
@@ -91,8 +91,8 @@ public class SmartCounterServiceConnection implements ServiceConnection {
         }
     }
 
-    public void stopCount(){
-        if (null != service){
+    public void stopCount() {
+        if (null != service) {
             service.stop();
         }
     }
@@ -100,7 +100,9 @@ public class SmartCounterServiceConnection implements ServiceConnection {
     public interface CountChangedListener {
         void onCountChanged(int value);
     }
+
     private CountChangedListener listener = null;
+
     public void setCountChangedListener(CountChangedListener listener) {
         this.listener = listener;
     }

@@ -58,11 +58,10 @@ public class LogUtils {
         StringBuilder buffer = new StringBuilder();
         buffer.append("[");
         buffer.append(tagInfo.fileName);
-        buffer.append(":");
-        buffer.append(tagInfo.methodName);
-        buffer.append("():");
-        buffer.append(tagInfo.lineNumber);
-        buffer.append("] ");
+        buffer.append("(line:").append(tagInfo.lineNumber).append(")").append(" ");
+        buffer.append(tagInfo.methodName).append("()");
+        buffer.append("]");
+        buffer.append(" ");
         buffer.append(formatString(log, args));
         return buffer.toString();
     }

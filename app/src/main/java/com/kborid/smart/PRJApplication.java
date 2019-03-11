@@ -3,8 +3,9 @@ package com.kborid.smart;
 import android.app.Application;
 import android.content.Context;
 
+import com.juma.jumaidapi.JumaIdApi;
+import com.kborid.library.pm.PackageManagerImpl;
 import com.kborid.library.util.LogUtils;
-import com.kborid.smart.service.LocationService;
 import com.kborid.smart.util.ScreenUtils;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.orhanobut.logger.DiskLogAdapter;
@@ -34,6 +35,8 @@ public class PRJApplication extends Application {
         ScreenUtils.init();
 //        LocationService.startLocationService(this);
         FileDownloader.init(PRJApplication.getInstance());
+        JumaIdApi.init(this);
+        PackageManagerImpl.init(this);
     }
 
     private void initLog() {

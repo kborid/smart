@@ -1,16 +1,18 @@
 package com.kborid.smart.activity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.LabeledIntent;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -35,9 +37,7 @@ import java.util.List;
 public class MainActivity extends BaseActivity {
 
     private SmartCounterServiceConnection counterConn = null;
-    /*
-     *  private static Drawable mDrawable;
-     */
+    private static Drawable mDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +66,10 @@ public class MainActivity extends BaseActivity {
          *  内存泄漏
          *  原因：mDrawable是一个静态对象，常驻内存，通过ImageView方法setImageDrawable时，会导致mDrawable引用ImageView（Drawable.setCallBack），
          *  同时，ImageView又对activity有引用，所以导致mDrawable间接引用activity，使activity无法被回收。
-         *
-         *  ImageView iv = new ImageView(this);
-         *  mDrawable = getResources().getDrawable(R.mipmap.ic_launcher);
-         *  iv.setImageDrawable(mDrawable);
          */
+         ImageView iv = new ImageView(this);
+         mDrawable = getResources().getDrawable(R.mipmap.ic_launcher);
+         iv.setImageDrawable(mDrawable);
     }
 
     @Override
@@ -95,19 +94,14 @@ public class MainActivity extends BaseActivity {
         }
         try {
             startActivity(resultIntent);
-        } catch (android.content.ActivityNotFoundException ex) {
+        } catch (ActivityNotFoundException ex) {
             ToastUtils.showToast("Can't find share component to share");
         }
         counterConn.stopCount();
     }
 
     public void onJump(View v) {
-        UIHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(MainActivity.this, FragmentContainerActivity.class));
-            }
-        }, 1000);
+        startActivity(new Intent(MainActivity.this, FragmentContainerActivity.class));
         counterConn.pauseCount();
     }
 

@@ -88,7 +88,7 @@ public class PictureAdapter extends BaseAdapter {
                 ImageLoader.getInstance().displayImage(url, viewHolder.iv);
                 break;
             case TYPE_PICASSO:
-                Picasso.with(context).load(url).into(viewHolder.iv);
+                Picasso.get().load(url).into(viewHolder.iv);
                 break;
             case TYPE_GLIDE:
                 Glide.with(context).load(url).into(viewHolder.iv);
