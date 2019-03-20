@@ -1,7 +1,7 @@
 package com.kborid.library.pm;
 
 public interface IPackageCallback {
-    void installPackage(String pkgName, int code);
+    void success(String pkgName);
 
-    void deletePackage(String pkgName, int code);
+    void fail(String pkgName, int code);
 }

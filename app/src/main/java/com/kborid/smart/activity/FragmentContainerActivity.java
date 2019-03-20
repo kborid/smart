@@ -21,7 +21,7 @@ import com.juma.jumaid.provider.BinderParcelable;
 import com.kborid.library.common.MultiTaskHandler;
 import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
-import com.kborid.smart.fragment.FragmentSecond;
+import com.kborid.smart.fragment.first.FragmentFirst;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -60,7 +60,7 @@ public class FragmentContainerActivity extends BaseActivity {
         super.initParams();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.container, FragmentSecond.newInstance());
+        ft.replace(R.id.container, FragmentFirst.newInstance());
         ft.commitAllowingStateLoss();
     }
 

@@ -20,10 +20,9 @@ import com.kborid.smart.manager.LocationManager;
  */
 public class LocationService extends Service implements AMapLocationListener {
     private static final String TAG = "LocationService";
-    private static final int DURING_CHECK = 8000;
-    private static final int DELAY_TIME = 8000;
+    private static final int DURING_CHECK = 10000;
+    private static final int DELAY_TIME = 10000;
     private AMapLocationClient mLocationClient = null;
-    private AMapLocation location;
 
 
     @Nullable
@@ -38,10 +37,10 @@ public class LocationService extends Service implements AMapLocationListener {
         mLocationClient = new AMapLocationClient(this);
         mLocationClient.setLocationListener(this);
         AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);//快频率定位模式,定位精度高
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setOnceLocation(false);
         mLocationOption.setNeedAddress(true);
-        mLocationOption.setInterval(3000);//间隔3秒返回结果
+        mLocationOption.setInterval(5000);
         mLocationClient.setLocationOption(mLocationOption);
     }
 
@@ -57,26 +56,24 @@ public class LocationService extends Service implements AMapLocationListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mLocationClient.startLocation();
-        //8秒后，检查GPS信号
-        UIHandler.postDelayed(checkGpsRunnable, DELAY_TIME);
+//        UIHandler.postDelayed(checkGpsRunnable, DELAY_TIME);
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private Runnable checkGpsRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (location != null){
-                LogUtils.d(TAG, "检查GPS信号");
-                parseGPSStatusString(location.getLocationQualityReport().getGPSStatus());
-                UIHandler.postDelayed(checkGpsRunnable, DURING_CHECK);
-            }
-        }
-    };
+//    private Runnable checkGpsRunnable = new Runnable() {
+//        @Override
+//        public void run() {
+//            if (location != null){
+//                LogUtils.d(TAG, "检查GPS信号");
+//                parseGPSStatusString(location.getLocationQualityReport().getGPSStatus());
+//                UIHandler.postDelayed(checkGpsRunnable, DURING_CHECK);
+//            }
+//        }
+//    };
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null){
-            location = aMapLocation;
             LocationManager.lon = aMapLocation.getLongitude();
             LocationManager.lat = aMapLocation.getLatitude();
             LocationManager.cityCode = aMapLocation.getCityCode();

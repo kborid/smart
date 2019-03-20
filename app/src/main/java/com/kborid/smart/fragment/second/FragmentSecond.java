@@ -1,4 +1,4 @@
-package com.kborid.smart.fragment;
+package com.kborid.smart.fragment.second;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +22,6 @@ import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.orhanobut.logger.Logger;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -35,6 +32,7 @@ import butterknife.OnClick;
 
 public class FragmentSecond extends Fragment {
 
+    private static final String TAG = FragmentSecond.class.getSimpleName();
     private String url = "http://gdown.baidu.com/data/wisegame/d4524b42d5a5ccf7/baidujisuban_20514176.apk";
     private String mDirStr, mFileStr;
 
@@ -57,24 +55,41 @@ public class FragmentSecond extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mDirStr = getActivity().getExternalCacheDir().getPath() + File.separator;
-        mFileStr = "ss.apk";
-        PackageManagerImpl.getInstance().registerPackageCallback(callback);
+        mFileStr = "ss%1$d.apk";
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        PackageManagerImpl.getInstance().unRegisterPackageCallback();
     }
 
     @OnClick(R.id.btn_click1)
     void click1() {
         Logger.t("down").d("path:" + mDirStr + mFileStr);
-        FileDownloader.getImpl().create(url)
-                .setPath(mDirStr + mFileStr)
-                .setListener(mFileDownloadListener)
-                .start();
+//        FileDownloader.getImpl().create(url)
+//                .setPath(mDirStr + mFileStr)
+//                .setListener(mFileDownloadListener)
+//                .start();
         ToastUtils.showToast("开始下载");
+//        FileDownloadQueueSet queueSet = new FileDownloadQueueSet(mFileDownloadListener);
+//        List<BaseDownloadTask> tasks = new ArrayList<>();
+//        for (int i = 0; i < 4; i++) {
+//            int id = FileDownloadUtils.generateId(url, mDirStr + String.format(mFileStr, i));
+//            Logger.t("duan").d("generate id = " + id);
+//            BaseDownloadTask task = FileDownloader.getImpl().create(url).setPath(mDirStr + String.format(mFileStr, i)).setTag(i + 1);
+//            Logger.t("duan").d("id = " + task.getId());
+//            tasks.add(task);
+//        }
+//        queueSet.downloadTogether(tasks);
+//        queueSet.start();
+        for (int i = 0; i < 3; i++) {
+            BaseDownloadTask task = FileDownloader.getImpl().create(url)
+                    .setListener(mFileDownloadListener)
+                    .setPath(mDirStr + String.format(mFileStr, i))
+                    .setTag(i + 1);
+            Logger.t("duan").d("id = " + task.getId());
+            task.start();
+        }
     }
 
     @OnClick(R.id.btn_click2)
@@ -85,18 +100,12 @@ public class FragmentSecond extends Fragment {
 
     @OnClick(R.id.btn_click3)
     void click3() {
-        if (!new File(mDirStr + mFileStr).exists()) {
+        if (!new File(mDirStr + "ss.apk").exists()) {
             ToastUtils.showToast("apk不存在");
             return;
         }
-//        MultiTaskHandler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                InstallUtil.install(mDirStr + mFileStr);
-//            }
-//        });
         try {
-            PackageManagerImpl.getInstance().installPackage(mDirStr + mFileStr);
+            PackageManagerImpl.installPackage(mDirStr + "ss.apk", callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -104,70 +113,41 @@ public class FragmentSecond extends Fragment {
 
     private IPackageCallback callback = new IPackageCallback() {
         @Override
-        public void installPackage(final String pkgName, int code) {
+        public void success(final String pkgName) {
             UIHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    ToastUtils.showToast("install " + pkgName + " success");
+                    ToastUtils.showToast(pkgName + " success");
                 }
             });
         }
 
         @Override
-        public void deletePackage(final String pkgName, int code) {
+        public void fail(final String pkgName, int code) {
             UIHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    ToastUtils.showToast("delete " + pkgName + " success");
+                    ToastUtils.showToast(pkgName + " fail");
                 }
             });
         }
     };
-
-    private void doSU() {
-        Process process = null;
-        DataOutputStream os = null;
-        DataInputStream is = null;
-        try {
-            process = Runtime.getRuntime().exec("sh"); /*这里可能需要修改su的源代码 （注掉  if (myuid != AID_ROOT && myuid != AID_SHELL) {*/
-            os = new DataOutputStream(process.getOutputStream());
-            is = new DataInputStream(process.getInputStream());
-            os.writeBytes("cp /storage/emulated/0/Android/data/com.kborid.smart/cache/ss.apk /system/app/");
-            os.writeBytes("exit \n");
-            os.flush();
-            process.waitFor();
-            //如果已经root，但是用户选择拒绝授权,e.getMessage() = write failed: EPIPE (Broken pipe)
-            //如果没有root，,e.getMessage()= Error running exec(). Command: [su] Working Directory: null Environment: null
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (os != null) {
-                    os.close();
-                }
-                if (is != null) {
-                    is.close();
-                }
-                if (null != process) {
-                    process.destroy();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     private class ExecuteAsRoot extends AExecuteAsRoot {
 
         @Override
         protected ArrayList<String> getCommandsToExecute() {
             ArrayList<String> list = new ArrayList<String>();
-//            list.add("add kill-server");
 //            list.add("adb devices");
-//            list.add("ls -l");
-            list.add("mount -o remount /system");
-            list.add("cp /storage/emulated/0/Android/data/com.kborid.smart/cache/ss.apk /system/app");
-            list.add("cp /storage/emulated/0/Android/data/com.kborid.smart/cache/ss.apk /storage/emulated/0/Android/data/com.kborid.smart/cache/ss111.apk");
+//            list.add("setenforce 0");
+//            list.add("su root");
+            list.add("whoami");
+//            list.add("mount -o rw,remount /system");
+//            list.add("chmod 777 /system");
+            list.add("ls -l");
+//            list.add("cp /storage/emulated/0/Android/data/com.kborid.smart/cache/ss.apk /system/app");
+//            list.add("cp /system/app/fyt.prop /storage/emulated/0/Android/data/com.kborid.smart/cache/");
+            list.add("ls -l /system/app | grep apk");
             return list;
         }
     }
@@ -175,13 +155,12 @@ public class FragmentSecond extends Fragment {
     @OnClick(R.id.btn_click4)
     void click4() {
         ToastUtils.showToast("doSU");
-//        doSU();
-        try {
-            Log.d("ROOT", "result:" + new ExecuteAsRoot().execute());
-        } catch (Exception e) {
-            e.printStackTrace();
+        boolean isCan = false;
+        Logger.t(TAG).d("can run root:" + (isCan = ExecuteAsRoot.canRunRootCommands()));
+
+        if (isCan) {
+            Logger.t(TAG).d("result = " + new ExecuteAsRoot().execute());
         }
-//        ToastUtils.showToast("222222");
 //        try {
 //            PackageManagerImpl.getInstance().uninstallPackage("com.baidu.searchbox.lite");
 //        } catch (Exception e) {
@@ -199,7 +178,7 @@ public class FragmentSecond extends Fragment {
     void click5() {
         ToastUtils.showToast("begin uninstall jumaLauncher");
         try {
-            PackageManagerImpl.getInstance().uninstallPackage("com.juma.jumalauncher.horizontal");
+            PackageManagerImpl.uninstallPackage("com.juma.jumalauncher.horizontal", callback);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -219,43 +198,37 @@ public class FragmentSecond extends Fragment {
     private FileDownloadListener mFileDownloadListener = new FileDownloadListener() {
         @Override
         protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-            Logger.t("down").d("pending soFarBytes:" + soFarBytes + ", totalBytes:" + totalBytes);
             int progress = (int) ((float) soFarBytes / totalBytes * 100);
-            Logger.t("down").d("progress progress:" + progress);
             progressBar.setProgress(progress);
         }
 
         @Override
         protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-            Logger.t("down").d("progress soFarBytes:" + soFarBytes + ", totalBytes:" + totalBytes);
+            Logger.t("down").d(task.getTag() + " progress soFarBytes:" + soFarBytes + ", totalBytes:" + totalBytes);
             int progress = (int) ((float) soFarBytes / totalBytes * 100);
-            Logger.t("down").d("progress progress:" + progress);
+            Logger.t("down").d(task.getTag() + " progress progress:" + progress);
             progressBar.setProgress(progress);
         }
 
         @Override
         protected void completed(BaseDownloadTask task) {
-            Logger.t("down").d("completed");
+            Logger.t("down").d(task.getTag() + " completed");
             progressBar.setProgress(100);
-            Logger.t("down").d("path = " + task.getPath());
-            Logger.t("down").d("name = " + task.getFilename());
+            Logger.t("down").d(task.getTag() + " path = " + task.getPath());
+            Logger.t("down").d(task.getTag() + " name = " + task.getFilename());
             ToastUtils.showToast("apk下载完成");
         }
 
         @Override
         protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-            Logger.t("down").d("paused soFarBytes:" + soFarBytes + ", totalBytes:" + totalBytes);
         }
 
         @Override
         protected void error(BaseDownloadTask task, Throwable e) {
-            Logger.t("down").d("error");
-            e.printStackTrace();
         }
 
         @Override
         protected void warn(BaseDownloadTask task) {
-            Logger.t("down").d("warn");
         }
     };
 }

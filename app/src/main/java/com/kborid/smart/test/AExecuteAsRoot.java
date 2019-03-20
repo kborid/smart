@@ -1,6 +1,6 @@
 package com.kborid.smart.test;
 
-import android.util.Log;
+import com.orhanobut.logger.Logger;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -10,6 +10,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public abstract class AExecuteAsRoot {
+
+    private static final String TAG = "ROOT";
+
     public static boolean canRunRootCommands() {
         boolean retval = false;
         Process suProcess;
@@ -29,15 +32,15 @@ public abstract class AExecuteAsRoot {
             if (null == currUid) {
                 retval = false;
                 exitSu = false;
-                Log.d("ROOT", "Can't get root access or denied by user");
+                Logger.t(TAG).d("Can't get root access or denied by user");
             } else if (currUid.contains("uid=0")) {
                 retval = true;
                 exitSu = true;
-                Log.d("ROOT", "Root access granted");
+                Logger.t(TAG).d("Root access granted");
             } else {
                 retval = false;
                 exitSu = true;
-                Log.d("ROOT", "Root access rejected: " + currUid);
+                Logger.t(TAG).d("Root access rejected: " + currUid);
             }
 
             if (exitSu) {
@@ -48,9 +51,8 @@ public abstract class AExecuteAsRoot {
             // Can't get root !
             // Probably broken pipe exception on trying to write to output
             // stream after su failed, meaning that the device is not rooted
-
             retval = false;
-            Log.d("ROOT", "Root access rejected [" + e.getClass().getName() + "] : " + e.getMessage());
+            Logger.t(TAG).d("Root access rejected [" + e.getClass().getName() + "] : " + e.getMessage());
         }
 
         return retval;
@@ -88,15 +90,15 @@ public abstract class AExecuteAsRoot {
                     retval = 255 != suProcessRetval;
                     System.out.println(output.toString());
                 } catch (Exception ex) {
-                    Log.d("ROOT", "exception", ex);
+                    Logger.t(TAG).d("exception", ex);
                 }
             }
         } catch (IOException ex) {
-            Log.d("ROOT", "Can't get root access", ex);
+            Logger.t(TAG).d("Can't get root access", ex);
         } catch (SecurityException ex) {
-            Log.d("ROOT", "Can't get root access", ex);
+            Logger.t(TAG).d("Can't get root access", ex);
         } catch (Exception ex) {
-            Log.d("ROOT", "Error executing internal operation", ex);
+            Logger.t(TAG).d("Error executing internal operation", ex);
         }
 
         return retval;
