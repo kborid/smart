@@ -59,7 +59,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 //    implementation(name:'jumaid-api-debug', ext:'aar')
-    implementation project(':common')
     testImplementation 'junit:junit:4.12'
     //noinspection GradleCompatible
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -97,6 +96,7 @@ dependencies {
 
     //rxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -121,9 +121,8 @@ dependencies {
     //storage + encrypt
     implementation 'com.orhanobut:hawk:2.0.1'
 
-//    implementation 'com.juma.android:jumaid:1.0.3'
-    //leak canary
-    //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    //    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    //    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    //eventbus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
+    implementation 'com.kborid.library:smart:1.0.4'
 }

@@ -5,21 +5,22 @@ android {
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 27
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -30,3 +31,23 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
+
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: "file://E://localMaven/maven/")
+        pom.groupId = 'com.kborid.library'
+        pom.artifactId = 'smart'
+        pom.version = '1.0.4'
+    }
+}
+
+//apply plugin: 'com.novoda.bintray-release'
+
+//publish {
+//    userOrg = 'dworg'      // bintray注册的用户名
+//    groupId = 'com.kborid.library'
+//    artifactId = 'common'// bintray创建的package
+//    publishVersion = '1.0.0'
+//}
