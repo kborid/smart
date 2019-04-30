@@ -25,9 +25,5 @@ public class SampleRegisterHandler {
      */
     public void init() {
 //        mWVJBWebViewClient.registerHandler("getUserId", new getUserId());
-//        mWVJBWebViewClient.registerHandler("getDeviceId", new getDeviceId());
-//        mWVJBWebViewClient.registerHandler("showException", new showException(mContext));
-//        mWVJBWebViewClient.registerHandler("getIDCardPic", new getIDCardPic());
-//        mWVJBWebViewClient.registerHandler("getSelfPic", new getSelfPic());
     }
 }
