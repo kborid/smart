@@ -1,5 +1,7 @@
 package com.kborid.library.common;
 
+import android.support.annotation.NonNull;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -16,7 +18,7 @@ public class MultiTaskHandler {
     private static final ThreadFactory sThreadFactory = new ThreadFactory() {
         private final AtomicInteger mCount = new AtomicInteger(1);
 
-        public Thread newThread(Runnable r) {
+        public Thread newThread(@NonNull Runnable r) {
             return new Thread(r, "MutiTask #" + mCount.getAndIncrement());
         }
     };

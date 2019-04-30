@@ -23,7 +23,7 @@
         android:roundIcon="@mipmap/icon"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.kborid.smart.activity.FragmentContainerActivity">
+        <activity android:name="com.kborid.smart.activity.WebViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,21 +34,10 @@
             </intent-filter>
         </activity>
 
-        <!--<activity
-            android:name="com.kborid.smart.activity.WebViewActivity"
-            android:icon="@mipmap/brower"
-            android:label="WebView">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>-->
-
-        <!--<activity android:name="com.kborid.smart.activity.FragmentContainerActivity" />-->
         <activity android:name=".imageloader.PictureActivity" />
 
         <service android:name="com.kborid.smart.service.SmartCounterService" />
-        <service android:name=".service.LocationService"/>
+        <service android:name=".service.LocationService" />
 
         <receiver android:name=".boradcast.TestBroadcastReceiver">
             <intent-filter>

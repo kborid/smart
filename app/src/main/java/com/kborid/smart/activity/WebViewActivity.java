@@ -1,7 +1,9 @@
 package com.kborid.smart.activity;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -12,6 +14,8 @@ import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.JsPromptResult;
+import android.webkit.JsResult;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -19,7 +23,6 @@ import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -27,6 +30,8 @@ import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
 import com.kborid.smart.test.TestTitleView;
 import com.kborid.smart.util.ToastUtils;
+import com.orhanobut.logger.Logger;
+import com.smart.jsbridge.WVJBWebViewClient;
 
 import butterknife.BindView;
 
@@ -62,30 +67,26 @@ public class WebViewActivity extends BaseActivity {
         super.initParams();
         initViews();
         setUpWebView();
-        mWebView.setWebViewClient(new MyWebViewClient());
+        mWebView.setWebViewClient(new MyWebViewClient(mWebView));
         mWebView.setWebChromeClient(new MyWebChromeClient());
-        mWebView.loadUrl("http://t66y.com");
+//        mWebView.loadUrl("http://t66y.com");
+        mWebView.loadUrl("file:///android_asset/ExampleApp.html");
     }
 
     @Override
     protected void dealIntent() {
         super.dealIntent();
         Bundle bundle = getIntent().getExtras();
-        String from = bundle.getString("from");
-        isFirst = TextUtils.isEmpty(from);
+        if (null != bundle) {
+            String from = bundle.getString("from");
+            isFirst = TextUtils.isEmpty(from);
+        }
     }
 
     private void setUpWebView() {
         WebSettings settings = mWebView.getSettings();
-        settings.setJavaScriptEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setDomStorageEnabled(true);
-        settings.setAppCacheMaxSize(1024 * 1024 * 8);
-        String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath();
-        settings.setAppCachePath(appCachePath);
-        settings.setAppCacheEnabled(true);
         settings.setBlockNetworkImage(false);
-        settings.supportZoom();
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
@@ -109,17 +110,10 @@ public class WebViewActivity extends BaseActivity {
         }
     }
 
-    private class MyWebViewClient extends WebViewClient {
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-            LogUtils.i("onPageStarted()");
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-            LogUtils.i("onPageFinished()");
+    private class MyWebViewClient extends WVJBWebViewClient {
+        public MyWebViewClient(WebView webView) {
+            super(webView);
+            new RegisterHandler(this, WebViewActivity.this).init();
         }
 
         @Override
@@ -134,7 +128,7 @@ public class WebViewActivity extends BaseActivity {
             if (url.startsWith("http") || url.startsWith("https")) {
                 view.loadUrl(url);
             }
-            return true;
+            return super.shouldOverrideUrlLoading(view, url);
         }
 
         @Override
@@ -145,6 +139,34 @@ public class WebViewActivity extends BaseActivity {
     }
 
     private class MyWebChromeClient extends WebChromeClient {
+
+        @Override
+        public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(WebViewActivity.this);
+            builder.setMessage(message);
+            builder.setPositiveButton("OK", new AlertDialog.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    result.confirm();
+                }
+            });
+            builder.setCancelable(false);
+            builder.create();
+            builder.show();
+            return true;
+        }
+
+        @Override
+        public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
+            Logger.t("duan").d("onJsConfirm()");
+            return super.onJsConfirm(view, url, message, result);
+        }
+
+        @Override
+        public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
+            Logger.t("duan").d("onJsPrompt()");
+            return super.onJsPrompt(view, url, message, defaultValue, result);
+        }
+
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {

@@ -3,29 +3,18 @@ package com.kborid.smart.activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ContentResolver;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.view.View;
 
-import com.juma.jumaid.aidl.IAidlSession;
-import com.juma.jumaid.aidl.IAidlSessionGetter;
-import com.juma.jumaid.provider.BinderParcelable;
 import com.kborid.library.common.MultiTaskHandler;
-import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
-import com.kborid.smart.fragment.first.FragmentFirst;
 import com.kborid.smart.fragment.second.FragmentSecond;
 import com.orhanobut.logger.Logger;
-
-import java.util.List;
 
 public class FragmentContainerActivity extends BaseActivity {
 
@@ -108,79 +97,11 @@ public class FragmentContainerActivity extends BaseActivity {
     }
 
     private void autoLogin() {
-        MultiTaskHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                ContentResolver contentResolver = getContentResolver();
-                Uri uri = Uri.parse("content://" + AUTHORITY + "/" + PATH_SESSION_GETTER_BINDER);
-                Cursor cursor = null;
-                try {
-                    cursor = contentResolver.query(uri, null, null, null, null);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                if (null == cursor) {
-                    return;
-                }
-
-                IBinder binder = getBinder(cursor);
-                try {
-                    IAidlSessionGetter sessionGetter = IAidlSessionGetter.Stub.asInterface(binder);
-                    sessionGetter.getSessionAutoLogin(1, new IAidlSession.Stub() {
-                        @Override
-                        public void onGetSession(String s) throws RemoteException {
-                            Logger.t(TAG).d("session = " + s);
-                        }
-                    });
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-
-                cursor.close();
-            }
-        });
     }
 
     public void logout1(View view) {
-        MultiTaskHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                ContentResolver contentResolver = getContentResolver();
-                Uri uri = Uri.parse("content://" + AUTHORITY + "/" + PATH_SESSION_GETTER_BINDER);
-                Cursor cursor = null;
-                try {
-                    cursor = contentResolver.query(uri, null, null, null, null);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                if (null == cursor) {
-                    return;
-                }
-
-                IBinder binder = getBinder(cursor);
-                try {
-                    IAidlSessionGetter sessionGetter = IAidlSessionGetter.Stub.asInterface(binder);
-                    sessionGetter.logout();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-
-                cursor.close();
-            }
-        });
     }
 
-    public void getSession2(View view) {
-        PackageManager pm = getPackageManager();
-        List<PackageInfo> pkgInfoList = pm.getInstalledPackages(0);
-        for (PackageInfo info : pkgInfoList) {
-            if ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != ApplicationInfo.FLAG_SYSTEM) {
-                LogUtils.d("name:" + info.applicationInfo.loadLabel(pm) + ", " + info.packageName);
-            }
-        }
-    }
 
     private Runnable runnableTask = new Runnable() {
         @Override
@@ -208,12 +129,12 @@ public class FragmentContainerActivity extends BaseActivity {
     }
 
     public static IBinder getBinder(Cursor cursor) {
-        Bundle extras = cursor.getExtras();
-        extras.setClassLoader(BinderParcelable.class.getClassLoader()); //目的是获取PathClassLoader加载自定义类，默认Parcel类的classloader是BootClassLoader
-        BinderParcelable binderParcelable = extras.getParcelable("binder");
-        if (null != binderParcelable) {
-            return binderParcelable.getBinder();
-        }
+//        Bundle extras = cursor.getExtras();
+//        extras.setClassLoader(BinderParcelable.class.getClassLoader()); //目的是获取PathClassLoader加载自定义类，默认Parcel类的classloader是BootClassLoader
+//        BinderParcelable binderParcelable = extras.getParcelable("binder");
+//        if (null != binderParcelable) {
+//            return binderParcelable.getBinder();
+//        }
         return null;
     }
 

@@ -22,7 +22,8 @@ allprojects {
         mavenCentral()
         maven { url 'https://maven.google.com' }
         maven { url 'http://10.101.0.101:8080/nexus/content/groups/public/' }
-        maven { url 'E://localMaven/maven/' }
+        maven { url "https://jitpack.io" }
+//        maven { url 'E://localMaven/maven/' }
     }
 }
 
