@@ -18,7 +18,6 @@ import com.smart.jsbridge.wvjb.handler.WVJBHandler;
 import com.smart.jsbridge.wvjb.WVJBJavascriptCallback;
 import com.smart.jsbridge.wvjb.WVJBMessage;
 import com.smart.jsbridge.wvjb.WVJBResponseCallback;
-import com.smart.jsbridge.wvjb.WVJBUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +32,7 @@ import java.util.Map;
  */
 @SuppressLint({"SetJavaScriptEnabled", "NewApi"})
 public class WVJBWebViewClient extends WebViewClient {
+    private static final String TAG = WVJBWebViewClient.class.getSimpleName();
 
     private static final String kInterface = "WVJBInterface";
     private static final String kCustomProtocolScheme = "wvjbscheme";
@@ -158,7 +158,7 @@ public class WVJBWebViewClient extends WebViewClient {
     private void log(String action, Object json) {
         if (!logging)
             return;
-        Logger.t(WVJBUtils.TAG).d(action + ": " + json);
+        Logger.t(TAG).d(action + ": " + json);
     }
 
     public void executeJavascript(String script) {

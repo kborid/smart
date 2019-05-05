@@ -2,6 +2,8 @@ package com.smart.jsbridge;
 
 import android.content.Context;
 
+import com.smart.jsbridge.function.test;
+
 /**
  * 樣例：注册处理程序
  */
@@ -24,6 +26,6 @@ public class SampleRegisterHandler {
      * 初始化，注册处理程序
      */
     public void init() {
-//        mWVJBWebViewClient.registerHandler("getUserId", new getUserId());
+        mWVJBWebViewClient.registerHandler("test", new test());
     }
 }

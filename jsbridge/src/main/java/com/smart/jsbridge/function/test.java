@@ -1,4 +1,4 @@
-package com.kborid.smart.activity;
+package com.smart.jsbridge.function;
 
 import com.alibaba.fastjson.JSONObject;
 import com.orhanobut.logger.Logger;

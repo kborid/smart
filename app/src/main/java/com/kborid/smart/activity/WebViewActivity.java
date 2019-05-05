@@ -31,6 +31,7 @@ import com.kborid.smart.R;
 import com.kborid.smart.test.TestTitleView;
 import com.kborid.smart.util.ToastUtils;
 import com.orhanobut.logger.Logger;
+import com.smart.jsbridge.SampleRegisterHandler;
 import com.smart.jsbridge.WVJBWebViewClient;
 
 import butterknife.BindView;
@@ -113,7 +114,7 @@ public class WebViewActivity extends BaseActivity {
     private class MyWebViewClient extends WVJBWebViewClient {
         public MyWebViewClient(WebView webView) {
             super(webView);
-            new RegisterHandler(this, WebViewActivity.this).init();
+            new SampleRegisterHandler(this, WebViewActivity.this).init();
         }
 
         @Override
