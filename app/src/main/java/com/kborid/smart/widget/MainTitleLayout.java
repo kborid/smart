@@ -1,4 +1,4 @@
-package com.kborid.smart.test;
+package com.kborid.smart.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -11,19 +11,19 @@ import android.widget.TextView;
 import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
 
-public class TestTitleView extends LinearLayout {
+public class MainTitleLayout extends LinearLayout {
 
     private TextView tv_back, tv_title;
 
-    public TestTitleView(Context context) {
+    public MainTitleLayout(Context context) {
         this(context, null);
     }
 
-    public TestTitleView(Context context, @Nullable AttributeSet attrs) {
+    public MainTitleLayout(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TestTitleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MainTitleLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

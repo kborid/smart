@@ -12,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
@@ -23,13 +22,13 @@ import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
-import com.kborid.smart.test.TestTitleView;
 import com.kborid.smart.util.ToastUtils;
+import com.kborid.smart.widget.MainTitleLayout;
 import com.orhanobut.logger.Logger;
 import com.smart.jsbridge.SampleRegisterHandler;
 import com.smart.jsbridge.WVJBWebViewClient;
@@ -40,27 +39,36 @@ public class WebViewActivity extends BaseActivity {
 
     private static final long DURATION_PRESS_TWO = 1000;
     private static final int REQUEST_CHOOSE_FILE = 1000;
+
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.web_view)
+    WebView mWebView;
+    @BindView(R.id.root)
+    FrameLayout root;
+
     private boolean isFirst = false;
     private long mFirstPressStamp = 0;
-    @BindView(R.id.progress_bar) ProgressBar mProgressBar;
-    @BindView(R.id.web_view) WebView mWebView;
     private ValueCallback<Uri[]> uploadMessage;
-    private TestTitleView testTitleView;
 
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_webview;
     }
 
+    @Override
+    protected boolean needStatusBarImmersive() {
+        return true;
+    }
+
     private void initViews() {
-        testTitleView = (TestTitleView) LayoutInflater.from(this).inflate(R.layout.layout_test_title, null);
-        ((LinearLayout)findViewById(R.id.title)).addView(testTitleView);
-        testTitleView.setOnTitleListener(new TestTitleView.OnTitleListener() {
-            @Override
-            public void onBack() {
-                onBackPressed();
-            }
-        });
+        if (null != titleView)
+            titleView.setOnTitleListener(new MainTitleLayout.OnTitleListener() {
+                @Override
+                public void onBack() {
+                    onBackPressed();
+                }
+            });
     }
 
     @Override
@@ -70,7 +78,6 @@ public class WebViewActivity extends BaseActivity {
         setUpWebView();
         mWebView.setWebViewClient(new MyWebViewClient(mWebView));
         mWebView.setWebChromeClient(new MyWebChromeClient());
-//        mWebView.loadUrl("http://t66y.com");
         mWebView.loadUrl("file:///android_asset/ExampleApp.html");
     }
 
@@ -199,7 +206,7 @@ public class WebViewActivity extends BaseActivity {
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
             LogUtils.i("onReceivedTitle() title = " + title);
-            testTitleView.setTitle(title);
+            titleView.setTitle(title);
         }
 
         @Override

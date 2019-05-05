@@ -2,9 +2,15 @@ package com.kborid.library.util;
 
 import android.util.Log;
 
+import com.kborid.library.BuildConfig;
+
 public class LogUtils {
-    private static final boolean isDebug = true;
+    private static final boolean isDebug = BuildConfig.DEBUG;
     private static final String TAG = "DWSmart";
+
+    public static void init() {
+        Log.i(TAG, "init() debug=" + isDebug);
+    }
 
     public static void i(String msg) {
         if (isDebug) {

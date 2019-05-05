@@ -1,4 +1,4 @@
-package com.kborid.smart.activity;
+package com.kborid.smart.test;
 
 import java.util.HashMap;
 
@@ -22,7 +22,7 @@ public class SingletonTest {
             return instance;
         }
     }
-    //3、double check
+    //3、double check + volatile
     public static class Singleton3{
         private static volatile Singleton3 instance = null;
         private Singleton3() {}

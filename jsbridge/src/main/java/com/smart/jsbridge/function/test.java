@@ -1,9 +1,10 @@
 package com.smart.jsbridge.function;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSONObject;
-import com.orhanobut.logger.Logger;
-import com.smart.jsbridge.wvjb.handler.WVJBHandler;
 import com.smart.jsbridge.wvjb.WVJBResponseCallback;
+import com.smart.jsbridge.wvjb.handler.WVJBHandler;
 
 public class test implements WVJBHandler {
 
@@ -11,7 +12,7 @@ public class test implements WVJBHandler {
 
     @Override
     public void request(Object data, WVJBResponseCallback callback) {
-        Logger.t(TAG).d("test data");
+        Log.i(TAG, "test data");
         if (callback != null) {
             JSONObject mJson = new JSONObject();
             mJson.put("test", "test data");

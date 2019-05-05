@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -12,12 +13,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.orhanobut.logger.Logger;
-import com.smart.jsbridge.wvjb.handler.WVJBDefaultHandler;
-import com.smart.jsbridge.wvjb.handler.WVJBHandler;
 import com.smart.jsbridge.wvjb.WVJBJavascriptCallback;
 import com.smart.jsbridge.wvjb.WVJBMessage;
 import com.smart.jsbridge.wvjb.WVJBResponseCallback;
+import com.smart.jsbridge.wvjb.handler.WVJBDefaultHandler;
+import com.smart.jsbridge.wvjb.handler.WVJBHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -158,7 +158,7 @@ public class WVJBWebViewClient extends WebViewClient {
     private void log(String action, Object json) {
         if (!logging)
             return;
-        Logger.t(TAG).d(action + ": " + json);
+        Log.i(TAG, action + ": " + json);
     }
 
     public void executeJavascript(String script) {

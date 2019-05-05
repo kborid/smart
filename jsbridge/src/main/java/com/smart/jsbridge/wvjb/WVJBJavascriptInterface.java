@@ -1,8 +1,7 @@
 package com.smart.jsbridge.wvjb;
 
+import android.util.Log;
 import android.webkit.JavascriptInterface;
-
-import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +18,7 @@ public class WVJBJavascriptInterface {
 
     @JavascriptInterface
     public void onResultForScript(String key, String value) {
-        Logger.t(TAG).d("WVJBJavascriptInterface::onResultForScript: " + value);
+        Log.i(TAG, "WVJBJavascriptInterface::onResultForScript: " + value);
         WVJBJavascriptCallback callback = map.remove(key);
         if (callback != null)
             callback.onReceiveValue(value);

@@ -28,6 +28,7 @@ import com.kborid.smart.imageloader.PictureActivity;
 import com.kborid.smart.imageloader.PictureAdapter;
 import com.kborid.smart.service.SmartCounterServiceConnection;
 import com.kborid.smart.test.CustomThread;
+import com.kborid.smart.test.SingletonTest;
 import com.kborid.smart.util.ToastUtils;
 
 import java.lang.reflect.Method;
@@ -49,6 +50,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected boolean needStatusBarImmersive() {
+        return true;
     }
 
     @Override

@@ -12,8 +12,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.INSTALL_PACKAGES" />
-    <uses-permission android:name="android.permission.DELETE_PACKAGES" />
+    <!--<uses-permission android:name="android.permission.INSTALL_PACKAGES" />-->
+    <!--<uses-permission android:name="android.permission.DELETE_PACKAGES" />-->
 
     <application
         android:name="com.kborid.smart.PRJApplication"
@@ -23,7 +23,7 @@
         android:roundIcon="@mipmap/icon"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.kborid.smart.activity.WebViewActivity">
+        <activity android:name="com.kborid.smart.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -33,17 +33,15 @@
                 <action android:name="android.intent.action.duanwei.test" />
             </intent-filter>
         </activity>
-
+        <activity android:name="com.kborid.smart.activity.FragmentContainerActivity"/>
+        <activity android:name="com.kborid.smart.activity.WebViewActivity" />
         <activity android:name=".imageloader.PictureActivity" />
 
         <service android:name="com.kborid.smart.service.SmartCounterService" />
         <service android:name=".service.LocationService" />
+        <service android:name="com.amap.api.location.APSService"/>
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="@string/amap_key"/>
 
-        <receiver android:name=".boradcast.TestBroadcastReceiver">
-            <intent-filter>
-                <action android:name="action.ttttt" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>
