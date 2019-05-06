@@ -2,10 +2,11 @@ package com.smart.jsbridge;
 
 import android.content.Context;
 
-import com.smart.jsbridge.function.test;
+import com.smart.jsbridge.function.TestWithCallback;
+import com.smart.jsbridge.function.TestWithoutCallback;
 
 /**
- * 樣例：注册处理程序
+ * 样例
  */
 public class SampleRegisterHandler {
 
@@ -15,17 +16,21 @@ public class SampleRegisterHandler {
     /**
      * 构造函数
      *
-     * @param mContext
+     * @param context
      */
-    public SampleRegisterHandler(WVJBWebViewClient mWVJBWebViewClient, Context mContext) {
+    public SampleRegisterHandler(WVJBWebViewClient mWVJBWebViewClient, Context context) {
         this.mWVJBWebViewClient = mWVJBWebViewClient;
-        this.mContext = mContext.getApplicationContext();
+        if (null == context) {
+            throw new NullPointerException("context is not init");
+        }
+        this.mContext = context.getApplicationContext();
     }
 
     /**
      * 初始化，注册处理程序
      */
     public void init() {
-        mWVJBWebViewClient.registerHandler("test", new test());
+        mWVJBWebViewClient.registerHandler("TestWithCallback", new TestWithCallback());
+        mWVJBWebViewClient.registerHandler("TestWithoutCallback", new TestWithoutCallback(mContext));
     }
 }

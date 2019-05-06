@@ -62,13 +62,15 @@ public class WebViewActivity extends BaseActivity {
     }
 
     private void initViews() {
-        if (null != titleView)
+        if (null != titleView) {
             titleView.setOnTitleListener(new MainTitleLayout.OnTitleListener() {
                 @Override
                 public void onBack() {
                     onBackPressed();
                 }
             });
+            titleView.setBackgroundColor(getResources().getColor(R.color.clock_number_pick_highlight));
+        }
     }
 
     @Override
@@ -97,9 +99,10 @@ public class WebViewActivity extends BaseActivity {
         settings.setBlockNetworkImage(false);
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
-        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
-        settings.setDatabaseEnabled(true);
-        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
+        }
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setLoadsImagesAutomatically(true);
     }
 
@@ -119,9 +122,9 @@ public class WebViewActivity extends BaseActivity {
     }
 
     private class MyWebViewClient extends WVJBWebViewClient {
-        public MyWebViewClient(WebView webView) {
+        MyWebViewClient(WebView webView) {
             super(webView);
-            new SampleRegisterHandler(this, WebViewActivity.this).init();
+            new SampleRegisterHandler(this, webView.getContext()).init();
         }
 
         @Override
@@ -133,15 +136,13 @@ public class WebViewActivity extends BaseActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             LogUtils.i("shouldOverrideUrlLoading() url = " + url);
-            if (url.startsWith("http") || url.startsWith("https")) {
-                view.loadUrl(url);
-            }
             return super.shouldOverrideUrlLoading(view, url);
         }
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             LogUtils.i("onReceivedSslError()");
+            //过滤https证书继续加载
             handler.proceed();
         }
     }

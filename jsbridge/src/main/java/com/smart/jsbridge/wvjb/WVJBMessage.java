@@ -1,5 +1,7 @@
 package com.smart.jsbridge.wvjb;
 
+import com.orhanobut.logger.Logger;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -7,6 +9,9 @@ import org.json.JSONObject;
  * js bridge通信message
  */
 public class WVJBMessage {
+
+    private static final String TAG = WVJBMessage.class.getSimpleName();
+
     private Object data = null;
     private String callbackId = null;
     private String handlerName = null;
@@ -60,6 +65,7 @@ public class WVJBMessage {
     }
 
     public static String message2JsonString(WVJBMessage message) {
+        Logger.t(TAG).d("message2JsonString()");
         JSONObject jsonObject= new JSONObject();
         try {
             jsonObject.put(CALLBACK_ID_STR, message.getCallbackId());
@@ -74,6 +80,7 @@ public class WVJBMessage {
     }
 
     public static WVJBMessage JsonString2Message(String jsonStr) {
+        Logger.t(TAG).d("JsonString2Message()");
         WVJBMessage message =  new WVJBMessage();
         try {
             JSONObject jsonObject = new JSONObject(jsonStr);

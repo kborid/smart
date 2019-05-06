@@ -1,12 +1,14 @@
 <!doctype html>
 <html xmlns:font-size="http://www.w3.org/1999/xhtml">
 <head>
-    <style type='text/css'>
-        html { font-family:Helvetica; color:#222; }
-        h1 { color:steelblue; font-size:30px; margin-top:24px; }
-        button { margin:0 3px 10px; font-size:30px; }
-        .logLine { border-bottom:1px solid #ccc; padding:4px 2px; font-family:courier; font-size:20px; }
-    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!--<style type='text/css'>-->
+    <!--html { font-family:Helvetica; color:#222; }-->
+    <!--h1 { color:steelblue; font-size:30px; margin-top:24px; }-->
+    <!--button { margin:0 3px 10px; font-size:30px; }-->
+    <!--.logLine { border-bottom:1px solid #ccc; padding:4px 2px; font-family:courier; font-size:20px; }-->
+
+    <!--</style>-->
 </head>
 
 <body>
@@ -15,10 +17,10 @@
 
 <form id="test-form">
     <input type="text" name="url">
-    <button type="button" onclick="doSubmitForm()">跳转URL</button>
+    <button type="button" onclick="doSubmitForm()">跳转URL</button>
 </form>
 
-<h2 font-size:30px>下面的按钮可以测试接口功能，在上面输入框输入目标页面地址，也可以将目标页面地址复制到剪贴板自动识别</h2>
+<h2 font-size:30px>下面的按钮可以测试接口功能，在上面输入框输入目标页面地址，也可以将目标页面地址复制到剪贴板自动识别</h2>
 
 
 <script>
@@ -94,15 +96,23 @@
 
 
                                    var getUserIDButton = document.getElementById('buttons').appendChild(document.createElement('button'))
-                                   getUserIDButton.innerHTML = 'test'
+                                   getUserIDButton.innerHTML = 'TestWithCallback'
                                    getUserIDButton.onclick = function(e) {
                                    e.preventDefault()
-                                   bridge.callHandler('test', null, function(response) {
+                                   bridge.callHandler('TestWithCallback', null, function(response) {
                                                       alert(response);
-                                                      log('test', response)
+                                                      log('TestWithCallback', response)
                                                       })
                                    }
+
+                                   var getUserIDButton = document.getElementById('buttons').appendChild(document.createElement('button'))
+                                   getUserIDButton.innerHTML = 'TestWithoutCallback'
+                                   getUserIDButton.onclick = function(e) {
+                                   e.preventDefault()
+                                   bridge.callHandler('TestWithoutCallback', null, null)
+                                   }
                                    })
+
 
 
 </script>

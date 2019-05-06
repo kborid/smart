@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Looper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -13,7 +12,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.orhanobut.logger.Logger;
 import com.smart.jsbridge.wvjb.WVJBJavascriptCallback;
+import com.smart.jsbridge.wvjb.WVJBJavascriptInterface;
 import com.smart.jsbridge.wvjb.WVJBMessage;
 import com.smart.jsbridge.wvjb.WVJBResponseCallback;
 import com.smart.jsbridge.wvjb.handler.WVJBDefaultHandler;
@@ -45,25 +46,27 @@ public class WVJBWebViewClient extends WebViewClient {
     private Map<String, WVJBResponseCallback> responseCallbacks = null;
     private Map<String, WVJBHandler> messageHandlers = null;
     private WVJBHandler defaultHandler;
-    //    private WVJBJavascriptInterface kJavascriptInterface = new WVJBJavascriptInterface();
+    private WVJBJavascriptInterface kJavascriptInterface = new WVJBJavascriptInterface();
     private String mNativeJS = null;
 
     private WebView webView;
 
     public WVJBWebViewClient(WebView webView) {
+        log("WVJBWebViewClient", "WVJBWebViewClient construct()");
         this.webView = webView;
         this.webView.getSettings().setJavaScriptEnabled(true);
         this.webView.getSettings().setSupportZoom(true);
         this.webView.getSettings().setBuiltInZoomControls(true);
         this.webView.getSettings().setDisplayZoomControls(false);
-//        this.webView.addJavascriptInterface(kJavascriptInterface, kInterface);
+        this.webView.addJavascriptInterface(kJavascriptInterface, kInterface);
         this.responseCallbacks = new HashMap<String, WVJBResponseCallback>();
         this.messageHandlers = new HashMap<String, WVJBHandler>();
         this.startupMessageQueue = new ArrayList<WVJBMessage>();
         this.defaultHandler = new WVJBDefaultHandler();
     }
 
-    private void sendData(String handlerName, Object data, WVJBResponseCallback responseCallback) {
+    private void doSend(String handlerName, Object data, WVJBResponseCallback responseCallback) {
+        log("doSend", "sendData() name=" + handlerName);
         if (TextUtils.isEmpty(handlerName))
             return;
         WVJBMessage message = new WVJBMessage();
@@ -78,6 +81,7 @@ public class WVJBWebViewClient extends WebViewClient {
     }
 
     private void queueMessage(WVJBMessage message) {
+        log("queueMessage", "queueMessage() message=" + message);
         if (startupMessageQueue != null) {
             startupMessageQueue.add(message);
         } else {
@@ -91,32 +95,34 @@ public class WVJBWebViewClient extends WebViewClient {
      * @param message
      */
     private void dispatchMessage(WVJBMessage message) {
-        log("dispatch", message.getResponseData());
+        log("dispatchMessage", message.getResponseData());
         String messageJSON = WVJBMessage.message2JsonString(message).replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\\\'").replaceAll("\n", "\\\\\n")
                 .replaceAll("\r", "\\\\\r").replaceAll("\f", "\\\\\f");
-        log("dispatch", messageJSON);
+        log("dispatchMessage", messageJSON);
         executeJavascript("WebViewJavascriptBridge._handleMessageFromObjC('" + messageJSON + "');");
     }
 
     private void flushMessageQueue() {
+        log("flushMessageQueue", "flushMessageQueue()");
         String script = "WebViewJavascriptBridge._fetchQueue()";
         executeJavascript(script, new WVJBJavascriptCallback() {
             public void onReceiveValue(String messageQueueString) {
+                log("onReceiveValue", "messageQueueString = " + messageQueueString);
                 if (TextUtils.isEmpty(messageQueueString)) {
                     return;
                 }
-                log("flush", "messageQueueString = " + messageQueueString);
                 processQueueMessage(messageQueueString);
             }
         });
     }
 
     private void processQueueMessage(String messageQueueString) {
+        log("processQueueMessage", "processQueueMessage() messageQueueString=" + messageQueueString);
         try {
             JSONArray messages = JSON.parseArray(messageQueueString);
             for (Object object : messages) {
                 JSONObject jo = (JSONObject) object;
-                log("flush", jo);
+                log("processQueueMessage", jo);
 
                 WVJBMessage message = WVJBMessage.JsonString2Message(jo.toString());
                 if (message.getResponseId() != null) {
@@ -140,12 +146,14 @@ public class WVJBWebViewClient extends WebViewClient {
                     }
 
                     WVJBHandler handler;
+                    log("handler", "handlerName=" + message.getHandlerName());
                     if (!TextUtils.isEmpty(message.getHandlerName())) {
                         handler = messageHandlers.get(message.getHandlerName());
                     } else {
                         handler = defaultHandler;
                     }
                     if (handler != null) {
+                        log("handler", "handler request()");
                         handler.request(message.getData(), responseCallback);
                     }
                 }
@@ -158,7 +166,7 @@ public class WVJBWebViewClient extends WebViewClient {
     private void log(String action, Object json) {
         if (!logging)
             return;
-        Log.i(TAG, action + ": " + json);
+        Logger.t(TAG).d(action + ": " + json);
     }
 
     public void executeJavascript(String script) {
@@ -172,6 +180,7 @@ public class WVJBWebViewClient extends WebViewClient {
      * @param callback
      */
     public void executeJavascript(final String script, final WVJBJavascriptCallback callback) {
+        log("executeJavascript", "script=" + script);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
                 webView.evaluateJavascript(script, new ValueCallback<String>() {
@@ -188,14 +197,11 @@ public class WVJBWebViewClient extends WebViewClient {
             }
         } else {
             if (callback != null) {
-//                kJavascriptInterface.addCallback(++uniqueId + "", callback);
-                // webView.loadUrl("javascript:window." + kInterface + ".onResultForScript(" + uniqueId + "," + script + ")");
+                kJavascriptInterface.addCallback(++uniqueId + "", callback);
                 webView.post(new Runnable() {
                     @Override
                     public void run() {
-                        StringBuffer sb = new StringBuffer();
-                        sb.append("javascript:window.").append(kInterface).append(".onResultForScript(").append(uniqueId).append(",").append(script).append(")");
-                        webView.loadUrl(sb.toString());
+                        webView.loadUrl("javascript:window." + kInterface + ".onResultForScript(" + uniqueId + "," + script + ")");
                     }
                 });
             } else {
@@ -211,6 +217,7 @@ public class WVJBWebViewClient extends WebViewClient {
 
     @Override
     public void onPageFinished(WebView view, String url) {
+        log("onPageFinished", "url=" + url);
         try {
             if (mNativeJS == null) {
                 InputStream is = webView.getContext().getAssets().open("WebViewJavascriptBridge.js");
@@ -236,47 +243,20 @@ public class WVJBWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        log("shouldOverrideUrlLoading", "url=" + url);
         if (url.startsWith(kCustomProtocolScheme)) {
             if (url.indexOf(kQueueHasMessage) > 0) {
                 flushMessageQueue();
             }
             return true;
-        } else {
-            try {
-//                // 调用拨号程序
-//                if (url.startsWith("tel:") || url.startsWith("mailto:") || url.startsWith("geo:") || url.startsWith("wtai://wp/mc;")) {
-//                    Uri uri = null;
-//                    if (url.startsWith("wtai://wp/mc;")) {
-//                        uri = Uri.parse(WebView.SCHEME_TEL + url.substring("wtai://wp/mc;".length()));
-//                    } else {
-//                        uri = Uri.parse(url);
-//                    }
-//                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    AppContext.mAppContext.startActivity(intent);
-//                    return true;
-//                }
-//                if (url.startsWith("alipays://") || url.startsWith("https://ds.alipay.com") || url.startsWith("intent://platformapi")) {
-//                    Uri uri = null;
-//                    if (url.startsWith("intent://platformapi")) {
-//                        uri = Uri.parse(view.getUrl());
-//                    } else {
-//                        uri = Uri.parse(url);
-//                    }
-//                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    view.getContext().startActivity(intent);
-//                    return true;
-//                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return super.shouldOverrideUrlLoading(view, url);
         }
+        return super.shouldOverrideUrlLoading(view, url);
     }
 
     /**
      * 是否打印log
+     *
+     * @param enable
      */
     public void enableLogging(boolean enable) {
         logging = enable;
@@ -298,7 +278,8 @@ public class WVJBWebViewClient extends WebViewClient {
      * @param responseCallback
      */
     public void callHandler(String handlerName, Object data, WVJBResponseCallback responseCallback) {
-        sendData(handlerName, data, responseCallback);
+        log("callHandler", "callHandler() name=" + handlerName);
+        doSend(handlerName, data, responseCallback);
     }
 
     /**
@@ -308,6 +289,7 @@ public class WVJBWebViewClient extends WebViewClient {
      * @param handler
      */
     public void registerHandler(String handlerName, WVJBHandler handler) {
+        log("registerHandler", "registerHandler() name=" + handlerName);
         if (TextUtils.isEmpty(handlerName)) {
             return;
         }
