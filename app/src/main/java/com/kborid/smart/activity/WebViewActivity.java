@@ -136,6 +136,14 @@ public class WebViewActivity extends BaseActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             LogUtils.i("shouldOverrideUrlLoading() url = " + url);
+            Uri uri = Uri.parse(url);
+            if ("tlhl".equals(uri.getScheme())) {
+                LogUtils.d("scheme=" + uri.getScheme());
+                LogUtils.d("host=" + uri.getHost());
+                LogUtils.d("path=" + uri.getPath());
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                return true;
+            }
             return super.shouldOverrideUrlLoading(view, url);
         }
 

@@ -137,4 +137,7 @@ dependencies {
     //js bridge
     implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 //    implementation 'com.kborid.library:smart:1.0.4'
+
+    //apache commons
+    implementation 'org.apache.commons:commons-lang3:3.7'
 }

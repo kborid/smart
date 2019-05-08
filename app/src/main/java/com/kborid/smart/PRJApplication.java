@@ -16,6 +16,8 @@ import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class PRJApplication extends Application {
     private static final String TAG = PRJApplication.class.getSimpleName();
     private static PRJApplication instance = null;
@@ -34,6 +36,9 @@ public class PRJApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (!StringUtils.isEmpty("222")) {
+            LogUtils.d(TAG, "string utils test");
+        }
         LogUtils.init();
         LogUtils.d(TAG, "onCreate()");
         initLogger();
