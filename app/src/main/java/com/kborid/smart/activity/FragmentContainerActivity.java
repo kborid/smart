@@ -16,7 +16,7 @@ import com.kborid.smart.R;
 import com.kborid.smart.fragment.second.FragmentSecond;
 import com.orhanobut.logger.Logger;
 
-public class FragmentContainerActivity extends BaseActivity {
+public class FragmentContainerActivity extends BaseAppActivity {
 
     private static final String TAG = FragmentContainerActivity.class.getSimpleName();
     private static final String AUTHORITY = "com.juma.jumaid.provider";

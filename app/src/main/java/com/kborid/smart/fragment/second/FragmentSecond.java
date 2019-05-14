@@ -71,103 +71,14 @@ public class FragmentSecond extends Fragment {
 
     @OnClick(R.id.btn_click1)
     void click1() {
-        Api.getUpdatesInfo(new Observer<Object>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                Logger.t(TAG).d("onSubscribe()");
-            }
-
-            @Override
-            public void onNext(Object o) {
-                Logger.t(TAG).d("onNext() o = " + o);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Logger.t(TAG).d("onError()");
-            }
-
-            @Override
-            public void onComplete() {
-                Logger.t(TAG).d("onComplete()");
-            }
-        });
-//        Logger.t("down").d("path:" + mDirStr + mFileStr);
-//        FileDownloader.getImpl().create(url)
-//                .setPath(mDirStr + mFileStr)
-//                .setListener(mFileDownloadListener)
-//                .start();
-//        ToastUtils.showToast("开始下载");
-//        FileDownloadQueueSet queueSet = new FileDownloadQueueSet(mFileDownloadListener);
-//        List<BaseDownloadTask> tasks = new ArrayList<>();
-//        for (int i = 0; i < 4; i++) {
-//            int id = FileDownloadUtils.generateId(url, mDirStr + String.format(mFileStr, i));
-//            Logger.t("duan").d("generate id = " + id);
-//            BaseDownloadTask task = FileDownloader.getImpl().create(url).setPath(mDirStr + String.format(mFileStr, i)).setTag(i + 1);
-//            Logger.t("duan").d("id = " + task.getId());
-//            tasks.add(task);
-//        }
-//        queueSet.downloadTogether(tasks);
-//        queueSet.start();
-//        for (int i = 0; i < 3; i++) {
-//            BaseDownloadTask task = FileDownloader.getImpl().create(url)
-//                    .setListener(mFileDownloadListener)
-//                    .setPath(mDirStr + String.format(mFileStr, i))
-//                    .setTag(i + 1);
-//            Logger.t("duan").d("id = " + task.getId());
-//            task.start();
-//        }
     }
 
     @OnClick(R.id.btn_click2)
     void click2() {
-//        FileDownloader.getImpl().pauseAll();
-//        ToastUtils.showToast("暂停下载");
-        AppRequestBean bean = new AppRequestBean();
-        bean.setPkgName("com.baidu.map");
-        bean.setVersionName(BuildConfig.VERSION_NAME);
-        bean.setVersionCode(105);
-
-        Api.getUpdateInfo(bean, new Observer<Object>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                Logger.t(TAG).d("onSubscribe()");
-            }
-
-            @Override
-            public void onNext(Object o) {
-                Logger.t(TAG).d("onNext() o = " + o);
-                JSONObject json = (JSONObject) o;
-                if (json.containsKey("path")) {
-                    String path = json.getString("path");
-                    Logger.t(TAG).d("path = "  + path);
-//                    FileDownloader.getImpl().create(path).setPath(mDirStr+mFileStr).setListener(mFileDownloadListener).start();
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Logger.t(TAG).d("onError()");
-            }
-
-            @Override
-            public void onComplete() {
-                Logger.t(TAG).d("onComplete()");
-            }
-        });
     }
 
     @OnClick(R.id.btn_click3)
     void click3() {
-//        if (!new File(mDirStr + "ss.apk").exists()) {
-//            ToastUtils.showToast("apk不存在");
-//            return;
-//        }
-//        try {
-//            PackageManagerImpl.installPackage(mDirStr + "ss.apk", callback);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     private IPackageCallback callback = new IPackageCallback() {
@@ -220,74 +131,9 @@ public class FragmentSecond extends Fragment {
         if (isCan) {
             Logger.t(TAG).d("result = " + new ExecuteAsRoot().execute());
         }
-//        try {
-//            PackageManagerImpl.getInstance().uninstallPackage("com.baidu.searchbox.lite");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        if (!new File(mDirStr + mFileStr).exists()) {
-//            ToastUtils.showToast("apk不存在");
-//            return;
-//        }
-//        new File(mDirStr + mFileStr).delete();
-//        ToastUtils.showToast("apk已删除");
     }
 
     @OnClick(R.id.btn_click5)
     void click5() {
-        ToastUtils.showToast("begin uninstall jumaLauncher");
-        try {
-            PackageManagerImpl.uninstallPackage("com.juma.jumalauncher.horizontal", callback);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
     }
-
-    private void install(String filePath) {
-        Logger.t("down").d("install()");
-        File apkFile = new File(filePath);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
-        startActivity(intent);
-    }
-
-    private FileDownloadListener mFileDownloadListener = new FileDownloadListener() {
-        @Override
-        protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-            int progress = (int) ((float) soFarBytes / totalBytes * 100);
-            progressBar.setProgress(progress);
-        }
-
-        @Override
-        protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-            Logger.t("down").d(task.getTag() + " progress soFarBytes:" + soFarBytes + ", totalBytes:" + totalBytes);
-            int progress = (int) ((float) soFarBytes / totalBytes * 100);
-            Logger.t("down").d(task.getTag() + " progress progress:" + progress);
-            progressBar.setProgress(progress);
-        }
-
-        @Override
-        protected void completed(BaseDownloadTask task) {
-            Logger.t("down").d(task.getTag() + " completed");
-            progressBar.setProgress(100);
-            Logger.t("down").d(task.getTag() + " path = " + task.getPath());
-            Logger.t("down").d(task.getTag() + " name = " + task.getFilename());
-            ToastUtils.showToast("apk下载完成");
-        }
-
-        @Override
-        protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-        }
-
-        @Override
-        protected void error(BaseDownloadTask task, Throwable e) {
-        }
-
-        @Override
-        protected void warn(BaseDownloadTask task) {
-        }
-    };
 }

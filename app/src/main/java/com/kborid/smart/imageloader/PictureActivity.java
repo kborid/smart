@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.widget.GridView;
 
 import com.kborid.smart.R;
-import com.kborid.smart.activity.BaseActivity;
+import com.kborid.smart.activity.BaseAppActivity;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-public class PictureActivity extends BaseActivity {
+public class PictureActivity extends BaseAppActivity {
 
     private int mType = PictureAdapter.TYPE_UNIVERSAL;
 

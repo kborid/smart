@@ -21,7 +21,7 @@ import com.kborid.library.common.UIHandler;
 import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
 import com.kborid.smart.activity.MainActivity;
-import com.kborid.smart.manager.LocationManager;
+import com.kborid.smart.manager.LocationManagers;
 import com.orhanobut.logger.Logger;
 
 /**
@@ -67,9 +67,9 @@ public class LocationService extends Service implements AMapLocationListener {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            setServiceForeground();
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            setServiceForeground();
+//        }
         mLocationClient.startLocation();
         UIHandler.postDelayed(checkGpsRunnable, DURING_TIME);
         return super.onStartCommand(intent, flags, startId);
@@ -112,21 +112,21 @@ public class LocationService extends Service implements AMapLocationListener {
         Logger.t(TAG).d(aMapLocation);
         mAMapLocation = aMapLocation;
         if (aMapLocation != null) {
-            LocationManager.lon = aMapLocation.getLongitude();
-            LocationManager.lat = aMapLocation.getLatitude();
-            LocationManager.city = aMapLocation.getCity();
-            LocationManager.cityCode = aMapLocation.getCityCode();
-            LogUtils.d(TAG, LocationManager.print());
+            LocationManagers.lon = aMapLocation.getLongitude();
+            LocationManagers.lat = aMapLocation.getLatitude();
+            LocationManagers.city = aMapLocation.getCity();
+            LocationManagers.cityCode = aMapLocation.getCityCode();
+            LogUtils.d(TAG, LocationManagers.print());
         }
     }
 
     public static void startLocationService(Context context) {
         Intent intent = new Intent(context, LocationService.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(intent);
-        } else {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            context.startForegroundService(intent);
+//        } else {
             context.startService(intent);
-        }
+//        }
     }
 
     public void speck(String str) {

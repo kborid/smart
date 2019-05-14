@@ -5,94 +5,103 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_main_title"/>
+    <include layout="@layout/layout_main_title" />
 
-    <include layout="@layout/measure_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TableRow>
+
             <Button
-                android:textAllCaps="false"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="onShare"
-                android:textSize="15sp"
                 android:text="文本分享"
-                android:layout_height="wrap_content" />
-            <Button
                 android:textAllCaps="false"
-                android:layout_weight="1"
+                android:textSize="15sp" />
+
+            <Button
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:onClick="onWebView"
-                android:textSize="15sp"
                 android:text="WebView"
-                android:layout_height="wrap_content" />
+                android:textAllCaps="false"
+                android:textSize="15sp" />
         </TableRow>
 
         <TableRow>
+
             <Button
-                android:textAllCaps="false"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:onClick="onJump"
-                android:textSize="15sp"
-                android:text="跳转"
-                android:layout_height="wrap_content" />
-            <Button
-                android:textAllCaps="false"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:onClick="onReflect"
-                android:textSize="15sp"
-                android:text="反射"
-                android:layout_height="wrap_content" />
-        </TableRow>
-        <TableRow>
-            <Button
-                android:textAllCaps="false"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:onClick="onClickMeasure"
-                android:textSize="15sp"
-                android:text="Measure"
-                android:layout_height="wrap_content" />
-            <Button
-                android:textAllCaps="false"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:onClick="onPrintContext"
-                android:textSize="15sp"
-                android:text="Context打印"
-                android:layout_height="wrap_content" />
-        </TableRow>
-        <TableRow>
-            <Button
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onJump"
+                android:text="跳转"
+                android:textAllCaps="false"
+                android:textSize="15sp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onReflect"
+                android:text="反射"
+                android:textAllCaps="false"
+                android:textSize="15sp" />
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onTest"
+                android:text="Test"
+                android:textAllCaps="false"
+                android:textSize="15sp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onPrintContext"
+                android:text="Context打印"
+                android:textAllCaps="false"
+                android:textSize="15sp" />
+        </TableRow>
+
+        <TableRow>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onUniversal"
                 android:text="Universal"
                 android:textAllCaps="false"
-                android:textSize="15sp"
-                android:onClick="onUniversal"/>
+                android:textSize="15sp" />
+
             <Button
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onPicasso"
                 android:text="Picasso"
                 android:textAllCaps="false"
-                android:textSize="15sp"
-                android:onClick="onPicasso"/>
+                android:textSize="15sp" />
+
             <Button
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onGlide"
                 android:text="Glide"
                 android:textAllCaps="false"
-                android:textSize="15sp"
-                android:onClick="onGlide"/>
+                android:textSize="15sp" />
         </TableRow>
     </TableLayout>
 
@@ -100,11 +109,11 @@
         android:id="@+id/tv_counter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="200sp"
+        android:gravity="center"
         android:textColor="#ff0000"
-        android:gravity="center"/>
+        android:textSize="200sp" />
 
     <com.kborid.smart.widget.ThirdLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 27
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "0.0.1"
 
@@ -40,23 +40,3 @@ dependencies {
     //gson
     api 'com.google.code.gson:gson:2.8.5'
 }
-
-apply plugin: 'maven'
-
-uploadArchives {
-    repositories.mavenDeployer {
-        repository(url: "file://E://localMaven/maven/")
-        pom.groupId = 'com.kborid.library'
-        pom.artifactId = 'smart'
-        pom.version = '1.0.4'
-    }
-}
-
-//apply plugin: 'com.novoda.bintray-release'
-
-//publish {
-//    userOrg = 'dworg'      // bintray注册的用户名
-//    groupId = 'com.kborid.library'
-//    artifactId = 'common'// bintray创建的package
-//    publishVersion = '1.0.0'
-//}

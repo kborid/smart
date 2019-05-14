@@ -13,7 +13,6 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -21,7 +20,6 @@ import com.kborid.library.common.MultiTaskHandler;
 import com.kborid.library.common.UIHandler;
 import com.kborid.library.sample.TestSettings;
 import com.kborid.library.util.LogUtils;
-import com.kborid.library.util.ViewUtils;
 import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.imageloader.PictureActivity;
@@ -35,7 +33,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseAppActivity {
 
     private SmartCounterServiceConnection counterConn = null;
     private static Drawable mDrawable;
@@ -73,9 +71,9 @@ public class MainActivity extends BaseActivity {
          *  原因：mDrawable是一个静态对象，常驻内存，通过ImageView方法setImageDrawable时，会导致mDrawable引用ImageView（Drawable.setCallBack），
          *  同时，ImageView又对activity有引用，所以导致mDrawable间接引用activity，使activity无法被回收。
          */
-         ImageView iv = new ImageView(this);
-         mDrawable = getResources().getDrawable(R.mipmap.ic_launcher);
-         iv.setImageDrawable(mDrawable);
+        ImageView iv = new ImageView(this);
+        mDrawable = getResources().getDrawable(R.mipmap.ic_launcher);
+        iv.setImageDrawable(mDrawable);
     }
 
     @Override
@@ -106,6 +104,10 @@ public class MainActivity extends BaseActivity {
         counterConn.stopCount();
     }
 
+    public void onTest(View v) {
+
+    }
+
     public void onJump(View v) {
         startActivity(new Intent(MainActivity.this, FragmentContainerActivity.class));
         counterConn.pauseCount();
@@ -114,7 +116,6 @@ public class MainActivity extends BaseActivity {
     public void onReflect(View v) {
         reflectInvokeTest();
         counterConn.startCount();
-        idleHandler();
 
         CustomThread customThread = new CustomThread();
         customThread.start();
@@ -184,48 +185,6 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra("from", "main");
         startActivity(intent);
-    }
-
-    public void onClickMeasure(View v) {
-        View view1 = findViewById(R.id.view_1);
-        View view2 = findViewById(R.id.view_2);
-        View view3 = findViewById(R.id.view_3);
-        View view4 = findViewById(R.id.view_4);
-
-        int view1_h1, view1_h2, view1_h3;
-        view1_h1 = ViewUtils.getSupposeHeight(view1);
-        view1_h2 = ViewUtils.getExactHeight(view1, view1.getWidth());
-        view1_h3 = ViewUtils.getSupposeHeightNoFixWidth(view1);
-        outputConsoleTextView("[view1]:height1 = " + view1_h1 + ", height2 = " + view1_h2 + ", height3 = " + view1_h3);
-        outputConsoleTextView("[view1]:myTestHeight = " + ViewUtils.getMyTestHeight(view1));
-
-        int view2_h1, view2_h2, view2_h3;
-        view2_h1 = ViewUtils.getSupposeHeight(view2);
-        view2_h2 = ViewUtils.getExactHeight(view2, view2.getWidth());
-        view2_h3 = ViewUtils.getSupposeHeightNoFixWidth(view2);
-        outputConsoleTextView("[view2]:height1 = " + view2_h1 + ", height2 = " + view2_h2 + ", height3 = " + view2_h3);
-        outputConsoleTextView("[view2]:myTestHeight = " + ViewUtils.getMyTestHeight(view2));
-
-        int view3_h1, view3_h2, view3_h3;
-        view3_h1 = ViewUtils.getSupposeHeight(view3);
-        view3_h2 = ViewUtils.getExactHeight(view3, view3.getWidth());
-        view3_h3 = ViewUtils.getSupposeHeightNoFixWidth(view3);
-        outputConsoleTextView("[view3]:height1 = " + view3_h1 + ", height2 = " + view3_h2 + ", height3 = " + view3_h3);
-        outputConsoleTextView("[view3]:myTestHeight = " + ViewUtils.getMyTestHeight(view3));
-
-        int view4_h1, view4_h2, view4_h3;
-        view4_h1 = ViewUtils.getSupposeHeight(view4);
-        view4_h2 = ViewUtils.getExactHeight(view4, view4.getWidth());
-        view4_h3 = ViewUtils.getSupposeHeightNoFixWidth(view4);
-        outputConsoleTextView("[view4]:height1 = " + view4_h1 + ", height2 = " + view4_h2 + ", height3 = " + view4_h3);
-        outputConsoleTextView("[view4]:myTestHeight = " + ViewUtils.getMyTestHeight(view4));
-
-        LinearLayout test = (LinearLayout) findViewById(R.id.test);
-        view3_h1 = ViewUtils.getSupposeHeight(test);
-        view3_h2 = ViewUtils.getExactHeight(test, test.getWidth());
-        view3_h3 = ViewUtils.getSupposeHeightNoFixWidth(test);
-        outputConsoleTextView("[test]:height1 = " + view3_h1 + ", height2 = " + view3_h2 + ", height3 = " + view3_h3);
-        outputConsoleTextView("[test]:myTestHeight = " + ViewUtils.getMyTestHeight(test));
     }
 
     private void printTest() {
