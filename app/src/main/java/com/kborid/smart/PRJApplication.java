@@ -5,6 +5,7 @@ import android.support.multidex.MultiDex;
 
 import com.kborid.library.base.BaseApplication;
 import com.kborid.library.util.ConfigUtils;
+import com.kborid.smart.service.LocationService;
 import com.kborid.smart.util.ScreenUtils;
 import com.liulishuo.filedownloader.FileDownloader;
 
@@ -22,10 +23,19 @@ public class PRJApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         ScreenUtils.init();
-//        LocationService.startLocationService(this);
+        LocationService.startLocationService(this);
         FileDownloader.init(PRJApplication.getInstance());
         System.out.println("=======================" + ConfigUtils.getConfigX());
         System.out.println("=======================" + ConfigUtils.getConfigY());
+    }
+
+    private void testReflect() {
+        System.out.println("testReflect");
+    }
+
+    private static int testReflect1() {
+        System.out.println("testReflect1");
+        return 1;
     }
 }
 

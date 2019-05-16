@@ -24,11 +24,14 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url "https://raw.github.com/kborid/Maven/master" }
 //        maven { url "http://repo.thunisoft.com/maven2/content/repositories/releases/" }
+        maven { url 'file:///D://localMaven/maven/'}
     }
 }
 
 ext {
+    compileSdkVersion = 26
     targetSdkVersion = 24
+    buildToolsVersion = "26.0.3"
 }
 
 task clean(type: Delete) {

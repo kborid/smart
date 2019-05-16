@@ -1,12 +1,17 @@
 package com.kborid.smart.manager;
 
+import com.amap.api.location.AMapLocation;
+
 public class LocationManagers {
-    public static double lon = 0;
-    public static double lat = 0;
-    public static String city = "";
-    public static String cityCode = "";
+    private static LocationInfo locationInfo;
+
+    public static void setLocationInfo(AMapLocation location) {
+        if (null != location) {
+            locationInfo = new LocationInfo(location);
+        }
+    }
 
     public static String print() {
-        return "city = " + city + ", cityCode = " + cityCode + ", lon = " + lon + ", lat = " + lat;
+        return locationInfo.toString();
     }
 }

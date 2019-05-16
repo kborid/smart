@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.compileSdkVersion
+
     defaultConfig {
         applicationId "com.kborid.smart"
         minSdkVersion 18
@@ -32,7 +33,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
@@ -47,10 +48,14 @@ android {
     flavorDimensions("smart")
 
     productFlavors {
-        FlavorTest {
+        A {
             dimension "smart"
             resValue "integer", "x", "111";
-            resValue "integer", "y", "111";
+        }
+
+        B {
+            dimension "smart"
+            resValue "integer", "x", "222";
         }
     }
 
@@ -133,12 +138,13 @@ dependencies {
 
     //eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
-    implementation project(path: ':base')
 
     //js bridge
     implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 //    implementation 'com.thunisoft.android:jsbridge:1.0.0'
     implementation 'com.kborid.jsbridge:jsbridge:1.0.0'
+    implementation 'com.thunisoft.android:logger:1.0.0'
+    implementation 'com.kborid.library:base:1.0.0'
 
     //apache commons
     implementation 'org.apache.commons:commons-lang3:3.7'

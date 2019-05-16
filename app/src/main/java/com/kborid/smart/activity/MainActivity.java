@@ -20,6 +20,7 @@ import com.kborid.library.common.MultiTaskHandler;
 import com.kborid.library.common.UIHandler;
 import com.kborid.library.sample.TestSettings;
 import com.kborid.library.util.LogUtils;
+import com.kborid.library.util.ReflectUtil;
 import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.imageloader.PictureActivity;
@@ -263,15 +264,16 @@ public class MainActivity extends BaseAppActivity {
 //                    Class<?> clazz = PRJApplication.class; // 2
                     Class<?> clazz = PRJApplication.getInstance().getClass(); // 3
                     Object obj = clazz.newInstance();
-                    Method method = clazz.getDeclaredMethod("initFunc1");
+                    Method method = clazz.getDeclaredMethod("testReflect");
                     method.setAccessible(true);
                     method.invoke(obj);
-                    Method method1 = clazz.getDeclaredMethod("reflectMethod", int.class);
-                    method1.setAccessible(true);
-                    method1.invoke(clazz, 30);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                String className = "com.kborid.smart.PRJApplication";
+                ReflectUtil.invokeStaticMethod(className, "testReflect1", null, null);
+                ReflectUtil.invokeMethod(className, "testReflect", null, null);
             }
         });
     }

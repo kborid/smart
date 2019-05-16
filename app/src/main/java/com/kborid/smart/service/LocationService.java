@@ -18,7 +18,6 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.AMapLocationQualityReport;
 import com.kborid.library.common.UIHandler;
-import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
 import com.kborid.smart.activity.MainActivity;
 import com.kborid.smart.manager.LocationManagers;
@@ -76,6 +75,8 @@ public class LocationService extends Service implements AMapLocationListener {
     }
 
     private void setServiceForeground() {
+        Notification.Builder builder = new Notification.Builder(this.getApplicationContext());
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
             notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
@@ -83,18 +84,20 @@ public class LocationService extends Service implements AMapLocationListener {
             if (manager != null) {
                 manager.createNotificationChannel(notificationChannel);
             }
-
-            Notification.Builder builder = new Notification.Builder(this.getApplicationContext(), CHANNEL_ID);
-            Intent nfIntent = new Intent(this, MainActivity.class);
-            builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
-                    .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher)) // 设置下拉列表中的图标(大图标)
-                    .setContentTitle("正在使用定位功能") // 设置下拉列表里的标题
-                    .setSmallIcon(R.mipmap.ic_launcher) // 设置状态栏内的小图标
-                    .setContentText("正在定位") // 设置上下文内容
-                    .setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
-            Notification notification = builder.build(); // 获取构建好的Notification
-            startForeground(110, notification);
+            builder.setChannelId(CHANNEL_ID);
         }
+
+        Intent nfIntent = new Intent(this, MainActivity.class);
+        builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher)) // 设置下拉列表中的图标(大图标)
+                .setContentTitle("正在进行后台定位") // 设置下拉列表里的标题
+                .setSmallIcon(R.mipmap.ic_launcher) // 设置状态栏内的小图标
+                .setContentText("点击查看更多") // 设置上下文内容
+                .setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
+        Notification notification = builder.build(); // 获取构建好的Notification
+
+        startForeground(1101, notification);
+        mLocationClient.enableBackgroundLocation(1101, notification);
     }
 
     private Runnable checkGpsRunnable = new Runnable() {
@@ -102,21 +105,18 @@ public class LocationService extends Service implements AMapLocationListener {
         public void run() {
             if (mAMapLocation != null) {
                 parseGPSStatusString(mAMapLocation.getLocationQualityReport().getGPSStatus());
-                UIHandler.postDelayed(checkGpsRunnable, DURING_TIME);
             }
+            UIHandler.postDelayed(checkGpsRunnable, DURING_TIME * 2);
         }
     };
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
-        Logger.t(TAG).d(aMapLocation);
+        Logger.t(TAG).d(String.valueOf(aMapLocation));
         mAMapLocation = aMapLocation;
         if (aMapLocation != null) {
-            LocationManagers.lon = aMapLocation.getLongitude();
-            LocationManagers.lat = aMapLocation.getLatitude();
-            LocationManagers.city = aMapLocation.getCity();
-            LocationManagers.cityCode = aMapLocation.getCityCode();
-            LogUtils.d(TAG, LocationManagers.print());
+            LocationManagers.setLocationInfo(aMapLocation);
+            Logger.t(TAG).d(LocationManagers.print());
         }
     }
 
@@ -162,6 +162,6 @@ public class LocationService extends Service implements AMapLocationListener {
                 speck("GPS信号弱");
                 break;
         }
-        LogUtils.d(TAG, str);
+        Logger.t(TAG).d(str);
     }
 }
