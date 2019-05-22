@@ -75,6 +75,7 @@ public class WebViewActivity extends BaseAppActivity {
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
+        super.initEventAndData(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
             String from = bundle.getString("from");
