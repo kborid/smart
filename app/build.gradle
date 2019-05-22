@@ -85,71 +85,53 @@ dependencies {
     //noinspection GradleCompatible
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     //support
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-
     implementation 'com.android.support:multidex:1.0.3'
-
     //glide
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
-
     //universal
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
-
     //AMap
     implementation 'com.amap.api:navi-3dmap:6.5.0_3dmap6.5.0'
     implementation 'com.amap.api:location:4.5.0'
     implementation 'com.amap.api:search:6.5.0.1'
-
     //rxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-
     //rxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
-
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
-
     //File Download
     implementation 'com.liulishuo.filedownloader:library:1.4.3'
-
     //ButterKnife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     //SmartRefreshLayout
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5.1'
-
     //storage + encrypt
     implementation 'com.orhanobut:hawk:2.0.1'
-
     //eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
-
     //js bridge
     implementation 'com.github.lzyzsd:jsbridge:1.0.4'
-//    implementation 'com.thunisoft.android:jsbridge:1.0.1'
+    //    implementation 'com.thunisoft.android:jsbridge:1.0.1'
     implementation 'com.kborid.jsbridge:jsbridge:1.0.0'
-    implementation 'com.thunisoft.android:logger:1.0.0'
-
+    //    implementation 'com.thunisoft.android:logger:1.0.0'
     //apache commons
     implementation 'org.apache.commons:commons-lang3:3.7'
-
     implementation 'me.yokeyword:fragmentation:0.10.3'
-
     // icon
     implementation 'com.mikepenz:iconics-core:3.0.3@aar'
     implementation 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar'
@@ -165,5 +147,5 @@ dependencies {
     implementation 'com.mikepenz:foundation-icons-typeface:3.0.0.4@aar'
     implementation 'com.mikepenz:ionicons-typeface:2.0.1.4@aar'
     implementation 'com.mikepenz:pixeden-7-stroke-typeface:1.2.0.2@aar'
-    implementation project(path: ':policecircle')
+    implementation project(':base')
 }
