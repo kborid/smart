@@ -3,10 +3,7 @@ package com.kborid.smart.fragment.first;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -14,6 +11,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.kborid.library.base.SimpleFragment;
 import com.kborid.smart.R;
 import com.kborid.smart.fragment.first.model.FirstModel;
 import com.kborid.smart.fragment.first.presenter.FirstPresenter;
@@ -25,9 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class FragmentFirst extends Fragment implements IFirstView {
+public class FragmentFirst extends SimpleFragment implements IFirstView {
 
     private static final String TAG = FragmentFirst.class.getSimpleName();
 
@@ -46,15 +43,9 @@ public class FragmentFirst extends Fragment implements IFirstView {
         Logger.t(TAG).d("onAttach()");
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        Logger.t(TAG).d("onCreateView()");
-        View view = inflater.inflate(R.layout.fragment_first, container, false);
-        firstPresenter = new FirstPresenter(this);
-        ButterKnife.bind(this, view);
-        initView();
-        return view;
+    protected int getLayoutResId() {
+        return R.layout.fragment_first;
     }
 
     public static Fragment newInstance() {
@@ -68,8 +59,9 @@ public class FragmentFirst extends Fragment implements IFirstView {
         }
     };
 
-    private void initView() {
-        Logger.t(TAG).d("initView()");
+    @Override
+    protected void initEventAndData(Bundle savedInstanceState) {
+        Logger.t(TAG).d("initEventAndData()");
         adapter = new SimpleAdapter(getActivity(), mData, R.layout.lv_string_item, new String[]{FirstModel.KEY_NAME}, new int[]{R.id.tv_name});
         listView.setAdapter(adapter);
         listView.setEmptyView(emptyView);

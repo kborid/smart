@@ -46,8 +46,7 @@ public class FragmentContainerActivity extends BaseAppActivity {
     }
 
     @Override
-    protected void initParams() {
-        super.initParams();
+    protected void initEventAndData(Bundle savedInstanceState) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.container, FragmentSecond.newInstance());

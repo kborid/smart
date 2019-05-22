@@ -74,23 +74,18 @@ public class WebViewActivity extends BaseAppActivity {
     }
 
     @Override
-    public void initParams() {
-        super.initParams();
-        initViews();
-        setUpWebView();
-        mWebView.setWebViewClient(new MyWebViewClient(mWebView));
-        mWebView.setWebChromeClient(new MyWebChromeClient());
-        mWebView.loadUrl("file:///android_asset/ExampleApp.html");
-    }
-
-    @Override
-    protected void dealIntent() {
-        super.dealIntent();
+    protected void initEventAndData(Bundle savedInstanceState) {
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
             String from = bundle.getString("from");
             isFirst = TextUtils.isEmpty(from);
         }
+
+        initViews();
+        setUpWebView();
+        mWebView.setWebViewClient(new MyWebViewClient(mWebView));
+        mWebView.setWebChromeClient(new MyWebChromeClient());
+        mWebView.loadUrl("file:///android_asset/ExampleApp.html");
     }
 
     private void setUpWebView() {

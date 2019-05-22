@@ -13,31 +13,25 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class PictureActivity extends BaseAppActivity {
 
-    private int mType = PictureAdapter.TYPE_UNIVERSAL;
-
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_imageloader;
     }
 
     @Override
-    protected void dealIntent() {
-        super.dealIntent();
+    protected void initEventAndData(Bundle savedInstanceState) {
+        int type = PictureAdapter.TYPE_UNIVERSAL;
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
-            mType = bundle.getInt("imageType");
+            type = bundle.getInt("imageType");
         }
-    }
 
-    @Override
-    protected void initParams() {
-        super.initParams();
-        if (PictureAdapter.TYPE_UNIVERSAL == mType) {
+        if (PictureAdapter.TYPE_UNIVERSAL == type) {
             initImageLoaderConfig();
         }
 
         GridView mGridView = findViewById(R.id.gridview);
-        PictureAdapter adapter = new PictureAdapter(this, mType);
+        PictureAdapter adapter = new PictureAdapter(this, type);
         mGridView.setAdapter(adapter);
     }
 

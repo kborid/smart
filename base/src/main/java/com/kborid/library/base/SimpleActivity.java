@@ -5,12 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
-    //    @Inject
-    protected T mPresenter;
+public abstract class SimpleActivity extends AppCompatActivity {
+
     protected Activity mContext;
     private Unbinder mUnBinder;
 
@@ -20,25 +21,16 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         setContentView(getLayoutResId());
         mUnBinder = ButterKnife.bind(this);
         mContext = this;
-        initInject();
-        if (null != mPresenter) {
-            mPresenter.attachView(this);
-        }
         initEventAndData(savedInstanceState);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (null != mPresenter) {
-            mPresenter.detachView();
-        }
         mUnBinder.unbind();
     }
 
-    protected abstract void initInject();
-
     protected abstract int getLayoutResId();
 
-    protected abstract void initEventAndData(@Nullable Bundle savedInstanceState);
+    protected abstract void initEventAndData(Bundle savedInstanceState);
 }

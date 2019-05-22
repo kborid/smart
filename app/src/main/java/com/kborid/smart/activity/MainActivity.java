@@ -28,6 +28,7 @@ import com.kborid.smart.imageloader.PictureAdapter;
 import com.kborid.smart.service.SmartCounterServiceConnection;
 import com.kborid.smart.test.CustomThread;
 import com.kborid.smart.test.SingletonTest;
+import com.kborid.smart.ui.test.TestActivity;
 import com.kborid.smart.util.ToastUtils;
 
 import java.lang.reflect.Method;
@@ -47,20 +48,8 @@ public class MainActivity extends BaseAppActivity {
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_main;
-    }
-
-    @Override
     protected boolean needStatusBarImmersive() {
         return true;
-    }
-
-    @Override
-    protected void initParams() {
-        super.initParams();
-        printTest();
-        bindServiceInner();
     }
 
     @Override
@@ -110,7 +99,7 @@ public class MainActivity extends BaseAppActivity {
     }
 
     public void onJump(View v) {
-        startActivity(new Intent(MainActivity.this, FragmentContainerActivity.class));
+        startActivity(new Intent(this, FragmentContainerActivity.class));
         counterConn.pauseCount();
     }
 
@@ -127,6 +116,7 @@ public class MainActivity extends BaseAppActivity {
         printContextType(getBaseContext());         //Context
         printContextType(getApplicationContext());  //ContextWrapper
         printContextType(this);     //ContextThemeWrapper
+        startActivity(new Intent(this, TestActivity.class));
     }
 
     public void onUniversal(View v) {
@@ -255,6 +245,17 @@ public class MainActivity extends BaseAppActivity {
         unBindServiceInner();
     }
 
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initEventAndData(Bundle savedInstanceState) {
+        printTest();
+        bindServiceInner();
+    }
+
     private void reflectInvokeTest() {
         MultiTaskHandler.post(new Runnable() {
             @Override
@@ -272,10 +273,18 @@ public class MainActivity extends BaseAppActivity {
                 }
 
                 String className = "com.kborid.smart.PRJApplication";
-                ReflectUtil.invokeStaticMethod(className, "testReflect1", null, null);
+                int ret = (int) ReflectUtil.invokeStaticMethod(className, "testReflect1", null, null);
+                System.out.println(String.valueOf(ret));
                 ReflectUtil.invokeMethod(className, "testReflect", null, null);
             }
         });
+    }
+
+    public static void main(String[] arg) {
+        String className = "com.kborid.smart.PRJApplication";
+        int ret = (int) ReflectUtil.invokeStaticMethod(className, "testReflect1", null, null);
+        System.out.println(String.valueOf(ret));
+        ReflectUtil.invokeMethod(className, "testReflect", null, null);
     }
 
     private void outputConsoleTextView(String string) {
