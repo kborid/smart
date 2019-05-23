@@ -7,8 +7,13 @@ public class TestPresenter extends RxPresenter<TestContract.View> implements Tes
 
     @Override
     public void loadData() {
-        for (int i = 0; i < 50000; i++) {
+        for (int i = 0; i < 5; i++) {
             System.out.println("loadData...");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         mView.endLoad();
     }

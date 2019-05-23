@@ -8,11 +8,15 @@ import android.widget.TextView;
 
 import com.kborid.library.base.BaseActivity;
 import com.kborid.library.common.UIHandler;
+import com.kborid.library.hand2eventbus.EventBusss;
+import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
+import com.kborid.smart.event.TestEvent;
 import com.kborid.smart.ui.test.presenter.TestPresenter;
 import com.kborid.smart.ui.test.presenter.contract.TestContract;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class TestActivity extends BaseActivity<TestPresenter> implements TestContract.View {
 
@@ -25,6 +29,12 @@ public class TestActivity extends BaseActivity<TestPresenter> implements TestCon
     protected void initInject() {
         mPresenter = new TestPresenter();
         test.setText("空");
+    }
+
+    @OnClick(R.id.test)
+    public void testOnClick() {
+        LogUtils.d("==>thread", "post:" + Thread.currentThread().getName());
+        EventBusss.getDefault().post(new TestEvent("one", "two"));
     }
 
     @Override

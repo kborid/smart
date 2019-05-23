@@ -18,11 +18,15 @@ import android.widget.TextView;
 
 import com.kborid.library.common.MultiTaskHandler;
 import com.kborid.library.common.UIHandler;
+import com.kborid.library.hand2eventbus.EventBusss;
+import com.kborid.library.hand2eventbus.Subscribe;
+import com.kborid.library.hand2eventbus.ThreadMode;
 import com.kborid.library.sample.TestSettings;
 import com.kborid.library.util.LogUtils;
 import com.kborid.library.util.ReflectUtil;
 import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
+import com.kborid.smart.event.TestEvent;
 import com.kborid.smart.imageloader.PictureActivity;
 import com.kborid.smart.imageloader.PictureAdapter;
 import com.kborid.smart.service.SmartCounterServiceConnection;
@@ -45,6 +49,7 @@ public class MainActivity extends BaseAppActivity {
         super.onCreate(savedInstanceState);
         LogUtils.d("onCreate()");
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        EventBusss.getDefault().register(this);
     }
 
     @Override
@@ -238,11 +243,24 @@ public class MainActivity extends BaseAppActivity {
         }
     };
 
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void getMessage(TestEvent testEvent) {
+        LogUtils.d("==>thread", "recv:" + Thread.currentThread().getName());
+        LogUtils.d("==>recv", testEvent.toString());
+    }
+
+    @Subscribe
+    public void getMessage1(TestEvent testEvent) {
+        LogUtils.d("==>thread", "recv:" + Thread.currentThread().getName());
+        LogUtils.d("==>recv", testEvent.toString());
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         LogUtils.d("onDestroy()");
         unBindServiceInner();
+        EventBusss.getDefault().unRegister(this);
     }
 
     @Override
