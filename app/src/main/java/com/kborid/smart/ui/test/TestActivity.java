@@ -11,9 +11,11 @@ import com.kborid.library.common.UIHandler;
 import com.kborid.library.hand2eventbus.EventBusss;
 import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
+import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.event.TestEvent;
 import com.kborid.smart.ui.test.presenter.TestPresenter;
 import com.kborid.smart.ui.test.presenter.contract.TestContract;
+import com.kborid.smart.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -27,7 +29,10 @@ public class TestActivity extends BaseActivity<TestPresenter> implements TestCon
 
     @Override
     protected void initInject() {
-        mPresenter = new TestPresenter();
+        DaggerCommonComponent.builder()
+                .commonModule(getCommonModule("test"))
+                .build()
+                .inject(this);
         test.setText("空");
     }
 
@@ -56,5 +61,6 @@ public class TestActivity extends BaseActivity<TestPresenter> implements TestCon
     public void endLoad() {
         progressBar.setVisibility(View.GONE);
         test.setText("OK");
+        ToastUtils.showToast(mPresenter.getString());
     }
 }

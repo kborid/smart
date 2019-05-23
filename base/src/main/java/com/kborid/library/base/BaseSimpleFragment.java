@@ -1,6 +1,5 @@
 package com.kborid.library.base;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -12,18 +11,14 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class SimpleFragment extends Fragment {
+public abstract class BaseSimpleFragment extends Fragment {
 
     protected View mView;
-    protected Activity mActivity;
-    protected Context mContext;
     private Unbinder mUnBinder;
     private boolean isInited = false;
 
     @Override
     public void onAttach(Context context) {
-        mActivity = (Activity) context;
-        mContext = context;
         super.onAttach(context);
     }
 

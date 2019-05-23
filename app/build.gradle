@@ -148,4 +148,7 @@ dependencies {
     implementation 'com.mikepenz:ionicons-typeface:2.0.1.4@aar'
     implementation 'com.mikepenz:pixeden-7-stroke-typeface:1.2.0.2@aar'
     implementation project(':base')
+    //dragger2
+    implementation"com.google.dagger:dagger:2.14.1"
+    annotationProcessor"com.google.dagger:dagger-compiler:2.14.1"
 }

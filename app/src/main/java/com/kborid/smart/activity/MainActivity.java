@@ -39,7 +39,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseAppActivity {
+public class MainActivity extends SimpleActivity {
 
     private SmartCounterServiceConnection counterConn = null;
     private static Drawable mDrawable;

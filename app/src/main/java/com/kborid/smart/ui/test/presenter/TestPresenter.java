@@ -3,7 +3,16 @@ package com.kborid.smart.ui.test.presenter;
 import com.kborid.library.base.RxPresenter;
 import com.kborid.smart.ui.test.presenter.contract.TestContract;
 
+import javax.inject.Inject;
+
 public class TestPresenter extends RxPresenter<TestContract.View> implements TestContract.Presenter {
+
+    private String name;
+
+    @Inject
+    public TestPresenter(String name) {
+        this.name = name;
+    }
 
     @Override
     public void loadData() {
@@ -16,5 +25,10 @@ public class TestPresenter extends RxPresenter<TestContract.View> implements Tes
             }
         }
         mView.endLoad();
+    }
+
+    @Override
+    public String getString() {
+        return name + " by " + TestPresenter.class.getSimpleName();
     }
 }

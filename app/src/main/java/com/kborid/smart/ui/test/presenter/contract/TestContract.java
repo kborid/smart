@@ -10,5 +10,6 @@ public class TestContract {
 
     public interface Presenter extends BasePresenter<View> {
         void loadData();
+        String getString();
     }
 }

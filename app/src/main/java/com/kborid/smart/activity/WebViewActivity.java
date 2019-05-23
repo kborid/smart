@@ -35,7 +35,7 @@ import com.smart.jsbridge.WVJBWebViewClient;
 
 import butterknife.BindView;
 
-public class WebViewActivity extends BaseAppActivity {
+public class WebViewActivity extends SimpleActivity {
 
     private static final long DURATION_PRESS_TWO = 1000;
     private static final int REQUEST_CHOOSE_FILE = 1000;

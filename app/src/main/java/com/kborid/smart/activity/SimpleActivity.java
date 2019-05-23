@@ -2,7 +2,7 @@ package com.kborid.smart.activity;
 
 import android.os.Bundle;
 
-import com.kborid.library.base.SimpleActivity;
+import com.kborid.library.base.BaseSimpleActivity;
 import com.kborid.smart.R;
 import com.kborid.smart.util.ImmersiveStatusBarUtils;
 import com.kborid.smart.widget.MainTitleLayout;
@@ -12,7 +12,7 @@ import com.kborid.smart.widget.MainTitleLayout;
  *
  * @author kborid
  */
-public abstract class BaseAppActivity extends SimpleActivity {
+public abstract class SimpleActivity extends BaseSimpleActivity {
 
     protected MainTitleLayout titleView;
 

@@ -1,18 +1,14 @@
 package com.kborid.library.base;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import org.greenrobot.eventbus.EventBus;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class SimpleActivity extends AppCompatActivity {
+public abstract class BaseSimpleActivity extends AppCompatActivity {
 
-    protected Activity mContext;
     private Unbinder mUnBinder;
 
     @Override
@@ -20,7 +16,6 @@ public abstract class SimpleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
         mUnBinder = ButterKnife.bind(this);
-        mContext = this;
         initEventAndData(savedInstanceState);
     }
 

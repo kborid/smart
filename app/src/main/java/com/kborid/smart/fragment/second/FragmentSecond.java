@@ -4,7 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
-import com.kborid.library.base.SimpleFragment;
+import com.kborid.library.base.BaseSimpleFragment;
 import com.kborid.smart.R;
 import com.kborid.smart.test.AExecuteAsRoot;
 import com.kborid.smart.util.ToastUtils;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class FragmentSecond extends SimpleFragment {
+public class FragmentSecond extends BaseSimpleFragment {
 
     private static final String TAG = FragmentSecond.class.getSimpleName();
     private String url = "http://gdown.baidu.com/data/wisegame/d4524b42d5a5ccf7/baidujisuban_20514176.apk";

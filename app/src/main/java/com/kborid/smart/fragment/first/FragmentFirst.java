@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.kborid.library.base.SimpleFragment;
+import com.kborid.library.base.BaseSimpleFragment;
 import com.kborid.smart.R;
 import com.kborid.smart.fragment.first.model.FirstModel;
 import com.kborid.smart.fragment.first.presenter.FirstPresenter;
@@ -24,7 +24,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class FragmentFirst extends SimpleFragment implements IFirstView {
+public class FragmentFirst extends BaseSimpleFragment implements IFirstView {
 
     private static final String TAG = FragmentFirst.class.getSimpleName();
 
