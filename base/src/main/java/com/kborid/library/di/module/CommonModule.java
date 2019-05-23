@@ -1,5 +1,7 @@
 package com.kborid.library.di.module;
 
+import com.kborid.library.di.ActivityScope;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -12,6 +14,7 @@ public class CommonModule {
         this.name = name;
     }
 
+    @ActivityScope
     @Provides
     String providerString() {
         return name;
