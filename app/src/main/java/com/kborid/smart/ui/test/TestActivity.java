@@ -33,13 +33,19 @@ public class TestActivity extends BaseActivity<TestPresenter> implements TestCon
                 .commonModule(getCommonModule("test"))
                 .build()
                 .inject(this);
-        test.setText("空");
     }
 
     @OnClick(R.id.test)
     public void testOnClick() {
         LogUtils.d("==>thread", "post:" + Thread.currentThread().getName());
         EventBusss.getDefault().post(new TestEvent("one", "two"));
+        startLoad();
+        UIHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mPresenter.loadData();
+            }
+        });
     }
 
     @Override
@@ -49,18 +55,21 @@ public class TestActivity extends BaseActivity<TestPresenter> implements TestCon
 
     @Override
     protected void initEventAndData(@Nullable Bundle savedInstanceState) {
-        UIHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPresenter.loadData();
-            }
-        }, 500);
+        test.setText("点击加载");
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void startLoad() {
+        if (!progressBar.isShown()) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void endLoad() {
-        progressBar.setVisibility(View.GONE);
-        test.setText("OK");
+        progressBar.setVisibility(View.INVISIBLE);
+        test.setText("加载完成");
         ToastUtils.showToast(mPresenter.getString());
     }
 }

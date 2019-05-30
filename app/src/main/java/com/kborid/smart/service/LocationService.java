@@ -32,7 +32,7 @@ public class LocationService extends Service implements AMapLocationListener {
     private static final String CHANNEL_NAME = "CHANNEL_NAME_001";
 
     private static final String TAG = "LocationService";
-    private static final int DURING_TIME = 5000;
+    private static final int DURING_TIME = 60000;
     private AMapLocationClient mLocationClient = null;
     private AMapLocation mAMapLocation;
 

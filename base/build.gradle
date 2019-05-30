@@ -8,8 +8,6 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "0.0.1"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -30,9 +28,6 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //logger
     api 'com.orhanobut:logger:2.2.0'
@@ -92,10 +87,7 @@ apply plugin: 'maven'
 
 uploadArchives {
     repositories.mavenDeployer {
-//        repository(url: "http://repo.thunisoft.com/maven2/content/repositories/releases/") {
-//            authentication(userName: "dev", password: "help")
-//        }
-        repository(url: "file:///localMaven/maven/")
+        repository(url: "file:///localMaven/Maven/")
         pom.artifactId = 'base'
         pom.groupId = 'com.kborid.library'
         pom.version = '1.0.0'

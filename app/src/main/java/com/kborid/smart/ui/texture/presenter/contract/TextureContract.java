@@ -1,16 +1,15 @@
-package com.kborid.smart.ui.test.presenter.contract;
+package com.kborid.smart.ui.texture.presenter.contract;
 
 import com.kborid.library.base.BasePresenter;
 import com.kborid.library.base.BaseView;
 
-public class TestContract {
+public class TextureContract {
+
     public interface View extends BaseView {
-        void startLoad();
-        void endLoad();
+
     }
 
     public interface Presenter extends BasePresenter<View> {
-        void loadData();
-        String getString();
+
     }
 }

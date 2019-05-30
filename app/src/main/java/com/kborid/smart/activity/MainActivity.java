@@ -29,15 +29,26 @@ import com.kborid.smart.R;
 import com.kborid.smart.event.TestEvent;
 import com.kborid.smart.imageloader.PictureActivity;
 import com.kborid.smart.imageloader.PictureAdapter;
+import com.kborid.smart.network.Api;
+import com.kborid.smart.network.OkHttpClientFactory;
 import com.kborid.smart.service.SmartCounterServiceConnection;
 import com.kborid.smart.test.CustomThread;
 import com.kborid.smart.test.SingletonTest;
 import com.kborid.smart.ui.test.TestActivity;
 import com.kborid.smart.util.ToastUtils;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class MainActivity extends SimpleActivity {
 
@@ -97,10 +108,6 @@ public class MainActivity extends SimpleActivity {
             ToastUtils.showToast("Can't find share component to share");
         }
         counterConn.stopCount();
-    }
-
-    public void onTest(View v) {
-
     }
 
     public void onJump(View v) {
@@ -177,10 +184,52 @@ public class MainActivity extends SimpleActivity {
         }, 200);
     }
 
-    public void onWebView(View v) {
+    public void onBaidu(View v) {
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra("from", "main");
+        intent.putExtra("path", "http://www.baidu.com");
         startActivity(intent);
+    }
+
+    public void onJSTest(View v) {
+//        Intent intent = new Intent(this, WebViewActivity.class);
+//        intent.putExtra("from", "main");
+//        intent.putExtra("path", "file:///android_asset/ExampleApp.html");
+//        startActivity(intent);
+        Api.getOkHttpTest(new Observer<ResponseBody>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                System.out.println("onSubscribe()");
+            }
+
+            @Override
+            public void onNext(ResponseBody o) {
+                System.out.println("onNext()");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                System.out.println("onError()");
+            }
+
+            @Override
+            public void onComplete() {
+                System.out.println("onComplete()");
+            }
+        });
+
+        OkHttpClientFactory.newOkHttpClient().newCall(new Request.Builder().url(Api.baseUrl + "helloworld.txt").build()).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("onFailure()");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("onResponse()");
+            }
+        });
     }
 
     private void printTest() {

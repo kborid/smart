@@ -24,7 +24,7 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url "https://raw.github.com/kborid/Maven/master" }
         maven { url "http://repo.thunisoft.com/maven2/content/repositories/releases/" }
-        maven { url 'file:///D://localMaven/maven/'}
+        maven { url 'file:///D://localMaven/Maven/'}
     }
 }
 

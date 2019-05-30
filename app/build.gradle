@@ -7,10 +7,8 @@ android {
         applicationId "com.kborid.smart"
         minSdkVersion 18
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2
-        versionName "1.1.1"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 3
+        versionName "1.1.2"
 
         //多dex文件支持
         multiDexEnabled true
@@ -81,10 +79,7 @@ android {
 dependencies {
     //可以包含多种格式lib包
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
-    //noinspection GradleCompatible
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation project(':base')
     //support
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -125,9 +120,10 @@ dependencies {
     //eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
     //js bridge
-    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
+//    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
+    //thunisoft
     //    implementation 'com.thunisoft.android:jsbridge:1.0.1'
-    implementation 'com.kborid.jsbridge:jsbridge:1.0.0'
+    implementation 'com.kborid.smart:jsbridge:1.0.3'
     //    implementation 'com.thunisoft.android:logger:1.0.0'
     //apache commons
     implementation 'org.apache.commons:commons-lang3:3.7'
@@ -147,8 +143,10 @@ dependencies {
     implementation 'com.mikepenz:foundation-icons-typeface:3.0.0.4@aar'
     implementation 'com.mikepenz:ionicons-typeface:2.0.1.4@aar'
     implementation 'com.mikepenz:pixeden-7-stroke-typeface:1.2.0.2@aar'
-    implementation project(':base')
     //dragger2
-    implementation"com.google.dagger:dagger:2.14.1"
-    annotationProcessor"com.google.dagger:dagger-compiler:2.14.1"
+    implementation 'com.google.dagger:dagger:2.14.1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
+    // stetho 调试工具
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 }

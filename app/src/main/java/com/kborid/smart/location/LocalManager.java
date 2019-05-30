@@ -15,7 +15,7 @@ import com.orhanobut.logger.Logger;
 public enum LocalManager {
     INSTANCE;
 
-    private static final String TAG = "Localllll";
+    private static final String TAG = "LocalManager";
 
     private static final int TWO_MINUTES = 1000 * 60 * 2;
     public static final String GPS_PROVIDER = LocationManager.GPS_PROVIDER;

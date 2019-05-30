@@ -1,15 +1,11 @@
 package com.kborid.smart.network;
 
 import io.reactivex.Observable;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
+import okhttp3.ResponseBody;
+import retrofit2.http.GET;
 
 public interface RequestApi {
 
-    @POST("/getLatestApps.json")
-    Observable<Object> getUpdatesInfo();
-
-    @POST("/getLatestAppByPkgName.json")
-    Observable<Object> getUpdateInfo(@Body AppRequestBean bean);
-
+    @GET("/helloworld.txt")
+    Observable<ResponseBody> getOkHttpTest();
 }

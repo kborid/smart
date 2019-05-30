@@ -26,10 +26,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="onWebView"
-                android:text="WebView"
+                android:onClick="onJump"
+                android:text="跳转"
                 android:textAllCaps="false"
                 android:textSize="15sp" />
+
         </TableRow>
 
         <TableRow>
@@ -38,8 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="onJump"
-                android:text="跳转"
+                android:onClick="onPrintContext"
+                android:text="Context打印"
                 android:textAllCaps="false"
                 android:textSize="15sp" />
 
@@ -59,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="onTest"
+                android:onClick="onBaidu"
                 android:text="Test"
                 android:textAllCaps="false"
                 android:textSize="15sp" />
@@ -68,10 +69,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="onPrintContext"
-                android:text="Context打印"
+                android:onClick="onJSTest"
+                android:text="JSTest"
                 android:textAllCaps="false"
                 android:textSize="15sp" />
+
         </TableRow>
 
         <TableRow>

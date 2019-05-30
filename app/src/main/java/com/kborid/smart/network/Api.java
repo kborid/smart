@@ -3,12 +3,13 @@ package com.kborid.smart.network;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.fastjson.FastJsonConverterFactory;
 
 public class Api {
-    public static final String baseUrl = "http://192.168.16.139:8880/";
+    public static final String baseUrl = "http://www.publicobject.com/";
     private static RequestApi requestApi;
 
 
@@ -16,7 +17,7 @@ public class Api {
         return new Retrofit.Builder()
                 .client(OkHttpClientFactory.newOkHttpClient())
                 .baseUrl(baseUrl)// Base URL
-                .addConverterFactory(FastJsonConverterFactory.create())
+//                .addConverterFactory(FastJsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
@@ -28,15 +29,8 @@ public class Api {
         return requestApi;
     }
 
-    public static void getUpdatesInfo(Observer<Object> observer) {
-        getApi().getUpdatesInfo()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
-    }
-
-    public static void getUpdateInfo(AppRequestBean bean, Observer<Object> observer) {
-        getApi().getUpdateInfo(bean)
+    public static void getOkHttpTest(Observer<ResponseBody> observer) {
+        getApi().getOkHttpTest()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
