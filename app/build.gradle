@@ -133,7 +133,7 @@ dependencies {
     //    implementation 'com.thunisoft.android:logger:1.0.0'
     //apache commons
     implementation 'org.apache.commons:commons-lang3:3.7'
-    implementation 'me.yokeyword:fragmentation:0.10.3'
+//    implementation 'me.yokeyword:fragmentation:0.10.3'
     // icon
     implementation 'com.mikepenz:iconics-core:3.0.3@aar'
     implementation 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar'
