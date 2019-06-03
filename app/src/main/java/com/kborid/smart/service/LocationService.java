@@ -106,7 +106,7 @@ public class LocationService extends Service implements AMapLocationListener {
             if (mAMapLocation != null) {
                 parseGPSStatusString(mAMapLocation.getLocationQualityReport().getGPSStatus());
             }
-            UIHandler.postDelayed(checkGpsRunnable, DURING_TIME * 2);
+            UIHandler.postDelayed(checkGpsRunnable, DURING_TIME * 2L);
         }
     };
 
@@ -130,6 +130,7 @@ public class LocationService extends Service implements AMapLocationListener {
     }
 
     public void speck(String str) {
+        Logger.t(TAG).d(str);
     }
 
     /**
@@ -161,6 +162,9 @@ public class LocationService extends Service implements AMapLocationListener {
                 str = "没有GPS定位权限，建议开启gps定位权限";
                 speck("GPS信号弱");
                 break;
+                default:
+                    Logger.t(TAG).d("no defined");
+                    break;
         }
         Logger.t(TAG).d(str);
     }

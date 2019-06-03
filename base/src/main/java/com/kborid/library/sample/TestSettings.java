@@ -50,7 +50,6 @@ public enum TestSettings {
     }
 
     public int getFlag(){
-        System.out.println("current Flag = " + mFlag);
         return mFlag;
     }
 

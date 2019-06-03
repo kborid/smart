@@ -60,6 +60,36 @@ public class LogUtils {
         }
     }
 
+    public static void e(Throwable e) {
+        String msg = e.getClass().getName() + " : " + e.getMessage();
+        TagInfo tagInfo = getMethodNames(new Throwable().getStackTrace());
+        msg = createLogWithoutFileName(tagInfo, msg);
+        Log.e(TAG, msg, e);
+    }
+
+    public static void e(String tag, Throwable e) {
+        String msg = e.getClass().getName() + " : " + e.getMessage();
+        TagInfo tagInfo = getMethodNames(new Throwable().getStackTrace());
+        msg = createLogWithoutFileName(tagInfo, msg);
+        Log.e(tag, msg, e);
+    }
+
+    public static void w(String msg) {
+        if (isDebug) {
+            TagInfo tagInfo = getMethodNames(new Throwable().getStackTrace());
+            msg = createLogWithoutFileName(tagInfo, msg);
+            Log.w(TAG, msg);
+        }
+    }
+
+    public static void w(String tag, String msg) {
+        if (isDebug) {
+            TagInfo tagInfo = getMethodNames(new Throwable().getStackTrace());
+            msg = createLogWithoutFileName(tagInfo, msg);
+            Log.w(tag, msg);
+        }
+    }
+
     private static String createLogWithoutFileName(TagInfo tagInfo, String log, Object... args) {
         StringBuilder buffer = new StringBuilder();
         buffer.append("[");

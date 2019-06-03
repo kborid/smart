@@ -89,7 +89,7 @@ public class SmartCounterService extends Service {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        LogUtils.e(e);
                     }
                     try {
                         Message message = Message.obtain();
@@ -97,7 +97,7 @@ public class SmartCounterService extends Service {
                         message.arg1 = value;
                         messenger.send(message);
                     } catch (RemoteException e) {
-                        e.printStackTrace();
+                        LogUtils.e(e);
                     }
                     value--;
                 }

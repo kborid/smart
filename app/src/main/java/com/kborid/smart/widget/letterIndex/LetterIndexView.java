@@ -124,7 +124,7 @@ public class LetterIndexView extends View {
         mLetterMarginBottom = array.getDimensionPixelSize(R.styleable.LetterIndexView_letterMarginBottom, 0);
 
         mHitDrawable = array.getDrawable(R.styleable.LetterIndexView_letterTouchBackground);
-        if(mHitDrawable == null) {
+        if (mHitDrawable == null) {
             mHitDrawable = getResources().getDrawable(R.drawable.select_contact_right_pressed);
         }
         mHeadArray = new Drawable[0];
@@ -140,13 +140,13 @@ public class LetterIndexView extends View {
             if (length > 0) {
                 for (int i = 0; i < length; i++) {
                     int resId = ar.getResourceId(i, -1);
-                    if(resId > 0) {
+                    if (resId > 0) {
                         drawables.add(getResources().getDrawable(resId));
                     }
                 }
             }
             ar.recycle();
-            if(drawables.size() > 0) {
+            if (drawables.size() > 0) {
                 mHeadArray = new Drawable[drawables.size()];
                 drawables.toArray(mHeadArray);
             }
@@ -160,7 +160,7 @@ public class LetterIndexView extends View {
     }
 
     public void setLetters(String[] letters) {
-        if(letters != null) {
+        if (letters != null) {
             this.mLetterArray = letters;
         }
     }
@@ -182,6 +182,8 @@ public class LetterIndexView extends View {
             case MotionEvent.ACTION_CANCEL:
                 onCancel();
                 break;
+            default:
+                break;
         }
         invalidate();
         return true;
@@ -193,8 +195,8 @@ public class LetterIndexView extends View {
         int headLength = mHeadArray.length;
         Drawable drawable;
         int height = mHeadMarginTop;
-        if(headLength > 0) {
-            for(int i = 0; i < headLength; i++) {
+        if (headLength > 0) {
+            for (int i = 0; i < headLength; i++) {
                 drawable = mHeadArray[i];
                 int drawWidth = mHeadWidth > 0 ? mHeadWidth : drawable.getIntrinsicWidth();
                 int drawHeight = mHeadHeight > 0 ? mHeadHeight : drawable.getIntrinsicHeight();
@@ -204,7 +206,7 @@ public class LetterIndexView extends View {
                 int bottom = height + drawHeight;
                 drawable.setBounds(left, top, right, bottom);
                 drawable.draw(canvas);
-                if(hit && mHitIndex == i) {
+                if (hit && mHitIndex == i) {
                     int hitWidth = mHitDrawable.getIntrinsicWidth();
                     int hitHeight = mHitDrawable.getIntrinsicHeight();
                     int centX = halfWidth;
@@ -217,21 +219,21 @@ public class LetterIndexView extends View {
         }
         height = height + mLetterMarginTop;
         int letterLength = mLetterArray.length;
-        if(letterLength > 0) {
-            float letterH = (getHeight() - height) / letterLength;
+        if (letterLength > 0) {
+            float letterH = (float) (getHeight() - height) / letterLength;
             float letterSize = mLetterSize > 0 ? mLetterSize : letterH * 5 / 6;
             mPaint.setTextSize(letterSize);
             mPaint.setColor(mLetterColor);
-            if(mLetterStyle == STYLE_BOLD) {
+            if (mLetterStyle == STYLE_BOLD) {
                 mPaint.setTypeface(Typeface.DEFAULT_BOLD);
             } else {
                 mPaint.setTypeface(Typeface.DEFAULT);
             }
             Paint.FontMetrics mat = mPaint.getFontMetrics();
-            for(int i = 0; i < letterLength; i++) {
+            for (int i = 0; i < letterLength; i++) {
                 float letterY = height + letterH * i + letterSize;
                 canvas.drawText(mLetterArray[i], halfWidth, letterY, mPaint);
-                if(hit && mHitIndex == mHeadArray.length + i) {
+                if (hit && mHitIndex == mHeadArray.length + i) {
                     int hitWidth = mHitDrawable.getIntrinsicWidth();
                     int hitHeight = mHitDrawable.getIntrinsicHeight();
                     int centX = halfWidth;
@@ -260,8 +262,8 @@ public class LetterIndexView extends View {
             height = height + mLetterMarginTop;
             length = mLetterArray.length;
             int letterH = (getHeight() - height) / length;
-            for(int i = 0; i < length; i++) {
-                if(offset < height + letterH) {
+            for (int i = 0; i < length; i++) {
+                if (offset < height + letterH) {
                     mHitIndex = mHeadArray.length + i;
                     listener.onHit(mLetterArray[i], mHitIndex);
                     return;
@@ -282,7 +284,9 @@ public class LetterIndexView extends View {
 
     public interface OnTouchingLetterChangedListener {
         void onHit(String letter, int index);
+
         void onHit(Drawable drawable, int index);
+
         void onCancel();
     }
 

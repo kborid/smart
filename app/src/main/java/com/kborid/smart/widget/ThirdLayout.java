@@ -25,13 +25,14 @@ public class ThirdLayout extends LinearLayout {
     private static final String ALIPAY_PKG = "com.eg.android.AlipayGphone";
     private static final String ALIPAY_CLASS = "com.eg.android.AlipayGphone.AlipayLogin";
 
-    private static final HashMap<String, String> packageName = new HashMap<String, String>() {
-        {
-            put(WX_PKG, WX_CLASS);
-            put(QQ_PKG, QQ_CLASS);
-            put(ALIPAY_PKG, ALIPAY_CLASS);
-        }
-    };
+    private static final HashMap<String, String> packageName;
+
+    static {
+        packageName = new HashMap<String, String>();
+        packageName.put(WX_PKG, WX_CLASS);
+        packageName.put(QQ_PKG, QQ_CLASS);
+        packageName.put(ALIPAY_PKG, ALIPAY_CLASS);
+    }
 
     private Context mContext;
 

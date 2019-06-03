@@ -24,7 +24,6 @@ import com.kborid.library.hand2eventbus.ThreadMode;
 import com.kborid.library.sample.TestSettings;
 import com.kborid.library.util.LogUtils;
 import com.kborid.library.util.ReflectUtil;
-import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.event.TestEvent;
 import com.kborid.smart.imageloader.PictureActivity;
@@ -38,7 +37,6 @@ import com.kborid.smart.ui.test.TestActivity;
 import com.kborid.smart.util.ToastUtils;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +51,8 @@ import okhttp3.ResponseBody;
 public class MainActivity extends SimpleActivity {
 
     private SmartCounterServiceConnection counterConn = null;
-    private static Drawable mDrawable;
+    private /*static*/ Drawable mDrawable;
+    private static final String IMAGE_TYPE = "imageType";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +110,7 @@ public class MainActivity extends SimpleActivity {
     }
 
     public void onJump(View v) {
-        startActivity(new Intent(this, FragmentContainerActivity.class));
+        startActivity(new Intent(this, FragmentActivity.class));
         counterConn.pauseCount();
     }
 
@@ -133,19 +132,19 @@ public class MainActivity extends SimpleActivity {
 
     public void onUniversal(View v) {
         Intent intent = new Intent(this, PictureActivity.class);
-        intent.putExtra("imageType", PictureAdapter.TYPE_UNIVERSAL);
+        intent.putExtra(IMAGE_TYPE, PictureAdapter.TYPE_UNIVERSAL);
         startActivity(intent);
     }
 
     public void onPicasso(View v) {
         Intent intent = new Intent(this, PictureActivity.class);
-        intent.putExtra("imageType", PictureAdapter.TYPE_PICASSO);
+        intent.putExtra(IMAGE_TYPE, PictureAdapter.TYPE_PICASSO);
         startActivity(intent);
     }
 
     public void onGlide(View v) {
         Intent intent = new Intent(this, PictureActivity.class);
-        intent.putExtra("imageType", PictureAdapter.TYPE_GLIDE);
+        intent.putExtra(IMAGE_TYPE, PictureAdapter.TYPE_GLIDE);
         startActivity(intent);
     }
 
@@ -199,75 +198,68 @@ public class MainActivity extends SimpleActivity {
         Api.getOkHttpTest(new Observer<ResponseBody>() {
             @Override
             public void onSubscribe(Disposable d) {
-                System.out.println("onSubscribe()");
+                LogUtils.d("onSubscribe()");
             }
 
             @Override
             public void onNext(ResponseBody o) {
-                System.out.println("onNext()");
+                LogUtils.d("onNext()");
             }
 
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-                System.out.println("onError()");
+                LogUtils.d("onError()");
             }
 
             @Override
             public void onComplete() {
-                System.out.println("onComplete()");
+                LogUtils.d("onComplete()");
             }
         });
 
         OkHttpClientFactory.newOkHttpClient().newCall(new Request.Builder().url(Api.baseUrl + "helloworld.txt").build()).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                System.out.println("onFailure()");
+                LogUtils.d("onFailure()");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                System.out.println("onResponse()");
+                LogUtils.d("onResponse()");
             }
         });
     }
 
     private void printTest() {
+        outputConsoleTextView("nothing set===========================");
         TestSettings.instance.reset();
-        outputConsoleTextView("\nnothing set===========================");
-        TestSettings.instance.getFlag();
-        outputConsoleTextView("isFlagOne = " + TestSettings.instance.isFlagOne());
-        outputConsoleTextView("isFlagTwo = " + TestSettings.instance.isFlagTwo());
-        outputConsoleTextView("isFlagThr = " + TestSettings.instance.isFlagThr());
+        printSettings();
 
-        outputConsoleTextView("\none set===========================");
+        outputConsoleTextView("one set===========================");
         TestSettings.instance.setSettingOne(true);
-        TestSettings.instance.getFlag();
-        outputConsoleTextView("isFlagOne = " + TestSettings.instance.isFlagOne());
-        outputConsoleTextView("isFlagTwo = " + TestSettings.instance.isFlagTwo());
-        outputConsoleTextView("isFlagThr = " + TestSettings.instance.isFlagThr());
+        printSettings();
 
-        outputConsoleTextView("\none two set===========================");
+        outputConsoleTextView("one two set===========================");
         TestSettings.instance.setSettingTwo(true);
-        TestSettings.instance.getFlag();
-        outputConsoleTextView("isFlagOne = " + TestSettings.instance.isFlagOne());
-        outputConsoleTextView("isFlagTwo = " + TestSettings.instance.isFlagTwo());
-        outputConsoleTextView("isFlagThr = " + TestSettings.instance.isFlagThr());
+        printSettings();
 
-        outputConsoleTextView("\none two thr set===========================");
+        outputConsoleTextView("one two thr set===========================");
         TestSettings.instance.setSettingThr(true);
-        TestSettings.instance.getFlag();
-        outputConsoleTextView("isFlagOne = " + TestSettings.instance.isFlagOne());
-        outputConsoleTextView("isFlagTwo = " + TestSettings.instance.isFlagTwo());
-        outputConsoleTextView("isFlagThr = " + TestSettings.instance.isFlagThr());
-
-        outputConsoleTextView("lists = " + TestSettings.instance.getTestList());
+        printSettings();
 
         outputConsoleTextView(getResources().getQuantityString(R.plurals.test_plurals, 0, 0));
         outputConsoleTextView(getResources().getQuantityString(R.plurals.test_plurals, 1, 1));
         outputConsoleTextView(getResources().getQuantityString(R.plurals.test_plurals, 2, 2));
         outputConsoleTextView(getResources().getQuantityString(R.plurals.test_plurals, 3, 3));
         outputConsoleTextView(getResources().getQuantityString(R.plurals.test_plurals, 4, 4));
+    }
+
+    private void printSettings() {
+        outputConsoleTextView("current Flag = " + TestSettings.instance.getFlag());
+        outputConsoleTextView("isFlagOne = " + TestSettings.instance.isFlagOne());
+        outputConsoleTextView("isFlagTwo = " + TestSettings.instance.isFlagTwo());
+        outputConsoleTextView("isFlagThr = " + TestSettings.instance.isFlagThr());
     }
 
     private void bindServiceInner() {
@@ -327,31 +319,12 @@ public class MainActivity extends SimpleActivity {
         MultiTaskHandler.post(new Runnable() {
             @Override
             public void run() {
-                try {
-//                    Class<?> clazz = Class.forName("com.kborid.smart.PRJApplication"); // 1
-//                    Class<?> clazz = PRJApplication.class; // 2
-                    Class<?> clazz = PRJApplication.getInstance().getClass(); // 3
-                    Object obj = clazz.newInstance();
-                    Method method = clazz.getDeclaredMethod("testReflect");
-                    method.setAccessible(true);
-                    method.invoke(obj);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
                 String className = "com.kborid.smart.PRJApplication";
                 int ret = (int) ReflectUtil.invokeStaticMethod(className, "testReflect1", null, null);
-                System.out.println(String.valueOf(ret));
+                LogUtils.d(String.valueOf(ret));
                 ReflectUtil.invokeMethod(className, "testReflect", null, null);
             }
         });
-    }
-
-    public static void main(String[] arg) {
-        String className = "com.kborid.smart.PRJApplication";
-        int ret = (int) ReflectUtil.invokeStaticMethod(className, "testReflect1", null, null);
-        System.out.println(String.valueOf(ret));
-        ReflectUtil.invokeMethod(className, "testReflect", null, null);
     }
 
     private void outputConsoleTextView(String string) {

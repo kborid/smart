@@ -1,5 +1,6 @@
 package com.kborid.smart.test;
 
+import com.kborid.library.util.LogUtils;
 import com.orhanobut.logger.Logger;
 
 import java.io.BufferedReader;
@@ -88,9 +89,9 @@ public abstract class AExecuteAsRoot {
                 try {
                     int suProcessRetval = process.waitFor();
                     retval = 255 != suProcessRetval;
-                    System.out.println(output.toString());
+                    LogUtils.d(TAG, output.toString());
                 } catch (Exception ex) {
-                    Logger.t(TAG).d("exception", ex);
+                    ex.printStackTrace();
                 }
             }
         } catch (IOException ex) {

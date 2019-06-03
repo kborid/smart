@@ -12,6 +12,8 @@ public class Api {
     public static final String baseUrl = "http://www.publicobject.com/";
     private static RequestApi requestApi;
 
+    private Api() {
+    }
 
     private static Retrofit getRetrofit() {
         return new Retrofit.Builder()

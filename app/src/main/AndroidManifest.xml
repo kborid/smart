@@ -40,7 +40,7 @@
                 <action android:name="android.intent.action.duanwei.test" />
             </intent-filter>
         </activity>
-        <activity android:name="com.kborid.smart.activity.FragmentContainerActivity"/>
+        <activity android:name="com.kborid.smart.activity.FragmentActivity"/>
         <activity android:name="com.kborid.smart.activity.WebViewActivity" />
         <activity android:name=".imageloader.PictureActivity" />
         <activity android:name=".ui.test.TestActivity"/>

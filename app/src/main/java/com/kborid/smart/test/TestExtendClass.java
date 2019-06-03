@@ -1,5 +1,7 @@
 package com.kborid.smart.test;
 
+import com.kborid.library.util.LogUtils;
+
 import java.util.Arrays;
 
 public class TestExtendClass {
@@ -13,17 +15,17 @@ public class TestExtendClass {
             e.printStackTrace();
             return a + a + a;
         } finally {
-            System.out.println("finally()");
+            LogUtils.d("finally()");
         }
     }
 
     public static void main(String[] arg) {
-        System.out.println("test() " + test());
+        LogUtils.d("test() " + test());
         int[] arr = new int[] {12, 4, 3, 9, 10, 11, 30, 49, 5, 10, 12, 9, 29, 22, 44};
         int left = 0;
         int right = arr.length - 1;
         quickSort(arr, left, right);
-        System.out.println(Arrays.toString(arr));
+        LogUtils.d(Arrays.toString(arr));
         bucketSort(arr);
     }
 

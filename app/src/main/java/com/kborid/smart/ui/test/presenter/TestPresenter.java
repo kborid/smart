@@ -1,6 +1,7 @@
 package com.kborid.smart.ui.test.presenter;
 
 import com.kborid.library.base.RxPresenter;
+import com.kborid.library.util.LogUtils;
 import com.kborid.smart.ui.test.presenter.contract.TestContract;
 
 import javax.inject.Inject;
@@ -17,11 +18,11 @@ public class TestPresenter extends RxPresenter<TestContract.View> implements Tes
     @Override
     public void loadData() {
         for (int i = 0; i < 5; i++) {
-            System.out.println("loadData...");
+            LogUtils.d("loadData...");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LogUtils.e(e);
             }
         }
         mView.endLoad();

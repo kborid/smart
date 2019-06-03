@@ -42,14 +42,17 @@ public class FragmentSecond extends BaseSimpleFragment {
 
     @OnClick(R.id.btn_click1)
     void click1() {
+        ToastUtils.showToast("click1");
     }
 
     @OnClick(R.id.btn_click2)
     void click2() {
+        ToastUtils.showToast("click2");
     }
 
     @OnClick(R.id.btn_click3)
     void click3() {
+        ToastUtils.showToast("click3");
     }
 
     private class ExecuteAsRoot extends AExecuteAsRoot {
@@ -73,7 +76,7 @@ public class FragmentSecond extends BaseSimpleFragment {
 
     @OnClick(R.id.btn_click4)
     void click4() {
-        ToastUtils.showToast("doSU");
+        ToastUtils.showToast("click4");
         boolean isCan = false;
         Logger.t(TAG).d("can run root:" + (isCan = ExecuteAsRoot.canRunRootCommands()));
 
@@ -84,5 +87,6 @@ public class FragmentSecond extends BaseSimpleFragment {
 
     @OnClick(R.id.btn_click5)
     void click5() {
+        ToastUtils.showToast("click5");
     }
 }

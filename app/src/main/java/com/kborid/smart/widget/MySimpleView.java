@@ -41,6 +41,8 @@ public class MySimpleView extends View {
                 break;
             case MeasureSpec.UNSPECIFIED:
                 break;
+            default:
+                break;
         }
         return size;
     }
@@ -55,6 +57,8 @@ public class MySimpleView extends View {
                 size = 200;
                 break;
             case MeasureSpec.UNSPECIFIED:
+                break;
+            default:
                 break;
         }
         return size;

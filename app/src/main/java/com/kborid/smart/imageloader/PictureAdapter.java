@@ -91,6 +91,7 @@ public class PictureAdapter extends BaseAdapter {
                 Picasso.get().load(url).into(viewHolder.iv);
                 break;
             case TYPE_GLIDE:
+            default:
                 Glide.with(context).load(url).into(viewHolder.iv);
                 break;
         }
