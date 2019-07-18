@@ -1,7 +1,7 @@
 package com.kborid.smart.fragment.second;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.widget.ProgressBar;
 
 import com.kborid.library.base.BaseSimpleFragment;

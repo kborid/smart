@@ -42,7 +42,7 @@ public class FragmentActivity extends SimpleActivity {
     protected void initEventAndData(Bundle savedInstanceState) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.container, FragmentSecond.newInstance());
+//        ft.replace(R.id.container, FragmentSecond.newInstance());
         ft.commitAllowingStateLoss();
     }
 

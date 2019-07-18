@@ -45,6 +45,7 @@
         <activity android:name=".imageloader.PictureActivity" />
         <activity android:name=".ui.test.TestActivity"/>
         <activity android:name=".ui.texture.TextureViewActivity"/>
+        <activity android:name=".activity.TabTestActivity"/>
 
         <service android:name="com.kborid.smart.service.SmartCounterService" />
         <service android:name=".service.LocationService"

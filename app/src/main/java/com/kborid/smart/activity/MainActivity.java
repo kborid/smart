@@ -24,6 +24,7 @@ import com.kborid.library.hand2eventbus.ThreadMode;
 import com.kborid.library.sample.TestSettings;
 import com.kborid.library.util.LogUtils;
 import com.kborid.library.util.ReflectUtil;
+import com.kborid.smart.BuildConfig;
 import com.kborid.smart.R;
 import com.kborid.smart.event.TestEvent;
 import com.kborid.smart.imageloader.PictureActivity;
@@ -35,6 +36,7 @@ import com.kborid.smart.test.CustomThread;
 import com.kborid.smart.test.SingletonTest;
 import com.kborid.smart.ui.test.TestActivity;
 import com.kborid.smart.util.ToastUtils;
+import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,6 +62,8 @@ public class MainActivity extends SimpleActivity {
         LogUtils.d("onCreate()");
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         EventBusss.getDefault().register(this);
+
+        Logger.t("duanwei").i("appId=%s", BuildConfig.appId);
     }
 
     @Override
@@ -110,8 +114,9 @@ public class MainActivity extends SimpleActivity {
     }
 
     public void onJump(View v) {
-        startActivity(new Intent(this, FragmentActivity.class));
-        counterConn.pauseCount();
+//        startActivity(new Intent(this, FragmentActivity.class));
+//        counterConn.pauseCount();
+        startActivity(new Intent(this, TabTestActivity.class));
     }
 
     public void onReflect(View v) {
