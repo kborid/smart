@@ -1,10 +1,10 @@
-package com.kborid.smart.util;
+package com.kborid.library.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateUtils {
+public class DateTestUtils {
 
     private static final ThreadLocal<DateFormat> sdf = new ThreadLocal<DateFormat>() {
         @Override

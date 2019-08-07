@@ -7,7 +7,7 @@ import com.kborid.library.base.BaseApplication;
 import com.kborid.library.util.ConfigUtils;
 import com.kborid.library.util.LogUtils;
 import com.kborid.smart.service.LocationService;
-import com.kborid.smart.util.ScreenUtils;
+import com.kborid.library.util.ScreenUtils;
 import com.liulishuo.filedownloader.FileDownloader;
 
 public class PRJApplication extends BaseApplication {

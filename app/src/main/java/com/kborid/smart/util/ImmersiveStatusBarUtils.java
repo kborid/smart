@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Space;
 
+import com.kborid.library.util.ScreenUtils;
 import com.kborid.smart.R;
 
 public class ImmersiveStatusBarUtils {
@@ -33,7 +34,7 @@ public class ImmersiveStatusBarUtils {
             Space space = titleView.findViewById(R.id.space);
             space.setVisibility(View.VISIBLE);
             //获取到状态栏的高度
-            int statusHeight = ScreenUtils.getStatusBarHeight();
+            int statusHeight = ScreenUtils.mScreenStatusBarHeight;
             //动态的设置隐藏布局的高度
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) space.getLayoutParams();
             params.height = statusHeight;

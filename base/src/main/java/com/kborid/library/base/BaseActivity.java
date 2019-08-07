@@ -3,7 +3,6 @@ package com.kborid.library.base;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import com.kborid.library.di.module.CommonModule;
 
@@ -11,8 +10,9 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
-public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity<T extends BasePresenter> extends SwipeBackActivity implements BaseView {
     @Inject
     protected T mPresenter;
     protected Activity mContext;

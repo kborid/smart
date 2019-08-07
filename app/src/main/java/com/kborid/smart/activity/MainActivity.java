@@ -29,8 +29,6 @@ import com.kborid.smart.R;
 import com.kborid.smart.event.TestEvent;
 import com.kborid.smart.imageloader.PictureActivity;
 import com.kborid.smart.imageloader.PictureAdapter;
-import com.kborid.smart.network.Api;
-import com.kborid.smart.network.OkHttpClientFactory;
 import com.kborid.smart.service.SmartCounterServiceConnection;
 import com.kborid.smart.test.CustomThread;
 import com.kborid.smart.test.SingletonTest;
@@ -38,17 +36,8 @@ import com.kborid.smart.ui.test.TestActivity;
 import com.kborid.smart.util.ToastUtils;
 import com.orhanobut.logger.Logger;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class MainActivity extends SimpleActivity {
 
@@ -62,8 +51,17 @@ public class MainActivity extends SimpleActivity {
         LogUtils.d("onCreate()");
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         EventBusss.getDefault().register(this);
+    }
 
-        Logger.t("duanwei").i("appId=%s", BuildConfig.appId);
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initEventAndData(Bundle savedInstanceState) {
+        printTest();
+        bindServiceInner();
     }
 
     @Override
@@ -196,44 +194,10 @@ public class MainActivity extends SimpleActivity {
     }
 
     public void onJSTest(View v) {
-//        Intent intent = new Intent(this, WebViewActivity.class);
-//        intent.putExtra("from", "main");
-//        intent.putExtra("path", "file:///android_asset/ExampleApp.html");
-//        startActivity(intent);
-        Api.getOkHttpTest(new Observer<ResponseBody>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                LogUtils.d("onSubscribe()");
-            }
-
-            @Override
-            public void onNext(ResponseBody o) {
-                LogUtils.d("onNext()");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                LogUtils.d("onError()");
-            }
-
-            @Override
-            public void onComplete() {
-                LogUtils.d("onComplete()");
-            }
-        });
-
-        OkHttpClientFactory.newOkHttpClient().newCall(new Request.Builder().url(Api.baseUrl + "helloworld.txt").build()).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                LogUtils.d("onFailure()");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                LogUtils.d("onResponse()");
-            }
-        });
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.putExtra("from", "main");
+        intent.putExtra("path", "file:///android_asset/ExampleApp.html");
+        startActivity(intent);
     }
 
     private void printTest() {
@@ -307,17 +271,6 @@ public class MainActivity extends SimpleActivity {
         LogUtils.d("onDestroy()");
         unBindServiceInner();
         EventBusss.getDefault().unRegister(this);
-    }
-
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    protected void initEventAndData(Bundle savedInstanceState) {
-        printTest();
-        bindServiceInner();
     }
 
     private void reflectInvokeTest() {

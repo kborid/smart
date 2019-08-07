@@ -1,7 +1,7 @@
 package com.kborid.lock;
 
 import com.kborid.library.util.LogUtils;
-import com.kborid.smart.util.DateUtils;
+import com.kborid.library.util.DateTestUtils;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -14,7 +14,7 @@ public class CountDownLatchDemo {
         worker1.start();//
         worker2.start();//
         latch.await();//等待所有工人完成工作
-        LogUtils.d("all work done at " + DateUtils.getCurrentFormatDateString());
+        LogUtils.d("all work done at " + DateTestUtils.getCurrentFormatDateString());
     }
 
 
@@ -31,9 +31,9 @@ public class CountDownLatchDemo {
 
         @Override
         public void run() {
-            LogUtils.d("Worker " + workerName + " do work begin at " + DateUtils.getCurrentFormatDateString());
+            LogUtils.d("Worker " + workerName + " do work begin at " + DateTestUtils.getCurrentFormatDateString());
             doWork();//工作了
-            LogUtils.d("Worker " + workerName + " do work complete at " + DateUtils.getCurrentFormatDateString());
+            LogUtils.d("Worker " + workerName + " do work complete at " + DateTestUtils.getCurrentFormatDateString());
             latch.countDown();//工人完成工作，计数器减一
         }
 

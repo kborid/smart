@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.kborid.smart.R;
-import com.kborid.smart.util.ScreenUtils;
+import com.kborid.library.util.ScreenUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 

@@ -2,12 +2,12 @@ package com.kborid.library.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
-public abstract class BaseSimpleActivity extends AppCompatActivity {
+public abstract class BaseSimpleActivity extends SwipeBackActivity {
 
     private Unbinder mUnBinder;
 

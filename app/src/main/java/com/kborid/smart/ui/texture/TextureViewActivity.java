@@ -5,7 +5,6 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.TextureView;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.kborid.library.base.BaseActivity;
@@ -13,7 +12,7 @@ import com.kborid.smart.R;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.ui.texture.presenter.TexturePresenter;
 import com.kborid.smart.ui.texture.presenter.contract.TextureContract;
-import com.kborid.smart.util.ScreenUtils;
+import com.kborid.library.util.ScreenUtils;
 
 import java.io.IOException;
 import java.util.List;

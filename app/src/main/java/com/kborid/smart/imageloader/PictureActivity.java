@@ -30,7 +30,7 @@ public class PictureActivity extends SimpleActivity {
             initImageLoaderConfig();
         }
 
-        GridView mGridView = findViewById(R.id.gridview);
+        GridView mGridView = (GridView) findViewById(R.id.gridview);
         PictureAdapter adapter = new PictureAdapter(this, type);
         mGridView.setAdapter(adapter);
     }

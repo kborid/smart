@@ -22,7 +22,7 @@ public class TabTestActivity extends SimpleActivity {
     @BindView(R.id.vp_msg)
     ViewPager mViewPager;
 
-    private static final String[] tabLabels = {"监狱消息", "分监狱消息", "业务消息"};
+    private static final String[] tabLabels = {"TabOne", "TabTwo", "TabThree"};
     private List<Fragment> mFragments = new ArrayList<>();
 
     @Override
