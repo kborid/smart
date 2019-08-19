@@ -24,26 +24,33 @@ import com.kborid.library.hand2eventbus.ThreadMode;
 import com.kborid.library.sample.TestSettings;
 import com.kborid.library.util.LogUtils;
 import com.kborid.library.util.ReflectUtil;
-import com.kborid.smart.BuildConfig;
 import com.kborid.smart.R;
 import com.kborid.smart.event.TestEvent;
 import com.kborid.smart.imageloader.PictureActivity;
 import com.kborid.smart.imageloader.PictureAdapter;
 import com.kborid.smart.service.SmartCounterServiceConnection;
+import com.kborid.smart.test.CustomHeader;
 import com.kborid.smart.test.CustomThread;
 import com.kborid.smart.test.SingletonTest;
 import com.kborid.smart.ui.test.TestActivity;
 import com.kborid.smart.util.ToastUtils;
-import com.orhanobut.logger.Logger;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
 
 public class MainActivity extends SimpleActivity {
 
     private SmartCounterServiceConnection counterConn = null;
     private /*static*/ Drawable mDrawable;
     private static final String IMAGE_TYPE = "imageType";
+
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,19 @@ public class MainActivity extends SimpleActivity {
     protected void initEventAndData(Bundle savedInstanceState) {
         printTest();
         bindServiceInner();
+        smartRefreshLayout.setRefreshHeader(new CustomHeader(this));
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                UIHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.showToast("刷新成功");
+                        smartRefreshLayout.finishRefresh();
+                    }
+                }, 1000);
+            }
+        });
     }
 
     @Override

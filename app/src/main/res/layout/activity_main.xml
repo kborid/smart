@@ -1,121 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/layout_main_title" />
 
-    <TableLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <TableRow>
+        <LinearLayout
+            android:id="@+id/root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <Button
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onShare"
+                        android:text="文本分享"
+                        android:textAllCaps="false"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onJump"
+                        android:text="跳转"
+                        android:textAllCaps="false"
+                        android:textSize="15sp" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onPrintContext"
+                        android:text="Context打印"
+                        android:textAllCaps="false"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onReflect"
+                        android:text="反射"
+                        android:textAllCaps="false"
+                        android:textSize="15sp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onBaidu"
+                        android:text="BaiduTest"
+                        android:textAllCaps="false"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onJSTest"
+                        android:text="JSTest"
+                        android:textAllCaps="false"
+                        android:textSize="15sp" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onUniversal"
+                        android:text="Universal"
+                        android:textAllCaps="false"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onPicasso"
+                        android:text="Picasso"
+                        android:textAllCaps="false"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onGlide"
+                        android:text="Glide"
+                        android:textAllCaps="false"
+                        android:textSize="15sp" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/tv_counter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onShare"
-                android:text="文本分享"
-                android:textAllCaps="false"
-                android:textSize="15sp" />
+                android:gravity="center"
+                android:textColor="#ff0000"
+                android:textSize="200sp" />
 
-            <Button
+            <com.kborid.smart.widget.ThirdLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onJump"
-                android:text="跳转"
-                android:textAllCaps="false"
-                android:textSize="15sp" />
-
-        </TableRow>
-
-        <TableRow>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onPrintContext"
-                android:text="Context打印"
-                android:textAllCaps="false"
-                android:textSize="15sp" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onReflect"
-                android:text="反射"
-                android:textAllCaps="false"
-                android:textSize="15sp" />
-        </TableRow>
-
-        <TableRow>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onBaidu"
-                android:text="BaiduTest"
-                android:textAllCaps="false"
-                android:textSize="15sp" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onJSTest"
-                android:text="JSTest"
-                android:textAllCaps="false"
-                android:textSize="15sp" />
-
-        </TableRow>
-
-        <TableRow>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onUniversal"
-                android:text="Universal"
-                android:textAllCaps="false"
-                android:textSize="15sp" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onPicasso"
-                android:text="Picasso"
-                android:textAllCaps="false"
-                android:textSize="15sp" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onGlide"
-                android:text="Glide"
-                android:textAllCaps="false"
-                android:textSize="15sp" />
-        </TableRow>
-    </TableLayout>
-
-    <TextView
-        android:id="@+id/tv_counter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="#ff0000"
-        android:textSize="200sp" />
-
-    <com.kborid.smart.widget.ThirdLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

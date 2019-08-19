@@ -21,7 +21,7 @@ public class PRJApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        ScreenUtils.init();
+        ScreenUtils.init(this);
         LocationService.startLocationService(this);
         FileDownloader.init(PRJApplication.getInstance());
         LogUtils.d("=======================" + ConfigUtils.getConfigX());

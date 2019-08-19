@@ -7,7 +7,7 @@ import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.thunisoft.base.base.BaseApplication;
+import com.kborid.library.base.BaseApplication;
 
 /**
  * @description: 网络状态判断类

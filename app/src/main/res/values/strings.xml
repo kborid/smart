@@ -6,4 +6,16 @@
         <item quantity="one">test %d</item>
         <item quantity="other">other %d</item>
     </plurals>
+
+    <array name="actions">
+        <item>Universal</item>
+        <item>Picasso</item>
+        <item>Glide</item>
+        <item>Baidu</item>
+        <item>JSTest</item>
+        <item>Context测试</item>
+        <item>文本分享</item>
+        <item>反射</item>
+        <item>跳转</item>
+    </array>
 </resources>
