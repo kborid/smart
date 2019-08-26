@@ -156,28 +156,3 @@ dependencies {
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
     implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
 }
-
-apply plugin: 'org.sonarqube'
-
-subprojects {
-    sonarqube {
-        properties {
-            property "sonar.host.url", "http://localhost:9000/" //本地SonarQube平台的配置
-            property "sonar.projectName", rootProject.name  //projectname
-            property "sonar.projectKey", "tttt" //projectkey
-            property "sonar.projectVersion", "1.0.0"  //版本，随意
-            property "sonar.language", "java"  //语言
-            property "sonar.sourceEncoding", "UTF-8" //编码
-            property "sonar.sources", android.sourceSets.main.java.srcDirs //源码，写这个就行
-
-            property "sonar.dynamicAnalysis", "reuseReports"
-            //property "sonar.tests", android.sourceSets.instrumentTest.java.srcDirs
-            property "sonar.java.binaries", "build/intermediates/classes"
-            //property 'sonar.jacoco.reportPath', "build/jacoco/testReleaseUnitTest.exec"
-            //property "sonar.jacoco.itReportPath", "$buildDir/jacoco/testReleaseUnitTest.exec"
-            property "sonar.cobertura.reportPath", "build/reports/coverage/debug/report.xml"
-            property "sonar.core.codeCoveragePlugin", "cobertura"
-
-        }
-    }
-}

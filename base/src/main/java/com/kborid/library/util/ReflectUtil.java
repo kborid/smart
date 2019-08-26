@@ -11,15 +11,31 @@ import java.lang.reflect.Method;
  */
 
 public class ReflectUtil {
+
+    /**
+     * 判断类是否存在
+     *
+     * @param className
+     * @return
+     */
     public static boolean hasClass(String className) {
         try {
-            Class clazz = Class.forName(className);
+            Class.forName(className);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
+    /**
+     * 反射调用静态方法
+     *
+     * @param className
+     * @param methodName
+     * @param paramTypes
+     * @param paramValues
+     * @return
+     */
     public static Object invokeStaticMethod(String className, String methodName, Class[] paramTypes, Object[] paramValues) {
         try {
             Class clazz = Class.forName(className);
@@ -32,6 +48,15 @@ public class ReflectUtil {
         return null;
     }
 
+    /**
+     * 反射调用非静态方法
+     *
+     * @param className
+     * @param methodName
+     * @param paramTypes
+     * @param paramValues
+     * @return
+     */
     public static Object invokeMethod(String className, String methodName, Class[] paramTypes, Object[] paramValues) {
         try {
             Class clazz = Class.forName(className);
@@ -45,6 +70,15 @@ public class ReflectUtil {
         return null;
     }
 
+    /**
+     * 反射实例化对象
+     *
+     * @param className
+     * @param paramType
+     * @param param
+     * @param <T>
+     * @return
+     */
     public static <T> T newInstance(String className, Class paramType, Object param) {
         Class<?> clazz = null;
         try {

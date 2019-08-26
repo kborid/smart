@@ -18,20 +18,13 @@ public class EventBusss {
 
     private static Map<Object, List<SubscribeMethod>> cacheMap;
 
-    private static volatile EventBusss instance;
+    private static EventBusss instance = new EventBusss();
 
     private EventBusss() {
         cacheMap = new HashMap<>();
     }
 
     public static EventBusss getDefault() {
-        if (null == instance) {
-            synchronized (EventBusss.class) {
-                if (null == instance) {
-                    instance = new EventBusss();
-                }
-            }
-        }
         return instance;
     }
 

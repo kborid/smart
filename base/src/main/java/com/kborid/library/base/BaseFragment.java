@@ -18,7 +18,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 
     @Inject
     protected T mPresenter;
-    protected View mView;
+    protected View mRootView;
     protected Activity mActivity;
     protected Context mContext;
     private Unbinder mUnBinder;
@@ -34,9 +34,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(getLayoutResId(), null);
+        mRootView = inflater.inflate(getLayoutResId(), null);
         initInject();
-        return mView;
+        return mRootView;
     }
 
     @Override

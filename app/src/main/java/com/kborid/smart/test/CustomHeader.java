@@ -42,7 +42,7 @@ public class CustomHeader extends LinearLayout implements RefreshHeader {
     @NonNull
     @Override
     public SpinnerStyle getSpinnerStyle() {
-        return null;
+        return SpinnerStyle.Scale;
     }
 
     @Override

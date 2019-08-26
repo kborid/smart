@@ -23,7 +23,7 @@ public class TabTestActivity extends SimpleActivity {
     ViewPager mViewPager;
 
     private static final String[] tabLabels = {"TabOne", "TabTwo", "TabThree"};
-    private List<Fragment> mFragments = new ArrayList<>();
+    private List<Fragment> tabFragments = new ArrayList<>();
 
     @Override
     protected int getLayoutResId() {
@@ -38,9 +38,9 @@ public class TabTestActivity extends SimpleActivity {
 
     private void initViewPager() {
         for (int i = 0; i < tabLabels.length; i++) {
-            mFragments.add(FragmentFirst.newInstance());
+            tabFragments.add(FragmentFirst.newInstance());
         }
-        mViewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), tabLabels, mFragments));
+        mViewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), tabLabels, tabFragments));
         mViewPager.setOffscreenPageLimit(tabLabels.length);
         mTabLayout.setupWithViewPager(mViewPager);
     }

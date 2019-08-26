@@ -1,7 +1,5 @@
 package com.kborid.library.sample;
 
-import java.util.ArrayList;
-
 public enum TestSettings {
     instance;
 
@@ -9,21 +7,6 @@ public enum TestSettings {
     private static final int FLAG_ONE = 0x0001;
     private static final int FLAG_TWO = 0x0002;
     private static final int FLAG_THR = 0x0004;
-
-    private ArrayList<Integer> testList = new ArrayList<>();
-
-    TestSettings(){
-        if (null != testList){
-            testList.clear();
-            testList.add(FLAG_ONE);
-            testList.add(FLAG_TWO);
-            testList.add(FLAG_THR);
-        }
-    }
-
-    public ArrayList<Integer> getTestList() {
-        return testList;
-    }
 
     public void setSettingOne(boolean one){
         if (one){

@@ -39,3 +39,5 @@ ext {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+apply from: "sonar.gradle"

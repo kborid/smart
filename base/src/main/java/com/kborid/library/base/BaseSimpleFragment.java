@@ -13,7 +13,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseSimpleFragment extends Fragment {
 
-    protected View mView;
+    protected View mRootView;
     private Unbinder mUnBinder;
     private boolean isInited = false;
 
@@ -25,8 +25,8 @@ public abstract class BaseSimpleFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(getLayoutResId(), null);
-        return mView;
+        mRootView = inflater.inflate(getLayoutResId(), null);
+        return mRootView;
     }
 
     @Override

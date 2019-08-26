@@ -26,7 +26,7 @@ import butterknife.Unbinder;
 public abstract class BaseLazyFragment extends Fragment {
 
     protected Context mContext;
-    protected View mView;
+    protected View mRootView;
     private Unbinder mUnBinder;
     protected boolean isFirst = true;
     protected boolean isPrepared = false;
@@ -41,8 +41,8 @@ public abstract class BaseLazyFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(getLayoutResId(), null);
-        return mView;
+        mRootView = inflater.inflate(getLayoutResId(), null);
+        return mRootView;
     }
 
     @Override
