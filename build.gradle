@@ -40,4 +40,4 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-apply from: "sonar.gradle"
+//apply from: "sonar.gradle"

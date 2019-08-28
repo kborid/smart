@@ -12,10 +12,15 @@ import android.os.MessageQueue;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.kborid.codescan.control.CaptureActivity;
+import com.kborid.helper.MainActionHelper;
 import com.kborid.library.common.MultiTaskHandler;
 import com.kborid.library.common.UIHandler;
 import com.kborid.library.hand2eventbus.EventBusss;
@@ -49,6 +54,8 @@ public class MainActivity extends SimpleActivity {
     private /*static*/ Drawable mDrawable;
     private static final String IMAGE_TYPE = "imageType";
 
+    @BindView(R.id.listView)
+    ListView listView;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
 
@@ -82,6 +89,46 @@ public class MainActivity extends SimpleActivity {
                 }, 1000);
             }
         });
+
+        listView.setAdapter(new ArrayAdapter<String>(this, R.layout.view_action_item, getResources().getStringArray(R.array.actions)));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MainActionHelper.ActionType actionType = MainActionHelper.ActionType.indexOf(position);
+                switch (actionType) {
+                    case ACTION_OPEN_BD:
+                        onBaidu();
+                        break;
+                    case ACTION_OPEN_JS:
+                        onJSTest();
+                        break;
+                    case ACTION_UNIVERSAL:
+                        onUniversal();
+                        break;
+                    case ACTION_PICASSO:
+                        onPicasso();
+                        break;
+                    case ACTION_GLIDE:
+                        onGlide();
+                        break;
+                    case ACTION_CHANGE_JUMP:
+                        onJump();
+                        break;
+                    case ACTION_REFLECT:
+                        onReflect();
+                        break;
+                    case ACTION_SHARE:
+                        onShare();
+                        break;
+                    case ACTION_CONTEXT_PRINT:
+                        onPrintContext();
+                        break;
+                    case ACTION_SCAN:
+                        startActivity(new Intent(MainActivity.this, CaptureActivity.class));
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -109,7 +156,7 @@ public class MainActivity extends SimpleActivity {
         LogUtils.d("onResume()");
     }
 
-    public void onShare(View v) {
+    private void onShare() {
         Intent targetIntent = new Intent(Intent.ACTION_SEND);
         targetIntent.setType("text/plain");
         targetIntent.putExtra(Intent.EXTRA_TEXT, "Hello World!!!");
@@ -131,13 +178,13 @@ public class MainActivity extends SimpleActivity {
         counterConn.stopCount();
     }
 
-    public void onJump(View v) {
+    private void onJump() {
 //        startActivity(new Intent(this, FragmentActivity.class));
 //        counterConn.pauseCount();
         startActivity(new Intent(this, TabTestActivity.class));
     }
 
-    public void onReflect(View v) {
+    private void onReflect() {
         reflectInvokeTest();
         counterConn.startCount();
 
@@ -146,26 +193,26 @@ public class MainActivity extends SimpleActivity {
         sendBroadcast(new Intent());
     }
 
-    public void onPrintContext(View v) {
+    private void onPrintContext() {
         printContextType(getBaseContext());         //Context
         printContextType(getApplicationContext());  //ContextWrapper
         printContextType(this);     //ContextThemeWrapper
         startActivity(new Intent(this, TestActivity.class));
     }
 
-    public void onUniversal(View v) {
+    private void onUniversal() {
         Intent intent = new Intent(this, PictureActivity.class);
         intent.putExtra(IMAGE_TYPE, PictureAdapter.TYPE_UNIVERSAL);
         startActivity(intent);
     }
 
-    public void onPicasso(View v) {
+    private void onPicasso() {
         Intent intent = new Intent(this, PictureActivity.class);
         intent.putExtra(IMAGE_TYPE, PictureAdapter.TYPE_PICASSO);
         startActivity(intent);
     }
 
-    public void onGlide(View v) {
+    private void onGlide() {
         Intent intent = new Intent(this, PictureActivity.class);
         intent.putExtra(IMAGE_TYPE, PictureAdapter.TYPE_GLIDE);
         startActivity(intent);
@@ -206,14 +253,14 @@ public class MainActivity extends SimpleActivity {
         }, 200);
     }
 
-    public void onBaidu(View v) {
+    private void onBaidu() {
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra("from", "main");
         intent.putExtra("path", "http://www.baidu.com");
         startActivity(intent);
     }
 
-    public void onJSTest(View v) {
+    private void onJSTest() {
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra("from", "main");
         intent.putExtra("path", "file:///android_asset/ExampleApp.html");

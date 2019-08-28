@@ -8,14 +8,20 @@
     </plurals>
 
     <array name="actions">
+        <item>Baidu</item>
+        <item>JSTest</item>
         <item>Universal</item>
         <item>Picasso</item>
         <item>Glide</item>
-        <item>Baidu</item>
-        <item>JSTest</item>
-        <item>Context测试</item>
-        <item>文本分享</item>
-        <item>反射</item>
         <item>跳转</item>
+        <item>反射</item>
+        <item>文本分享</item>
+        <item>Context打印</item>
+        <item>掃碼</item>
     </array>
+
+    <string name="qr_scan">将二维码/条码放入取景框内，即可自动扫描</string>
+    <string name="ret_scan">扫描结果</string>
+    <string name="my_code">我的二维码</string>
+    <string name="ar_ex">AR增强现实体验</string>
 </resources>

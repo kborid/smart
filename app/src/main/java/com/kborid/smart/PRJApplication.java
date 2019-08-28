@@ -9,6 +9,7 @@ import com.kborid.library.util.LogUtils;
 import com.kborid.smart.service.LocationService;
 import com.kborid.library.util.ScreenUtils;
 import com.liulishuo.filedownloader.FileDownloader;
+import com.tencent.bugly.crashreport.CrashReport;
 
 public class PRJApplication extends BaseApplication {
 
@@ -26,6 +27,7 @@ public class PRJApplication extends BaseApplication {
         FileDownloader.init(PRJApplication.getInstance());
         LogUtils.d("=======================" + ConfigUtils.getConfigX());
         LogUtils.d("=======================" + ConfigUtils.getConfigY());
+        CrashReport.initCrashReport(getApplicationContext(), "6b298e7c56", BuildConfig.DEBUG);
     }
 
     private void testReflect() {
