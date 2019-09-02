@@ -34,9 +34,12 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
+
         debug {
             signingConfig signingConfigs.config
         }
@@ -141,16 +144,8 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
 
     //js bridge
-
-    //    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
-
-    //thunisoft
-
-    //    implementation 'com.thunisoft.android:jsbridge:1.0.1'
-    implementation 'com.kborid.smart:jsbridge:1.0.3'
-
-    //    implementation 'com.thunisoft.android:logger:1.0.0'
-
+//    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
+//    implementation 'com.kborid.smart:jsbridge:1.0.3'
     //apache commons
     implementation 'org.apache.commons:commons-lang3:3.7'
 

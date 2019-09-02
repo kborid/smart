@@ -24,7 +24,6 @@ allprojects {
         maven { url 'https://maven.google.com' }
         maven { url "https://jitpack.io" }
         maven { url "https://raw.github.com/kborid/Maven/master" }
-        maven { url "http://repo.thunisoft.com/maven2/content/repositories/releases/" }
         maven { url 'file:///D://localMaven/Maven/'}
         maven { url "https://plugins.gradle.org/m2/" }
     }

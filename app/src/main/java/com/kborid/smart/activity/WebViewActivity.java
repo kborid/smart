@@ -16,6 +16,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
@@ -24,8 +25,6 @@ import com.kborid.smart.R;
 import com.kborid.smart.util.ToastUtils;
 import com.kborid.smart.widget.MainTitleLayout;
 import com.orhanobut.logger.Logger;
-import com.thunisoft.jsbridge.SampleRegisterHandler;
-import com.thunisoft.jsbridge.WVJBWebViewClient;
 
 import butterknife.BindView;
 
@@ -82,10 +81,10 @@ public class WebViewActivity extends SimpleActivity {
         mWebView.loadUrl(path);
     }
 
-    private class MyWebViewClient extends WVJBWebViewClient {
+    private class MyWebViewClient extends WebViewClient {
         MyWebViewClient(WebView webView) {
-            super(webView);
-            new SampleRegisterHandler(this, webView.getContext()).init();
+//            super(webView);
+//            new SampleRegisterHandler(this, webView.getContext()).init();
         }
 
         @Override
