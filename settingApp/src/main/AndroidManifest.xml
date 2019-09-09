@@ -36,6 +36,7 @@
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent" />
+        <activity android:name=".activity.ReaderViewActivity"/>
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

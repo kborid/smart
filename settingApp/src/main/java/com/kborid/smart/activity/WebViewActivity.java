@@ -171,11 +171,13 @@ public class WebViewActivity extends SimpleActivity {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-            if (newProgress == 100) {
-                mProgressBar.setVisibility(View.GONE);
-            } else {
-                mProgressBar.setVisibility(View.VISIBLE);
-                mProgressBar.setProgress(newProgress);
+            if (!isDestroyed()) {
+                if (newProgress == 100) {
+                    mProgressBar.setVisibility(View.GONE);
+                } else {
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    mProgressBar.setProgress(newProgress);
+                }
             }
         }
     }

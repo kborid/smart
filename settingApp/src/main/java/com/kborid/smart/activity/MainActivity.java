@@ -265,9 +265,9 @@ public class MainActivity extends SimpleActivity {
     }
 
     private void onJSTest() {
-        Intent intent = new Intent(this, WebViewActivity.class);
+        Intent intent = new Intent(this, ReaderViewActivity.class);
         intent.putExtra("from", "main");
-        intent.putExtra("path", "file:///android_asset/ExampleApp.html");
+        intent.putExtra("path", "file:///android_asset/test.doc");
         startActivity(intent);
     }
 
