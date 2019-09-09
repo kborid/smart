@@ -56,6 +56,14 @@ public class MainTitleLayout extends LinearLayout {
         tv_title.setText(title);
     }
 
+    public void setCanBack(boolean flag) {
+        if (flag) {
+            tv_back.setVisibility(VISIBLE);
+        } else {
+            tv_back.setVisibility(GONE);
+        }
+    }
+
     public interface OnTitleListener {
         void onBack();
     }

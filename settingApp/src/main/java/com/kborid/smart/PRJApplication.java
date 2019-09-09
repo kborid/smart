@@ -6,11 +6,12 @@ import android.support.multidex.MultiDex;
 import com.kborid.library.base.BaseApplication;
 import com.kborid.library.util.ConfigUtils;
 import com.kborid.library.util.LogUtils;
-import com.kborid.smart.service.LocationService;
 import com.kborid.library.util.ScreenUtils;
+import com.kborid.smart.service.LocationService;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.tencent.bugly.Bugly;
-import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.smtt.sdk.QbSdk;
+import com.thunisoft.common.util.SystemParamUtil;
 
 public class PRJApplication extends BaseApplication {
 
@@ -29,6 +30,17 @@ public class PRJApplication extends BaseApplication {
         LogUtils.d("=======================" + ConfigUtils.getConfigX());
         LogUtils.d("=======================" + ConfigUtils.getConfigY());
         Bugly.init(getApplicationContext(), "6b298e7c56", BuildConfig.DEBUG);
+        QbSdk.initX5Environment(this, new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
+                System.out.println("onCoreInitFinished()");
+            }
+
+            @Override
+            public void onViewInitFinished(boolean b) {
+                System.out.println("onViewInitFinished()");
+            }
+        });
     }
 
     private void testReflect() {

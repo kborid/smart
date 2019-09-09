@@ -74,6 +74,9 @@ public class MainActivity extends SimpleActivity {
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
+        if (null != titleView) {
+            titleView.setCanBack(false);
+        }
         printTest();
         bindServiceInner();
         smartRefreshLayout.setRefreshHeader(new CustomHeader(this));
@@ -158,7 +161,8 @@ public class MainActivity extends SimpleActivity {
 
     private void onShare() {
         Intent targetIntent = new Intent(Intent.ACTION_SEND);
-        targetIntent.setType("text/plain");
+//        targetIntent.setType("text/plain");
+        targetIntent.setType("application/msword");
         targetIntent.putExtra(Intent.EXTRA_TEXT, "Hello World!!!");
         targetIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         List<Intent> targetedShareIntents = new ArrayList<Intent>();
@@ -179,9 +183,9 @@ public class MainActivity extends SimpleActivity {
     }
 
     private void onJump() {
-//        startActivity(new Intent(this, FragmentActivity.class));
+        startActivity(new Intent(this, FragmentActivity.class));
 //        counterConn.pauseCount();
-        startActivity(new Intent(this, TabTestActivity.class));
+//        startActivity(new Intent(this, TabTestActivity.class));
     }
 
     private void onReflect() {
@@ -256,7 +260,7 @@ public class MainActivity extends SimpleActivity {
     private void onBaidu() {
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra("from", "main");
-        intent.putExtra("path", "http://www.baidu.com");
+        intent.putExtra("path", "https://www.baidu.com");
         startActivity(intent);
     }
 

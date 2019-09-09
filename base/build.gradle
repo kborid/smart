@@ -30,7 +30,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 
     //logger
-    api 'com.orhanobut:logger:2.2.0'
+    implementation 'com.orhanobut:logger:2.2.0'
 
     //fastjson
     api 'com.alibaba:fastjson:1.2.56'

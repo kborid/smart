@@ -21,6 +21,7 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
+        maven { url "http://repo.thunisoft.com/maven2/content/repositories/releases/" }
         maven { url 'https://maven.google.com' }
         maven { url "https://jitpack.io" }
         maven { url "https://raw.github.com/kborid/Maven/master" }

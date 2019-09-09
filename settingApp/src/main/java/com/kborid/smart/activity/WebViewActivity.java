@@ -2,20 +2,11 @@ package com.kborid.smart.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.net.http.SslError;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.webkit.JsPromptResult;
-import android.webkit.JsResult;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
@@ -24,8 +15,14 @@ import com.kborid.smart.R;
 import com.kborid.smart.util.ToastUtils;
 import com.kborid.smart.widget.MainTitleLayout;
 import com.orhanobut.logger.Logger;
-import com.thunisoft.jsbridge.SampleRegisterHandler;
-import com.thunisoft.jsbridge.WVJBWebViewClient;
+import com.tencent.smtt.export.external.interfaces.JsPromptResult;
+import com.tencent.smtt.export.external.interfaces.JsResult;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+import com.tencent.smtt.sdk.CookieSyncManager;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
 
@@ -35,14 +32,14 @@ public class WebViewActivity extends SimpleActivity {
 
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
-    @BindView(R.id.web_view)
-    WebView mWebView;
-    @BindView(R.id.root)
-    FrameLayout root;
+    @BindView(R.id.content)
+    FrameLayout content;
+
+    private X5WebView mWebView;
 
     private boolean isFirst = false;
     private long mFirstPressStamp = 0;
-    private String path = "http://www.baidu.com";
+    private String path = "https://www.baidu.com";
 
     @Override
     protected int getLayoutResId() {
@@ -75,45 +72,52 @@ public class WebViewActivity extends SimpleActivity {
             isFirst = TextUtils.isEmpty(from);
             path = bundle.getString("path");
         }
-
         initViews();
-        mWebView.setWebViewClient(new MyWebViewClient(mWebView));
-        mWebView.setWebChromeClient(new MyWebChromeClient());
-        mWebView.loadUrl(path);
+        initWebView();
     }
 
-    private class MyWebViewClient extends WVJBWebViewClient {
-        MyWebViewClient(WebView webView) {
-            super(webView);
-            new SampleRegisterHandler(this, webView.getContext()).init();
+    private void initWebView() {
+        if (null == mWebView) {
+            mWebView = new X5WebView(this);
+            content.removeAllViews();
+            content.addView(mWebView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
-
-        @Override
-        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-            super.onReceivedError(view, request, error);
-            LogUtils.i("onReceivedError()");
-        }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            LogUtils.i("shouldOverrideUrlLoading() url = " + url);
-            Uri uri = Uri.parse(url);
-            if ("tlhl".equals(uri.getScheme())) {
-                LogUtils.d("scheme=" + uri.getScheme());
-                LogUtils.d("host=" + uri.getHost());
-                LogUtils.d("path=" + uri.getPath());
-                startActivity(new Intent(Intent.ACTION_VIEW, uri));
-                return true;
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView webView, WebResourceRequest webResourceRequest) {
+                return super.shouldOverrideUrlLoading(webView, webResourceRequest);
             }
-            return super.shouldOverrideUrlLoading(view, url);
-        }
+        });
+        mWebView.setWebChromeClient(new MyWebChromeClient());
 
-        @Override
-        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            LogUtils.i("onReceivedSslError()");
-            //过滤https证书继续加载
-            handler.proceed();
-        }
+        WebSettings webSetting = mWebView.getSettings();
+        webSetting.setAllowFileAccess(true);
+        webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webSetting.setSupportZoom(true);
+        webSetting.setBuiltInZoomControls(true);
+        webSetting.setUseWideViewPort(true);
+        webSetting.setSupportMultipleWindows(false);
+        // webSetting.setLoadWithOverviewMode(true);
+        webSetting.setAppCacheEnabled(true);
+        // webSetting.setDatabaseEnabled(true);
+        webSetting.setDomStorageEnabled(true);
+        webSetting.setJavaScriptEnabled(true);
+        webSetting.setGeolocationEnabled(true);
+        webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
+        webSetting.setAppCachePath(this.getDir("appcache", 0).getPath());
+        webSetting.setDatabasePath(this.getDir("databases", 0).getPath());
+        webSetting.setGeolocationDatabasePath(this.getDir("geolocation", 0)
+                .getPath());
+        // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
+        webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
+        // webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        // webSetting.setPreFectch(true);
+        long time = System.currentTimeMillis();
+        mWebView.loadUrl(path);
+        LogUtils.d("time-cost", "cost time: "
+                + (System.currentTimeMillis() - time));
+        CookieSyncManager.createInstance(this);
+        CookieSyncManager.getInstance().sync();
     }
 
     private class MyWebChromeClient extends WebChromeClient {

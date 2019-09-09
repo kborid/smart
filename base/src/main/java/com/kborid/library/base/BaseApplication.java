@@ -46,7 +46,7 @@ public class BaseApplication extends Application {
         LogUtils.init();
         LogUtils.d(TAG, "onCreate()");
         initLogger();
-        PackageManagerImpl.init(this);
+//        PackageManagerImpl.init(this);
         CrashHandler.getInstance().init(this);
     }
 

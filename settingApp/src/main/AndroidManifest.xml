@@ -40,7 +40,13 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="@string/amap_key" />
+
+        <meta-data
+            android:name="env"
+            android:value="${CHANNEL_VALUE}" />
+
         <service android:name="com.kborid.smart.service.SmartCounterService" />
+
         <service
             android:name=".service.LocationService"
             android:process=":location" />
@@ -48,8 +54,10 @@
         <service android:name="com.amap.api.location.APSService" />
 
     </application>
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
