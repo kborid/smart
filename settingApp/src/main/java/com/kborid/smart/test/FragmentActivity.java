@@ -1,4 +1,4 @@
-package com.kborid.smart.activity;
+package com.kborid.smart.test;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
-import com.kborid.smart.fragment.second.FragmentSecond;
+import com.kborid.smart.activity.SimpleActivity;
 
 public class FragmentActivity extends SimpleActivity {
 

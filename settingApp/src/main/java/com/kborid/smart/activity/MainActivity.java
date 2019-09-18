@@ -4,11 +4,12 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.pm.LabeledIntent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
-import android.os.MessageQueue;
+import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,32 +20,22 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.kborid.smart.codescan.control.CaptureActivity;
-import com.kborid.smart.helper.MainActionHelper;
-import com.kborid.library.common.MultiTaskHandler;
 import com.kborid.library.common.UIHandler;
 import com.kborid.library.hand2eventbus.EventBusss;
 import com.kborid.library.hand2eventbus.Subscribe;
 import com.kborid.library.hand2eventbus.ThreadMode;
 import com.kborid.library.sample.TestSettings;
 import com.kborid.library.util.LogUtils;
-import com.kborid.library.util.ReflectUtil;
 import com.kborid.smart.R;
+import com.kborid.smart.codescan.control.CaptureActivity;
 import com.kborid.smart.event.TestEvent;
-import com.kborid.smart.imageloader.PictureActivity;
-import com.kborid.smart.imageloader.PictureAdapter;
+import com.kborid.smart.helper.MainActionHelper;
 import com.kborid.smart.service.SmartCounterServiceConnection;
-import com.kborid.smart.test.CustomHeader;
 import com.kborid.smart.test.CustomThread;
 import com.kborid.smart.test.SingletonTest;
 import com.kborid.smart.ui.test.TestActivity;
-import com.kborid.smart.util.ToastUtils;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 import butterknife.BindView;
 
@@ -52,12 +43,9 @@ public class MainActivity extends SimpleActivity {
 
     private SmartCounterServiceConnection counterConn = null;
     private /*static*/ Drawable mDrawable;
-    private static final String IMAGE_TYPE = "imageType";
 
     @BindView(R.id.listView)
     ListView listView;
-    @BindView(R.id.smartRefreshLayout)
-    SmartRefreshLayout smartRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,22 +64,10 @@ public class MainActivity extends SimpleActivity {
     protected void initEventAndData(Bundle savedInstanceState) {
         if (null != titleView) {
             titleView.setCanBack(false);
+            titleView.setTitle("Home");
         }
         printTest();
         bindServiceInner();
-        smartRefreshLayout.setRefreshHeader(new CustomHeader(this));
-        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshLayout) {
-                UIHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUtils.showToast("刷新成功");
-                        smartRefreshLayout.finishRefresh();
-                    }
-                }, 1000);
-            }
-        });
 
         listView.setAdapter(new ArrayAdapter<String>(this, R.layout.view_action_item, getResources().getStringArray(R.array.actions)));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -103,19 +79,7 @@ public class MainActivity extends SimpleActivity {
                         onBaidu();
                         break;
                     case ACTION_OPEN_JS:
-                        onJSTest();
-                        break;
-                    case ACTION_UNIVERSAL:
-                        onUniversal();
-                        break;
-                    case ACTION_PICASSO:
-                        onPicasso();
-                        break;
-                    case ACTION_GLIDE:
-                        onGlide();
-                        break;
-                    case ACTION_CHANGE_JUMP:
-                        onJump();
+                        onReaderView();
                         break;
                     case ACTION_REFLECT:
                         onReflect();
@@ -128,6 +92,9 @@ public class MainActivity extends SimpleActivity {
                         break;
                     case ACTION_SCAN:
                         startActivity(new Intent(MainActivity.this, CaptureActivity.class));
+                        break;
+                    case ACTION_SECRET:
+                        onJump();
                         break;
                 }
             }
@@ -153,48 +120,58 @@ public class MainActivity extends SimpleActivity {
         iv.setImageDrawable(mDrawable);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        LogUtils.d("onResume()");
-    }
-
     private void onShare() {
-        Intent targetIntent = new Intent(Intent.ACTION_SEND);
+//        Intent targetIntent = new Intent(Intent.ACTION_SEND);
 //        targetIntent.setType("text/plain");
-        targetIntent.setType("application/msword");
-        targetIntent.putExtra(Intent.EXTRA_TEXT, "Hello World!!!");
-        targetIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        List<Intent> targetedShareIntents = new ArrayList<Intent>();
-        targetedShareIntents.add(targetIntent);
-        Intent resultIntent = null;
-        if (targetedShareIntents.size() > 0) {
-            resultIntent = Intent.createChooser(targetedShareIntents.remove(0), null);
-            LabeledIntent[] li = targetedShareIntents.toArray(new LabeledIntent[targetedShareIntents.size()]);
-            resultIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, li);
-            resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
-        try {
-            startActivity(resultIntent);
-        } catch (ActivityNotFoundException ex) {
-            ToastUtils.showToast("Can't find share component to share");
-        }
+//        targetIntent.putExtra(Intent.EXTRA_TEXT, "Hello World!!!");
+//        targetIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        List<Intent> targetedShareIntents = new ArrayList<Intent>();
+//        targetedShareIntents.add(targetIntent);
+//        Intent resultIntent = null;
+//        if (targetedShareIntents.size() > 0) {
+//            resultIntent = Intent.createChooser(targetedShareIntents.remove(0), null);
+//            LabeledIntent[] li = targetedShareIntents.toArray(new LabeledIntent[targetedShareIntents.size()]);
+//            resultIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, li);
+//            resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        }
+//        try {
+//            startActivity(resultIntent);
+//        } catch (ActivityNotFoundException ex) {
+//            ToastUtils.showToast("Can't find share component to share");
+//        }
         counterConn.stopCount();
+
+        File file = new File(Environment.getExternalStorageDirectory() + File.separator + "test.doc");
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(this, "com.kborid.smart.fileProvider", file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+//        if(!file.exists()){
+//            return;
+//        }
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.putExtra("filePath", file.getPath());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setType("application/*");
+        try {
+//            startActivity(intent);
+            startActivity(Intent.createChooser(intent, "选择浏览工具"));
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void onJump() {
-        startActivity(new Intent(this, FragmentActivity.class));
-//        counterConn.pauseCount();
-//        startActivity(new Intent(this, TabTestActivity.class));
+        counterConn.pauseCount();
     }
 
     private void onReflect() {
-        reflectInvokeTest();
         counterConn.startCount();
-
         CustomThread customThread = new CustomThread();
         customThread.start();
-        sendBroadcast(new Intent());
     }
 
     private void onPrintContext() {
@@ -202,24 +179,6 @@ public class MainActivity extends SimpleActivity {
         printContextType(getApplicationContext());  //ContextWrapper
         printContextType(this);     //ContextThemeWrapper
         startActivity(new Intent(this, TestActivity.class));
-    }
-
-    private void onUniversal() {
-        Intent intent = new Intent(this, PictureActivity.class);
-        intent.putExtra(IMAGE_TYPE, PictureAdapter.TYPE_UNIVERSAL);
-        startActivity(intent);
-    }
-
-    private void onPicasso() {
-        Intent intent = new Intent(this, PictureActivity.class);
-        intent.putExtra(IMAGE_TYPE, PictureAdapter.TYPE_PICASSO);
-        startActivity(intent);
-    }
-
-    private void onGlide() {
-        Intent intent = new Intent(this, PictureActivity.class);
-        intent.putExtra(IMAGE_TYPE, PictureAdapter.TYPE_GLIDE);
-        startActivity(intent);
     }
 
     private void printContextType(Context context) {
@@ -233,38 +192,14 @@ public class MainActivity extends SimpleActivity {
         }
     }
 
-    private void idleHandler() {
-        Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
-            @Override
-            public boolean queueIdle() {
-                outputConsoleTextView("IdleHandler queueIdle()");
-                return false;
-            }
-        });
-
-        UIHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                outputConsoleTextView("normal handler post");
-            }
-        });
-
-        UIHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                outputConsoleTextView("delay 200 handler post");
-            }
-        }, 200);
-    }
-
     private void onBaidu() {
-        Intent intent = new Intent(this, WebViewActivity.class);
+        Intent intent = new Intent(this, X5WebViewActivity.class);
         intent.putExtra("from", "main");
         intent.putExtra("path", "https://www.baidu.com");
         startActivity(intent);
     }
 
-    private void onJSTest() {
+    private void onReaderView() {
         Intent intent = new Intent(this, ReaderViewActivity.class);
         intent.putExtra("from", "main");
         intent.putExtra("path", "file:///android_asset/test.doc");
@@ -342,18 +277,6 @@ public class MainActivity extends SimpleActivity {
         LogUtils.d("onDestroy()");
         unBindServiceInner();
         EventBusss.getDefault().unRegister(this);
-    }
-
-    private void reflectInvokeTest() {
-        MultiTaskHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                String className = "com.kborid.smart.PRJApplication";
-                int ret = (int) ReflectUtil.invokeStaticMethod(className, "testReflect1", null, null);
-                LogUtils.d(String.valueOf(ret));
-                ReflectUtil.invokeMethod(className, "testReflect", null, null);
-            }
-        });
     }
 
     private void outputConsoleTextView(String string) {

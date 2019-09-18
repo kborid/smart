@@ -14,6 +14,7 @@ import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
 import com.kborid.smart.util.ToastUtils;
 import com.kborid.smart.widget.MainTitleLayout;
+import com.kborid.smart.widget.X5WebView;
 import com.orhanobut.logger.Logger;
 import com.tencent.smtt.export.external.interfaces.JsPromptResult;
 import com.tencent.smtt.export.external.interfaces.JsResult;
@@ -26,7 +27,7 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
 
-public class WebViewActivity extends SimpleActivity {
+public class X5WebViewActivity extends SimpleActivity {
 
     private static final long DURATION_PRESS_TWO = 1000;
 
@@ -124,7 +125,7 @@ public class WebViewActivity extends SimpleActivity {
 
         @Override
         public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(WebViewActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(X5WebViewActivity.this);
             builder.setMessage(message);
             builder.setPositiveButton("OK", new AlertDialog.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {

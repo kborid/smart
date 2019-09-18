@@ -1,39 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tv="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_main_title" />
-
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smartRefreshLayout"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
 
-            <ListView
-                android:id="@+id/listView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:id="@+id/tv_counter"
-                android:layout_width="match_parent"
+            <com.kborid.smart.widget.AutoAdjustTextView
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
                 android:gravity="center"
-                android:textColor="#ff0000"
-                android:textSize="200sp" />
-
-            <com.kborid.smart.widget.ThirdLayout
+                android:text="Test1"
+                android:lines="1"
+                android:textSize="100sp"/>
+            <com.kborid.smart.widget.AdaptionSizeTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom" />
-        </FrameLayout>
+                android:gravity="center"
+                android:textSize="30sp"
+                android:text="Test2Test2Test2Test2Test2Test2" />
+        </LinearLayout>
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_counter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:textColor="#ff0000"
+            android:textSize="200sp" />
+
+        <com.kborid.smart.widget.ThirdLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
+    </FrameLayout>
+
+    <include layout="@layout/layout_main_title" />
 </LinearLayout>

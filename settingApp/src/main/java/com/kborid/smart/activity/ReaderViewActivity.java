@@ -1,7 +1,12 @@
 package com.kborid.smart.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -12,6 +17,8 @@ import com.kborid.smart.widget.MainTitleLayout;
 import com.tencent.smtt.sdk.TbsReaderView;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import butterknife.BindView;
 
@@ -21,6 +28,7 @@ public class ReaderViewActivity extends SimpleActivity implements TbsReaderView.
     FrameLayout content;
 
     private TbsReaderView mTbsReaderView;
+    private String mFilePath = "";
 
     @Override
     protected int getLayoutResId() {
@@ -44,12 +52,41 @@ public class ReaderViewActivity extends SimpleActivity implements TbsReaderView.
         }
     }
 
+    private void dealIntent() {
+        Uri uri = getIntent().getParcelableExtra(Intent.EXTRA_STREAM);
+        if (null != uri) {
+            String path = getPath(this, uri);
+        }
+        String path = getIntent().getStringExtra("filePath");
+        if (!TextUtils.isEmpty(path)) {
+            mFilePath = path;
+        }
+    }
+
+    private String getPath(Context context, Uri uri) {
+        String path = null;
+        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+        if (cursor.moveToFirst()) {
+            try {
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DATA));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        cursor.close();
+        return path;
+    }
+
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
         super.initEventAndData(savedInstanceState);
+        dealIntent();
         initViews();
         initReaderView();
-        displayFile(Environment.getExternalStorageDirectory().getPath() + File.separator + "test.doc");
+        displayFile(mFilePath);
     }
 
     private void initReaderView() {

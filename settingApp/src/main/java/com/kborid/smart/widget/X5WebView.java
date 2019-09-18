@@ -1,4 +1,4 @@
-package com.kborid.smart.activity;
+package com.kborid.smart.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -1,7 +1,7 @@
-package com.kborid.smart.fragment.first.presenter;
+package com.kborid.smart.ui.snaphelper.presenter;
 
-import com.kborid.smart.fragment.first.model.FirstModel;
-import com.kborid.smart.fragment.first.view.IFirstView;
+import com.kborid.smart.ui.snaphelper.model.FirstModel;
+import com.kborid.smart.ui.snaphelper.view.IFirstView;
 
 public class FirstPresenter {
 

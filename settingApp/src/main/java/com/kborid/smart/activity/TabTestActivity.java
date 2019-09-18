@@ -6,7 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.kborid.smart.R;
-import com.kborid.smart.fragment.first.FragmentFirst;
+import com.kborid.smart.fragment.image.ImageFragment;
+import com.kborid.smart.fragment.image.adapter.PictureAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class TabTestActivity extends SimpleActivity {
     @BindView(R.id.vp_msg)
     ViewPager mViewPager;
 
-    private static final String[] tabLabels = {"TabOne", "TabTwo", "TabThree"};
+    private static final String[] tabLabels = {"Universal", "Picasso", "Glide"};
     private List<Fragment> tabFragments = new ArrayList<>();
 
     @Override
@@ -37,17 +38,11 @@ public class TabTestActivity extends SimpleActivity {
     }
 
     private void initViewPager() {
-        for (int i = 0; i < tabLabels.length; i++) {
-            tabFragments.add(FragmentFirst.newInstance());
-        }
+        tabFragments.add(ImageFragment.newInstance(PictureAdapter.TYPE_UNIVERSAL));
+        tabFragments.add(ImageFragment.newInstance(PictureAdapter.TYPE_PICASSO));
+        tabFragments.add(ImageFragment.newInstance(PictureAdapter.TYPE_GLIDE));
         mViewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), tabLabels, tabFragments));
         mViewPager.setOffscreenPageLimit(tabLabels.length);
         mTabLayout.setupWithViewPager(mViewPager);
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
 }

@@ -38,7 +38,6 @@ public class MainTitleLayout extends LinearLayout {
 
     private void initParams() {
         LogUtils.d("initParams()");
-        tv_title.setText("测试标题");
         tv_back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
