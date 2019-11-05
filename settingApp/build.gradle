@@ -17,9 +17,28 @@ android {
         multiDexEnabled true
 
         resConfigs('zh-rCN')
-        ndk {
-            abiFilters('armeabi')
-        }
+//        resConfigs('zh-rCN')
+//        ndk {
+//            abiFilters('armeabi', 'armeabi-v7a', 'arm64-v8a')
+//        }
+//
+//        splits{
+//            // Configures multiple APKs based on ABI.
+//            abi {
+//                // Enables building multiple APKs per ABI.
+//                enable true
+//
+//                // By default all ABIs are included, so use reset() and include to specify that we only
+//                // want APKs for x86, armeabi-v7a, and mips.
+//                reset()
+//
+//                // Specifies a list of ABIs that Gradle should create APKs for.
+//                include "armeabi", "armeabi-v7a", "arm64-v8a"
+//
+//                // Specifies that we want to also generate a universal APK that includes all ABIs.
+//                universalApk true
+//            }
+//        }
     }
 
     sourceSets {
@@ -80,7 +99,20 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = 'Smart-' + "${variant.name}-${variant.versionName}.apk"
+            def abiName = getFilter(com.android.build.OutputFile.ABI)
+//            def flavorName = ""
+//            variant.productFlavors.each { product ->
+//                flavorName = product.name //获取渠道名字
+//            }
+//            变量名字
+//            variant.versionName //eg:1.1.1
+//            variant.versionCode //eg:1
+//            variant.buildType.name //eg:debug/release
+//            variant.name //flavorBuildTypeName eg:devRelease
+//            flavorName //eg:dev
+            def buildFlag = ("release".equalsIgnoreCase(variant.buildType.name)) ? "_r" : "_d"
+            outputFileName = 'Smart' + "-v${variant.versionName}_${flavorName}_build${variant.versionCode}${buildFlag}.apk"
+//            outputFileName = 'Smart-' + "${variant.name}-${variant.versionName}.apk"
         }
     }
 
@@ -196,4 +228,8 @@ dependencies {
 
     //bugly
     implementation 'com.tencent.bugly:crashreport_upgrade:1.4.1'
+
+    //lombok
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+    implementation "org.projectlombok:lombok:1.18.10"
 }

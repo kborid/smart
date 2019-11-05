@@ -1,6 +1,5 @@
 package com.kborid.library.base;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,16 +10,20 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * BaseSimpleFragment
+ *
+ * @description: 简单fragment基类封装
+ * @date: 2019/9/25
+ * @author: duanwei
+ * @email: duanwei@thunisoft.com
+ * @version: 1.0.0
+ */
 public abstract class BaseSimpleFragment extends Fragment {
 
     protected View mRootView;
     private Unbinder mUnBinder;
-    private boolean isInited = false;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
+    private boolean isInitialized = false;
 
     @Nullable
     @Override
@@ -35,8 +38,8 @@ public abstract class BaseSimpleFragment extends Fragment {
         mUnBinder = ButterKnife.bind(this, view);
         if (savedInstanceState == null) {
             if (!isHidden()) {
-                isInited = true;
-                initEventAndData(savedInstanceState);
+                isInitialized = true;
+                initEventAndData(null);
             }
         }
     }
@@ -44,8 +47,8 @@ public abstract class BaseSimpleFragment extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!isInited && !hidden) {
-            isInited = true;
+        if (!isInitialized && !hidden) {
+            isInitialized = true;
             initEventAndData(null);
         }
     }

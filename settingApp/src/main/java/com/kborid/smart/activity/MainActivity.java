@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Message;
 import android.support.v4.content.FileProvider;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -33,6 +34,7 @@ import com.kborid.smart.helper.MainActionHelper;
 import com.kborid.smart.service.SmartCounterServiceConnection;
 import com.kborid.smart.test.CustomThread;
 import com.kborid.smart.test.SingletonTest;
+import com.kborid.smart.ui.snaphelper.SnapHelpActivity;
 import com.kborid.smart.ui.test.TestActivity;
 
 import java.io.File;
@@ -97,6 +99,21 @@ public class MainActivity extends SimpleActivity {
                         onJump();
                         break;
                 }
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                MainActionHelper.ActionType actionType = MainActionHelper.ActionType.indexOf(position);
+                switch (actionType) {
+                    case ACTION_SCAN:
+                        startActivity(new Intent(MainActivity.this, SnapHelpActivity.class));
+                        break;
+                    case ACTION_SECRET:
+                        startActivity(new Intent(MainActivity.this, TabTestActivity.class));
+                        break;
+                }
+                return true;
             }
         });
     }
@@ -172,6 +189,16 @@ public class MainActivity extends SimpleActivity {
         counterConn.startCount();
         CustomThread customThread = new CustomThread();
         customThread.start();
+//        customThread.getInnerHandler().sendEmptyMessage(1);
+//        customThread.getInnerHandler().sendEmptyMessageDelayed(2, 1000);
+        Message message = Message.obtain(/*customThread.getInnerHandler(), new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Message's callback");
+            }
+        }*/);
+        message.what = 3;
+        customThread.getInnerHandler().sendMessageDelayed(message, 2000);
     }
 
     private void onPrintContext() {

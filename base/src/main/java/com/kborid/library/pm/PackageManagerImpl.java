@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.RemoteException;
 import android.text.TextUtils;
 
+import com.kborid.library.util.ReflectUtil;
+
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,13 +20,15 @@ public class PackageManagerImpl {
     private static PackageInstallObserver packageInstallObserver;
     private static PackageManager packageManager;
     private static Method installMethod, unInstallMethod;
+    private static Class<?>[] installParamClazz;
+    private static Class<?>[] unInstallParamClazz;
 
     public static void init(Context context) {
         packageManager = context.getPackageManager();
         packageDeleteObserver = new PackageDeleteObserver();
         packageInstallObserver = new PackageInstallObserver();
-        Class<?>[] installParamClazz = new Class[]{Uri.class, IPackageInstallObserver.class, int.class, String.class};
-        Class<?>[] unInstallParamClazz = new Class[]{String.class, IPackageDeleteObserver.class, int.class};
+        installParamClazz = new Class[]{Uri.class, IPackageInstallObserver.class, int.class, String.class};
+        unInstallParamClazz = new Class[]{String.class, IPackageDeleteObserver.class, int.class};
 
         try {
             installMethod = packageManager.getClass().getMethod("installPackage", installParamClazz);
@@ -36,7 +40,11 @@ public class PackageManagerImpl {
 
     public static void uninstallPackage(String pkgName, IPackageCallback callback) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         mPackageCallback = callback;
-        unInstallMethod.invoke(packageManager, pkgName, packageDeleteObserver, 0);
+//        unInstallMethod.invoke(packageManager, pkgName, packageDeleteObserver, 0);
+        ReflectUtil.invokeMethod(packageManager.getClass().getName(),
+                "deletePackage",
+                unInstallParamClazz,
+                new Object[]{pkgName, packageDeleteObserver, 0});
     }
 
     public static void installPackage(String apkPath, IPackageCallback callback) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
@@ -53,7 +61,11 @@ public class PackageManagerImpl {
 
     public static void installPackage(Uri apkFile, IPackageCallback callback) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         mPackageCallback = callback;
-        installMethod.invoke(packageManager, apkFile, packageInstallObserver, 2, null);
+//        installMethod.invoke(packageManager, apkFile, packageInstallObserver, 2, null);
+        ReflectUtil.invokeMethod(packageManager.getClass().getName(),
+                "installPackage",
+                installParamClazz,
+                new Object[]{apkFile, packageInstallObserver, 2, null});
     }
 
     static class PackageDeleteObserver extends IPackageDeleteObserver.Stub {

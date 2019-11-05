@@ -39,7 +39,9 @@ public class SnapHelpActivity extends BaseSimpleActivity implements IFirstView {
         }
         recycleView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         recycleView.setAdapter(adapter);
-        new LinearSnapHelper().attachToRecyclerView(recycleView);
+        LinearSnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(recycleView);
+
         firstPresenter.request();
     }
 

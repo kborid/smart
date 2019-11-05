@@ -9,9 +9,7 @@ import android.util.Log;
 import com.kborid.library.base.BaseApplication;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -72,21 +70,11 @@ public class CrashInfoUtils {
             }
 
             return fileName;
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             Log.e(TAG, "an error occured while writing file...", e);
-            //如果是因为没有文件写入权限可能会引起递归收集错误日志，所以就不记录了
-//            PackageUtils.collectDeviceInfo(PRJApplication.getInstance(),e);
-        } catch (Exception e1) {
-            Log.e(TAG, "an error occured while writing file...", e1);
-            CrashInfoUtils.collectDeviceInfo(e1);
+            CrashInfoUtils.collectDeviceInfo(e);
         } finally {
-            if (outStream != null) {
-                try {
-                    outStream.close();
-                } catch (IOException e) {
-                    Log.e(TAG, Log.getStackTraceString(e));
-                }
-            }
+            IOUtils.closeQuietly(outStream);
         }
 
         return null;
