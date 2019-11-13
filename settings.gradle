@@ -1,1 +1,6 @@
 include ':settingApp', ':settingHelper', ':base'
+setBinding(new Binding([gradle: this]))
+evaluate(new File(
+        settingsDir.parentFile,
+        'tt/.android/include_flutter.groovy'
+))
