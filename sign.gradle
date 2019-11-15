@@ -1,0 +1,10 @@
+android {
+    signingConfigs {
+        config {
+            keyAlias 'kborid'
+            keyPassword '123456'
+            storeFile file('../sign/sign.jks')
+            storePassword '123456'
+        }
+    }
+}
