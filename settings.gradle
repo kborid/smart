@@ -1,4 +1,4 @@
-include ':app', ':app2', ':library'
+include ':app', ':app2', ':library', ':kotlin'
 setBinding(new Binding([gradle: this]))
 evaluate(new File(
         settingsDir.parentFile,
