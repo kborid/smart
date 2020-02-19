@@ -1,6 +1,8 @@
 package com.kborid.smart.fragment.image;
 
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.widget.GridView;
 
@@ -14,6 +16,11 @@ public class ImageFragment extends BaseSimpleFragment {
 
     @BindView(R.id.gridview)
     GridView mGridView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected int getLayoutResId() {

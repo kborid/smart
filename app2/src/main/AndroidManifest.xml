@@ -28,6 +28,9 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity android:name=".ui.FragmentActivity"
+            android:configChanges="orientation|keyboard|screenSize"/>
+
         <service android:name=".test.TestIntentService" />
         <service
             android:name=".test.TestJopService"
