@@ -1,16 +1,33 @@
 package com.kborid.setting.ui;//package com.kborid.setting.ui
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.kborid.setting.R;
 import com.thunisoft.common.base.BaseActivity;
 
 public class MainActivity extends BaseActivity {
+
+    private LifecycleObserver lifecycleObserver = new LifecycleObserver() {
+        @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+        void resume() {
+            System.out.println("resume");
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+        void pause() {
+            System.out.println("pause");
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        void destroy() {
+            System.out.println("destroy");
+        }
+    };
 
     @Override
     protected int getLayoutResId() {
@@ -19,14 +36,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initDataAndEvent(@Nullable Bundle bundle) {
-
+        getLifecycle().addObserver(lifecycleObserver);
     }
 
-    public void startFlutter(View view) {
-        Toast.makeText(this, "tt", Toast.LENGTH_SHORT).show();
-//        startActivity(FlutterActivity.createDefaultIntent(this));
-//        startActivity(FlutterActivity.withNewEngine().initialRoute("hybrid").build(this));
-//        startActivity(FlutterActivity.withCachedEngine("flutter_engine").build(this))
-        startActivity(new Intent(this, FragmentActivity.class));
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getLifecycle().removeObserver(lifecycleObserver);
     }
 }

@@ -1,4 +1,4 @@
-package com.kborid.setting.ui;
+package com.kborid.setting.test;
 
 import android.os.Bundle;
 

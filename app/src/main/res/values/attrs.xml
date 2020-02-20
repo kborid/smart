@@ -35,4 +35,13 @@
             <enum name="recentAndAllFriend" value="5" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="HwLoadingView">
+        <!--控件大小-->
+        <attr name="hlv_size" format="dimension" />
+        <!--控件颜色-->
+        <attr name="hlv_color" format="color" />
+        <!--转一圈花费时长-->
+        <attr name="hlv_duration" format="integer"/>
+    </declare-styleable>
 </resources>

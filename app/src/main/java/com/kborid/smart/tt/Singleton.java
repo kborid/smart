@@ -1,4 +1,4 @@
-package com.kborid.smart.test;
+package com.kborid.smart.tt;
 
 public abstract class Singleton<T> {
     private T mInstance;

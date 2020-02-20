@@ -1,4 +1,4 @@
-package com.kborid.smart.test;
+package com.kborid.smart.tt;
 
 import com.kborid.library.util.LogUtils;
 

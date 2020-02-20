@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tv="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <LinearLayout
+    <!--底部导航栏-->
+    <com.thunisoft.ui.bottombar.NavigationBottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom">
+
+        <com.thunisoft.ui.bottombar.NavigationBottomItem
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:bottomItemTitle="音乐"
+            app:drawablePadding="5dp"
+            app:drawableTop="@drawable/ic_library_music_black_24dp" />
 
-            <com.kborid.smart.widget.AutoAdjustTextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Test1"
-                android:lines="1"
-                android:textSize="100sp"/>
-            <com.kborid.smart.widget.AdaptionSizeTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="30sp"
-                android:text="Test2Test2Test2Test2Test2Test2" />
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/listView"
+        <com.thunisoft.ui.bottombar.NavigationBottomItem
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:bottomItemTitle="聆听"
+            app:drawablePadding="5dp"
+            app:drawableTop="@drawable/ic_headset_black_24dp" />
 
-        <TextView
-            android:id="@+id/tv_counter"
+        <com.thunisoft.ui.bottombar.NavigationBottomItem
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="center"
-            android:textColor="#ff0000"
-            android:textSize="200sp" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:bottomItemTitle="浏览"
+            app:drawablePadding="5dp"
+            app:drawableTop="@drawable/ic_public_black_24dp" />
 
-        <com.kborid.smart.widget.ThirdLayout
+        <com.thunisoft.ui.bottombar.NavigationBottomItem
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom" />
-    </FrameLayout>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:bottomItemTitle="我的"
+            app:drawablePadding="5dp"
+            app:drawableTop="@drawable/ic_person_black_24dp" />
 
-    <include layout="@layout/layout_main_title" />
+    </com.thunisoft.ui.bottombar.NavigationBottomBar>
 </LinearLayout>

@@ -28,7 +28,6 @@ class MainActivity : BaseActivity() {
         JSONObject.parseObject(json, CheckInfo::class.java)
         TestUtil().printJson(json)
         TestUtil.parseJson(json)
-        TestStaticUtil.printJson(json)
         if (json != null) {
             TTest.instance?.test(json)
         }

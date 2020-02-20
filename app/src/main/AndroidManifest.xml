@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name="com.kborid.smart.activity.MainActivity">
+        <activity android:name="com.kborid.smart.ui.main.MainFragmentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,7 +23,7 @@
                 <action android:name="android.intent.action.duanwei.test" />
             </intent-filter>
         </activity>
-        <activity android:name="com.kborid.smart.test.FragmentActivity" />
+        <activity android:name="com.kborid.smart.tt.FragmentActivity" />
         <activity android:name="com.kborid.smart.activity.X5WebViewActivity" />
         <activity android:name=".ui.texture.TextureViewActivity" />
         <activity android:name=".activity.TabTestActivity" />

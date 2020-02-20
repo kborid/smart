@@ -1,4 +1,4 @@
-package com.kborid.smart.test;
+package com.kborid.smart.tt;
 
 public class ThreadLocalTest {
 

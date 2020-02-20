@@ -6,7 +6,7 @@ import android.widget.ProgressBar;
 
 import com.kborid.library.base.BaseSimpleFragment;
 import com.kborid.smart.R;
-import com.kborid.smart.test.AExecuteAsRoot;
+import com.kborid.smart.tt.AExecuteAsRoot;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.util.ToastUtils;
 

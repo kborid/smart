@@ -30,13 +30,12 @@ import com.kborid.smart.R;
 import com.kborid.smart.codescan.control.CaptureActivity;
 import com.kborid.smart.helper.MainActionHelper;
 import com.kborid.smart.service.SmartCounterServiceConnection;
-import com.kborid.smart.test.CustomThread;
-import com.kborid.smart.test.SingletonTest;
+import com.kborid.smart.tt.CustomThread;
+import com.kborid.smart.tt.SingletonTest;
 import com.kborid.smart.ui.snaphelper.SnapHelpActivity;
 import com.thunisoft.common.tool.UIHandler;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -60,7 +59,7 @@ public class MainActivity extends SimpleActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_main;
+        return R.layout.activity_main2;
     }
 
     @Override
