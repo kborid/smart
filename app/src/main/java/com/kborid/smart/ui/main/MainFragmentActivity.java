@@ -1,15 +1,15 @@
 package com.kborid.smart.ui.main;
 
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.kborid.library.base.BaseSimpleActivity;
+import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.activity.FragmentAdapter;
-import com.kborid.smart.ui.mainTab.MainTabFragment;
+import com.kborid.smart.ui.mainTab.news.NewsTabFragment;
 import com.thunisoft.ui.bottombar.NavigationBottomBar;
 
 import java.util.ArrayList;
@@ -19,8 +19,9 @@ import butterknife.BindView;
 
 public class MainFragmentActivity extends BaseSimpleActivity {
 
-    private static final String[] titles = new String[]{"音乐", "聆听", "浏览", "我的"};
     private static final int DEFAULT_INDEX = 0;
+    private static final String[] mBottomBarTitles = PRJApplication.getInstance().getResources().getStringArray(R.array.BottomBarTitle);
+    private static final int[] mIcon = {R.drawable.select_tab_news, R.drawable.select_tab_girl, R.drawable.select_tab_video, R.drawable.select_tab_user};
 
     @BindView(R.id.viewpager)
     ViewPager viewPager;
@@ -34,15 +35,26 @@ public class MainFragmentActivity extends BaseSimpleActivity {
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            setShowWhenLocked(false);
-        }
-        List<Fragment> fragments = new ArrayList<>(5);
-        fragments.add(MainTabFragment.newInstance(titles[0]));
-        fragments.add(MainTabFragment.newInstance(titles[1]));
-        fragments.add(MainTabFragment.newInstance(titles[2]));
-        fragments.add(MainTabFragment.newInstance(titles[3]));
-        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), titles, fragments));
+        setSwipeBackEnable(false);
+        initFragment();
+        // 兼容lib库bug
+        bottomBar.check(DEFAULT_INDEX + 1);
+        bottomBar.check(DEFAULT_INDEX);
+        bottomBar.setOnTabCheckedListener(new NavigationBottomBar.OnTabCheckedListener() {
+            @Override
+            public void onTabChecked(int i) {
+                viewPager.setCurrentItem(i, true);
+            }
+        });
+    }
+
+    private void initFragment() {
+        List<Fragment> fragments = new ArrayList<>(4);
+        fragments.add(NewsTabFragment.newInstance(mBottomBarTitles[0]));
+        fragments.add(NewsTabFragment.newInstance(mBottomBarTitles[1]));
+        fragments.add(NewsTabFragment.newInstance(mBottomBarTitles[2]));
+        fragments.add(NewsTabFragment.newInstance(mBottomBarTitles[3]));
+        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), mBottomBarTitles, fragments));
         viewPager.setCurrentItem(DEFAULT_INDEX);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -58,16 +70,6 @@ public class MainFragmentActivity extends BaseSimpleActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
 
-            }
-        });
-
-        // 兼容lib库bug
-        bottomBar.check(DEFAULT_INDEX + 1);
-        bottomBar.check(DEFAULT_INDEX);
-        bottomBar.setOnTabCheckedListener(new NavigationBottomBar.OnTabCheckedListener() {
-            @Override
-            public void onTabChecked(int i) {
-                viewPager.setCurrentItem(i, true);
             }
         });
     }

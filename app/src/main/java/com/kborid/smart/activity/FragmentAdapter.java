@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,26 +17,38 @@ import java.util.List;
  */
 public class FragmentAdapter extends FragmentPagerAdapter {
     private List<String> mTitles;
-    private List<Fragment> mList;
+    private List<Fragment> mFragments;
 
-    public FragmentAdapter(FragmentManager fm, String[] title, List<Fragment> list) {
+    public FragmentAdapter(FragmentManager fm, String[] title, List<Fragment> fragments) {
         super(fm);
-        mTitles = Arrays.asList(title);
-        this.mList = list;
+        this.mTitles = Arrays.asList(title);
+        this.mFragments = fragments;
+    }
+
+    public FragmentAdapter(FragmentManager fm, List<String> title, List<Fragment> fragments) {
+        super(fm);
+        this.mTitles = title;
+        this.mFragments = fragments;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return mList.get(position);
+        return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return mList.size();
+        return mFragments.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         return mTitles.get(position);
+    }
+
+    public void setFragments(List<String> title, List<Fragment> fragments) {
+        this.mTitles = title;
+        this.mFragments = fragments;
+        notifyDataSetChanged();
     }
 }

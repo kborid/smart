@@ -22,25 +22,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:bottomItemTitle="音乐"
+            app:bottomItemTitle="首页"
             app:drawablePadding="5dp"
-            app:drawableTop="@drawable/ic_library_music_black_24dp" />
+            app:drawableTop="@drawable/select_tab_news" />
 
         <com.thunisoft.ui.bottombar.NavigationBottomItem
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:bottomItemTitle="聆听"
+            app:bottomItemTitle="图片"
             app:drawablePadding="5dp"
-            app:drawableTop="@drawable/ic_headset_black_24dp" />
+            app:drawableTop="@drawable/select_tab_girl" />
 
         <com.thunisoft.ui.bottombar.NavigationBottomItem
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:bottomItemTitle="浏览"
+            app:bottomItemTitle="视频"
             app:drawablePadding="5dp"
-            app:drawableTop="@drawable/ic_public_black_24dp" />
+            app:drawableTop="@drawable/select_tab_video" />
 
         <com.thunisoft.ui.bottombar.NavigationBottomItem
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             app:bottomItemTitle="我的"
             app:drawablePadding="5dp"
-            app:drawableTop="@drawable/ic_person_black_24dp" />
+            app:drawableTop="@drawable/select_tab_user" />
 
     </com.thunisoft.ui.bottombar.NavigationBottomBar>
 </LinearLayout>

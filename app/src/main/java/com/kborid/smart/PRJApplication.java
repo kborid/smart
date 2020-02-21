@@ -69,8 +69,6 @@ public class PRJApplication extends BaseApplication {
 
     private void initImageLoaderConfig() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnFail(R.mipmap.brower)
-                .showImageForEmptyUri(R.mipmap.brower)
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smart</string>
+    <string name="app_name">新闻火</string>
     <string name="app_des">Smart-Description</string>
 
     <plurals name="test_plurals">
@@ -15,6 +15,13 @@
         <item>Context打印</item>
         <item>掃碼</item>
         <item>秘密花园</item>
+    </array>
+
+    <array name="BottomBarTitle">
+        <item>首页</item>
+        <item>图片</item>
+        <item>视频</item>
+        <item>我的</item>
     </array>
 
     <string name="qr_scan">将二维码/条码放入取景框内，即可自动扫描</string>

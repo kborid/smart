@@ -16,6 +16,7 @@ public class MainActivity extends BaseActivity {
         @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
         void resume() {
             System.out.println("resume");
+            getLayoutInflater().inflate(R.layout.activity_main, null);
         }
 
         @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)

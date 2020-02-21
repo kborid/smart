@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.kborid.smart.R;
-import com.kborid.smart.fragment.image.ImageFragment;
-import com.kborid.smart.fragment.image.adapter.PictureAdapter;
+import com.kborid.smart.ui.image.ImageFragment;
+import com.kborid.smart.ui.image.adapter.PictureAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

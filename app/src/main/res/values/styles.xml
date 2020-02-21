@@ -8,8 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.Trans">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <declare-styleable name="AutoAlignTextView">
-        <attr name="maxTextSize" format="dimension"/>
-        <attr name="minTextSize" format="dimension"/>
+        <attr name="maxTextSize" format="dimension" />
+        <attr name="minTextSize" format="dimension" />
     </declare-styleable>
 </resources>
