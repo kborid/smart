@@ -1,15 +1,15 @@
-package com.kborid.smart.ui.mainTab.comm;
+package com.kborid.smart.ui.mainTab.news.newslist;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kborid.library.base.BaseFragment;
 import com.kborid.smart.R;
+import com.kborid.smart.contant.AppConstant;
 import com.kborid.smart.di.DaggerCommonComponent;
-import com.kborid.smart.ui.mainTab.comm.presenter.NewsPresenter;
-import com.kborid.smart.ui.mainTab.comm.presenter.contract.NewsContract;
+import com.kborid.smart.ui.mainTab.news.newslist.presenter.NewsPresenter;
+import com.kborid.smart.ui.mainTab.news.newslist.presenter.contract.NewsContract;
 
 import butterknife.BindView;
 
@@ -17,6 +17,10 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     @BindView(R.id.recycleView)
     RecyclerView recyclerView;
+
+    private String mNewsId;
+    private String mNewsType;
+    private int mStartPage = 0;
 
     @Override
     protected void initInject() {
@@ -31,16 +35,12 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         return R.layout.fragment_news;
     }
 
-    public static Fragment newInstance(String type) {
-        Fragment fragment = new NewsFragment();
-        Bundle args = new Bundle();
-        args.putString("type", type);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
-        String title = getArguments().getString("type");
+        if (getArguments() != null) {
+            mNewsId = getArguments().getString(AppConstant.NEWS_ID);
+            mNewsType = getArguments().getString(AppConstant.NEWS_TYPE);
+        }
+        mPresenter.getNewsList(mNewsType, mNewsId, mStartPage);
     }
 }

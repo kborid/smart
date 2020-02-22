@@ -21,7 +21,6 @@ public class MainFragmentActivity extends BaseSimpleActivity {
 
     private static final int DEFAULT_INDEX = 0;
     private static final String[] mBottomBarTitles = PRJApplication.getInstance().getResources().getStringArray(R.array.BottomBarTitle);
-    private static final int[] mIcon = {R.drawable.select_tab_news, R.drawable.select_tab_girl, R.drawable.select_tab_video, R.drawable.select_tab_user};
 
     @BindView(R.id.viewpager)
     ViewPager viewPager;

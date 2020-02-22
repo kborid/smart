@@ -15,16 +15,17 @@
     <com.thunisoft.ui.bottombar.NavigationBottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom">
 
         <com.thunisoft.ui.bottombar.NavigationBottomItem
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:bottomItemTitle="首页"
+            app:bottomItemTitle="新闻"
             app:drawablePadding="5dp"
-            app:drawableTop="@drawable/select_tab_news" />
+            app:drawableTop="@drawable/select_tab_news"
+            app:iconSize="25dp" />
 
         <com.thunisoft.ui.bottombar.NavigationBottomItem
             android:layout_width="match_parent"
@@ -32,7 +33,8 @@
             android:layout_weight="1"
             app:bottomItemTitle="图片"
             app:drawablePadding="5dp"
-            app:drawableTop="@drawable/select_tab_girl" />
+            app:drawableTop="@drawable/select_tab_girl"
+            app:iconSize="25dp" />
 
         <com.thunisoft.ui.bottombar.NavigationBottomItem
             android:layout_width="match_parent"
@@ -40,7 +42,8 @@
             android:layout_weight="1"
             app:bottomItemTitle="视频"
             app:drawablePadding="5dp"
-            app:drawableTop="@drawable/select_tab_video" />
+            app:drawableTop="@drawable/select_tab_video"
+            app:iconSize="25dp" />
 
         <com.thunisoft.ui.bottombar.NavigationBottomItem
             android:layout_width="match_parent"
@@ -48,7 +51,8 @@
             android:layout_weight="1"
             app:bottomItemTitle="我的"
             app:drawablePadding="5dp"
-            app:drawableTop="@drawable/select_tab_user" />
+            app:drawableTop="@drawable/select_tab_user"
+            app:iconSize="25dp" />
 
     </com.thunisoft.ui.bottombar.NavigationBottomBar>
 </LinearLayout>

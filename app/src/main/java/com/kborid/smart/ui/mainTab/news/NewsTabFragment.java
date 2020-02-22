@@ -3,6 +3,7 @@ package com.kborid.smart.ui.mainTab.news;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -13,7 +14,7 @@ import com.kborid.smart.activity.FragmentAdapter;
 import com.kborid.smart.contant.AppConstant;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.NewsChannelBean;
-import com.kborid.smart.ui.mainTab.comm.NewsFragment;
+import com.kborid.smart.ui.mainTab.news.newslist.NewsFragment;
 import com.kborid.smart.ui.mainTab.news.presenter.NewsTabPresenter;
 import com.kborid.smart.ui.mainTab.news.presenter.contract.NewsTabContract;
 import com.thunisoft.ui.util.ScreenUtils;
@@ -25,6 +26,8 @@ import butterknife.BindView;
 
 public class NewsTabFragment extends BaseFragment<NewsTabPresenter> implements NewsTabContract.View {
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.viewpager)
@@ -55,6 +58,7 @@ public class NewsTabFragment extends BaseFragment<NewsTabPresenter> implements N
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
+        toolbar.setTitle(getArguments().getString("type"));
         mPresenter.loadMainChannel();
     }
 

@@ -16,26 +16,26 @@
  */
 package com.kborid.smart.network;
 
-public class HostType {
+public interface HostType {
 
     /**
      * 多少种Host类型
      */
-    public static final int TYPE_COUNT = 3;
+    int TYPE_COUNT = 3;
 
     /**
      * 网易新闻视频的host
      */
-    public static final int NETEASE_NEWS_VIDEO = 1;
+    int NETEASE_NEWS_VIDEO = 1;
 
     /**
      * 新浪图片的host
      */
-    public static final int GANK_GIRL_PHOTO = 2;
+    int GANK_GIRL_PHOTO = 2;
 
     /**
      * 新闻详情html图片的host
      */
-    public static final int NEWS_DETAIL_HTML_PHOTO = 3;
+    int NEWS_DETAIL_HTML_PHOTO = 3;
 
 }

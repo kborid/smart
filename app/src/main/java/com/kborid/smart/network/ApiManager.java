@@ -1,10 +1,12 @@
 package com.kborid.smart.network;
 
 import android.annotation.SuppressLint;
+import android.util.SparseArray;
 
 import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.entity.NewsChannelBean;
+import com.kborid.smart.entity.NewsSummary;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.network.OkHttpClientFactory;
 import com.thunisoft.common.network.callback.ResponseCallback;
@@ -14,38 +16,39 @@ import com.thunisoft.common.network.func.ErrorAction;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.fastjson.FastJsonConverterFactory;
 
-public class Api {
-    private static final String baseUrl = "http://www.publicobject.com/";
-    private static RequestApi requestApi;
+public class ApiManager {
 
-    private Api() {
+    private static SparseArray<RequestApi> apiSparseArray = new SparseArray<>();
+
+    private ApiManager() {
     }
 
-    private static Retrofit getRetrofit() {
+    private static Retrofit getRetrofit(int hostType) {
         return new Retrofit.Builder()
                 .client(OkHttpClientFactory.newOkHttpClient())
-                .baseUrl(baseUrl)// Base URL
+                .baseUrl(ApiConstants.getHost(hostType))
                 .addConverterFactory(FastJsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
-    private static RequestApi getApi() {
+    private static RequestApi getApi(int hostType) {
+        RequestApi requestApi = apiSparseArray.get(hostType);
         if (requestApi == null) {
-            requestApi = getRetrofit().create(RequestApi.class);
+            requestApi = getRetrofit(hostType).create(RequestApi.class);
+            apiSparseArray.put(hostType, requestApi);
         }
         return requestApi;
     }
@@ -83,5 +86,55 @@ public class Api {
                         }
                     }
                 });
+    }
+
+    @SuppressLint("CheckResult")
+    public static void getNewsList(String type, String id, int startPage, ResponseCallback<Map<String, List<NewsSummary>>> callback) {
+        ApiManager.getApi(HostType.NETEASE_NEWS_VIDEO).getNewsList(type, id, startPage)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Map<String, List<NewsSummary>>>() {
+                    @Override
+                    public void accept(Map<String, List<NewsSummary>> map) throws Exception {
+                        if (null != callback) {
+                            callback.success(map);
+                        }
+                    }
+                }, new ErrorAction() {
+                    @Override
+                    protected void call(ApiException e) {
+                        if (null != callback) {
+                            callback.failure(e);
+                        }
+                    }
+                });
+//                .flatMap(new Function<Map<String, List<NewsSummary>>, ObservableSource<? extends R>>() {
+//                    @Override
+//                    public Observable<NewsSummary> call(Map<String, List<NewsSummary>> map) {
+//                        if (id.endsWith(ApiConstants.HOUSE_ID)) {
+//                            // 房产实际上针对地区的它的id与返回key不同
+//                            return Observable.from(map.get("北京"));
+//                        }
+//                        return Observable.from(map.get(id));
+//                    }
+//                })
+//                //转化时间
+//                .map(new Func1<NewsSummary, NewsSummary>() {
+//                    @Override
+//                    public NewsSummary call(NewsSummary newsSummary) {
+//                        String ptime = TimeUtil.formatDate(newsSummary.getPtime());
+//                        newsSummary.setPtime(ptime);
+//                        return newsSummary;
+//                    }
+//                })
+//                .distinct()//去重
+//                .toSortedList(new Func2<NewsSummary, NewsSummary, Integer>() {
+//                    @Override
+//                    public Integer call(NewsSummary newsSummary, NewsSummary newsSummary2) {
+//                        return newsSummary2.getPtime().compareTo(newsSummary.getPtime());
+//                    }
+//                })
+//                //声明线程调度
+//                .compose(RxSchedulers.<List<NewsSummary>>io_main());
     }
 }

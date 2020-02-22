@@ -64,7 +64,7 @@ public class PRJApplication extends BaseApplication {
             }
         });
         initImageLoaderConfig();
-        registerActivityLifecycleCallbacks(LifeCycleCallback.activityLifecycleCallbacks);
+//        registerActivityLifecycleCallbacks(LifeCycleCallback.activityLifecycleCallbacks);
     }
 
     private void initImageLoaderConfig() {

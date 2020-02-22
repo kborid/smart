@@ -2,7 +2,7 @@ package com.kborid.smart.ui.mainTab.news.presenter;
 
 import com.kborid.library.base.RxPresenter;
 import com.kborid.smart.entity.NewsChannelBean;
-import com.kborid.smart.network.Api;
+import com.kborid.smart.network.ApiManager;
 import com.kborid.smart.ui.mainTab.news.presenter.contract.NewsTabContract;
 import com.thunisoft.common.network.callback.ResponseCallback;
 
@@ -18,7 +18,7 @@ public class NewsTabPresenter extends RxPresenter<NewsTabContract.View> implemen
 
     @Override
     public void loadMainChannel() {
-        Api.loadMainChannel(new ResponseCallback<List<NewsChannelBean>>() {
+        ApiManager.loadMainChannel(new ResponseCallback<List<NewsChannelBean>>() {
             @Override
             public void failure(Throwable throwable) {
                 System.out.println(throwable.getMessage());
