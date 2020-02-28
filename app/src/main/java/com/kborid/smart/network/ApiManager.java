@@ -12,17 +12,21 @@ import com.thunisoft.common.network.OkHttpClientFactory;
 import com.thunisoft.common.network.callback.ResponseCallback;
 import com.thunisoft.common.network.func.ApiException;
 import com.thunisoft.common.network.func.ErrorAction;
+import com.thunisoft.common.util.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -89,15 +93,47 @@ public class ApiManager {
     }
 
     @SuppressLint("CheckResult")
-    public static void getNewsList(String type, String id, int startPage, ResponseCallback<Map<String, List<NewsSummary>>> callback) {
+    public static void getNewsList(String type, String id, int startPage, ResponseCallback<List<NewsSummary>> callback) {
         ApiManager.getApi(HostType.NETEASE_NEWS_VIDEO).getNewsList(type, id, startPage)
+                .flatMap(new Function<Map<String, List<NewsSummary>>, ObservableSource<NewsSummary>>() {
+                    @Override
+                    public ObservableSource<NewsSummary> apply(Map<String, List<NewsSummary>> map) throws Exception {
+                        List<NewsSummary> list;
+                        if (id.endsWith(ApiConstants.HOUSE_ID)) {
+                            list = map.get("北京");
+                        } else {
+                            list = map.get(id);
+                        }
+                        return Observable.fromIterable(null != list ? list : new ArrayList<>());
+                    }
+                })
+                // 格式化时间
+                .map(new Function<NewsSummary, NewsSummary>() {
+                    @Override
+                    public NewsSummary apply(NewsSummary newsSummary) throws Exception {
+                        String ptime = DateUtils.formatDate(newsSummary.getPtime());
+                        newsSummary.setPtime(ptime);
+                        return newsSummary;
+                    }
+                })
+                .distinct() // 去重
+                // 排序
+                .toSortedList(new Comparator<NewsSummary>() {
+                    @Override
+                    public int compare(NewsSummary newsSummary1, NewsSummary newsSummary2) {
+                        if (null != newsSummary1.getPtime() && null != newsSummary2) {
+                            return newsSummary2.getPtime().compareTo(newsSummary1.getPtime());
+                        }
+                        return 0;
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Map<String, List<NewsSummary>>>() {
+                .subscribe(new Consumer<List<NewsSummary>>() {
                     @Override
-                    public void accept(Map<String, List<NewsSummary>> map) throws Exception {
+                    public void accept(List<NewsSummary> list) throws Exception {
                         if (null != callback) {
-                            callback.success(map);
+                            callback.success(list);
                         }
                     }
                 }, new ErrorAction() {
@@ -108,33 +144,5 @@ public class ApiManager {
                         }
                     }
                 });
-//                .flatMap(new Function<Map<String, List<NewsSummary>>, ObservableSource<? extends R>>() {
-//                    @Override
-//                    public Observable<NewsSummary> call(Map<String, List<NewsSummary>> map) {
-//                        if (id.endsWith(ApiConstants.HOUSE_ID)) {
-//                            // 房产实际上针对地区的它的id与返回key不同
-//                            return Observable.from(map.get("北京"));
-//                        }
-//                        return Observable.from(map.get(id));
-//                    }
-//                })
-//                //转化时间
-//                .map(new Func1<NewsSummary, NewsSummary>() {
-//                    @Override
-//                    public NewsSummary call(NewsSummary newsSummary) {
-//                        String ptime = TimeUtil.formatDate(newsSummary.getPtime());
-//                        newsSummary.setPtime(ptime);
-//                        return newsSummary;
-//                    }
-//                })
-//                .distinct()//去重
-//                .toSortedList(new Func2<NewsSummary, NewsSummary, Integer>() {
-//                    @Override
-//                    public Integer call(NewsSummary newsSummary, NewsSummary newsSummary2) {
-//                        return newsSummary2.getPtime().compareTo(newsSummary.getPtime());
-//                    }
-//                })
-//                //声明线程调度
-//                .compose(RxSchedulers.<List<NewsSummary>>io_main());
     }
 }
