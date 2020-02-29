@@ -1,18 +1,42 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/mainColor</item>
+
+        <!--控制window默认背景-->
+        <item name="android:windowBackground">@null</item>
+        <!--控制状态栏显示明暗主题-->
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <!-- App theme. -->
+    <style name="BaseAppTheme.AppTheme">
+        <item name="android:windowBackground">@color/defaultBg</item>
+        <!--控制状态栏是否透明（布局内容是否沁入到状态栏），默认false-->
+        <item name="android:windowTranslucentStatus">false</item>
+        <!--控制虚拟导航栏是否透明（布局内容是否沁入到虚拟导航栏），默认false-->
+        <item name="android:windowTranslucentNavigation">false</item>
+        <!--控制window背景是否透明-->
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <!--splashTheme-->
+    <style name="BaseAppTheme.SplashTheme">
+        <item name="android:windowBackground">@mipmap/launch_bg</item>
+        <!--控制布局全屏显示-->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.Trans">
+    <style name="BaseAppTheme.Trans">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>

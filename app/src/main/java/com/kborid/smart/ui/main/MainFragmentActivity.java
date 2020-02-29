@@ -1,6 +1,8 @@
 package com.kborid.smart.ui.main;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -14,6 +16,7 @@ import com.kborid.smart.ui.user.tab.UserTabFragment;
 import com.kborid.smart.ui.video.tab.VideoTabFragment;
 import com.thunisoft.common.base.BaseSimpleActivity;
 import com.thunisoft.ui.bottombar.NavigationBottomBar;
+import com.thunisoft.ui.widget.CustomViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +29,7 @@ public class MainFragmentActivity extends BaseSimpleActivity {
     private static final String[] mBottomBarTitles = PRJApplication.getInstance().getResources().getStringArray(R.array.BottomBarTitle);
 
     @BindView(R.id.viewpager)
-    ViewPager viewPager;
+    CustomViewPager viewPager;
     @BindView(R.id.bottomBar)
     NavigationBottomBar bottomBar;
 
@@ -44,7 +47,7 @@ public class MainFragmentActivity extends BaseSimpleActivity {
         bottomBar.setOnTabCheckedListener(new NavigationBottomBar.OnTabCheckedListener() {
             @Override
             public void onTabChecked(int i) {
-                viewPager.setCurrentItem(i, true);
+                viewPager.setCurrentItem(i, false);
             }
         });
     }
@@ -57,6 +60,8 @@ public class MainFragmentActivity extends BaseSimpleActivity {
         fragments.add(UserTabFragment.newInstance(mBottomBarTitles[3]));
         viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), mBottomBarTitles, fragments));
         viewPager.setCurrentItem(DEFAULT_INDEX);
+        viewPager.setOffscreenPageLimit(4);
+        viewPager.setSlidingEnabled(false);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -66,6 +71,7 @@ public class MainFragmentActivity extends BaseSimpleActivity {
             @Override
             public void onPageSelected(int position) {
                 bottomBar.check(position);
+                changedStatusBar(position);
             }
 
             @Override
@@ -73,5 +79,18 @@ public class MainFragmentActivity extends BaseSimpleActivity {
 
             }
         });
+    }
+
+    private void changedStatusBar(int index) {
+        Window window = getWindow();
+        int flag = window.getDecorView().getSystemUiVisibility();
+        if (index == 3) {
+            flag = flag & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            window.setStatusBarColor(getResources().getColor(R.color.mainColor, null));
+        } else {
+            flag = flag | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            window.setStatusBarColor(getResources().getColor(R.color.white, null));
+        }
+        window.getDecorView().setSystemUiVisibility(flag);
     }
 }

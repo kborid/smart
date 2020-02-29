@@ -1,8 +1,8 @@
 package com.kborid.smart.ui.user.tab;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.kborid.smart.R;
@@ -12,8 +12,10 @@ import butterknife.BindView;
 
 public class UserTabFragment extends BaseSimpleFragment {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    Toolbar toolbar;
+    @BindView(R.id.tv_title)
+    TextView titleTV;
 
     @Override
     protected int getLayoutResId() {
@@ -30,6 +32,7 @@ public class UserTabFragment extends BaseSimpleFragment {
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
-        toolbar.setTitle(getArguments().getString("type"));
+//        toolbar.setTitle(getArguments().getString("type"));
+        titleTV.setText(getArguments().getString("type"));
     }
 }

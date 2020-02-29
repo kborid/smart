@@ -9,23 +9,23 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/white"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
+            android:background="@color/white"
+            app:layout_scrollFlags="scroll"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:title="title"
-            app:titleTextColor="@color/white" />
+            app:titleTextColor="@color/text_black" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/white"
             android:orientation="horizontal">
 
             <com.google.android.material.tabs.TabLayout
@@ -33,8 +33,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:tabBackground="@color/colorPrimary"
-                app:tabIndicatorColor="@color/white" />
+                app:tabBackground="@color/white"
+                app:tabTextColor="@color/text_black"
+                app:tabIndicatorColor="@color/mainColor" />
 
             <ImageView
                 android:id="@+id/add_channel_iv"
