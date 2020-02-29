@@ -202,4 +202,7 @@ dependencies {
     //lombok
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
     implementation "org.projectlombok:lombok:1.18.10"
+
+    //图片缩放
+    implementation 'com.commit451:PhotoView:1.2.4'
 }

@@ -15,8 +15,8 @@ import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.kborid.smart.codescan.camera.CameraManager;
 import com.kborid.smart.codescan.view.ViewfinderView;
-import com.kborid.library.base.BaseSimpleActivity;
 import com.kborid.smart.R;
+import com.thunisoft.common.base.BaseSimpleActivity;
 import com.thunisoft.common.util.ToastUtils;
 
 import java.io.IOException;

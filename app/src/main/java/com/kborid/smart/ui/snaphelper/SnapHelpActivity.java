@@ -37,7 +37,7 @@ public class SnapHelpActivity extends BaseActivity<SnapPresenter> implements Sna
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_snaphelper;
+        return R.layout.act_snaphelper;
     }
 
     @Override

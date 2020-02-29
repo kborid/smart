@@ -44,7 +44,7 @@ public class X5WebViewActivity extends SimpleActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_webview;
+        return R.layout.act_webview;
     }
 
     @Override

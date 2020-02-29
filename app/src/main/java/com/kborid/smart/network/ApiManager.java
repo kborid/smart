@@ -7,6 +7,8 @@ import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.entity.NewsChannelBean;
 import com.kborid.smart.entity.NewsSummary;
+import com.kborid.smart.entity.PhotoGirl;
+import com.kborid.smart.entity.PhotoResBean;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.network.OkHttpClientFactory;
 import com.thunisoft.common.network.callback.ResponseCallback;
@@ -94,7 +96,7 @@ public class ApiManager {
 
     @SuppressLint("CheckResult")
     public static void getNewsList(String type, String id, int startPage, ResponseCallback<List<NewsSummary>> callback) {
-        ApiManager.getApi(HostType.NETEASE_NEWS_VIDEO).getNewsList(type, id, startPage)
+        getApi(HostType.NETEASE_NEWS_VIDEO).getNewsList(type, id, startPage)
                 .flatMap(new Function<Map<String, List<NewsSummary>>, ObservableSource<NewsSummary>>() {
                     @Override
                     public ObservableSource<NewsSummary> apply(Map<String, List<NewsSummary>> map) throws Exception {
@@ -134,6 +136,34 @@ public class ApiManager {
                     public void accept(List<NewsSummary> list) throws Exception {
                         if (null != callback) {
                             callback.success(list);
+                        }
+                    }
+                }, new ErrorAction() {
+                    @Override
+                    protected void call(ApiException e) {
+                        if (null != callback) {
+                            callback.failure(e);
+                        }
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    public static void getPhotoList(int size, int page, ResponseCallback<List<PhotoGirl>> callback) {
+        getApi(HostType.GANK_GIRL_PHOTO).getPhotoList(size, page)
+                .map(new Function<PhotoResBean, List<PhotoGirl>>() {
+                    @Override
+                    public List<PhotoGirl> apply(PhotoResBean photoResBean) throws Exception {
+                        return photoResBean.getResults();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<PhotoGirl>>() {
+                    @Override
+                    public void accept(List<PhotoGirl> girls) throws Exception {
+                        if (null != callback) {
+                            callback.success(girls);
                         }
                     }
                 }, new ErrorAction() {

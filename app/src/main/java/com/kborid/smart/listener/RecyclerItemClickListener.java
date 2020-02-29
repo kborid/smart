@@ -7,8 +7,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.kborid.library.util.LogUtils;
+import com.kborid.smart.ui.picture.tab.PicTabFragment;
 
-public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
+public class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchListener {
     private GestureDetector mGestureDetector;
     private View childView;
     private RecyclerView recyclerView;
@@ -32,6 +33,9 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
         });
     }
 
+    public RecyclerItemClickListener(PicTabFragment picTabFragment, PicTabFragment mListener) {
+    }
+
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
 
@@ -44,15 +48,5 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
         childView = rv.findChildViewUnder(e.getX(), e.getY());
         recyclerView = rv;
         return false;
-    }
-
-    @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        LogUtils.d("onTouchEvent()");
-    }
-
-    @Override
-    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-        LogUtils.d("onRequestDisallowInterceptTouchEvent()");
     }
 }

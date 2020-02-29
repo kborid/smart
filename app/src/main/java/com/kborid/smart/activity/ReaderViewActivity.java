@@ -17,8 +17,6 @@ import com.kborid.smart.widget.MainTitleLayout;
 import com.tencent.smtt.sdk.TbsReaderView;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 import butterknife.BindView;
 
@@ -32,7 +30,7 @@ public class ReaderViewActivity extends SimpleActivity implements TbsReaderView.
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_webview;
+        return R.layout.act_webview;
     }
 
     @Override

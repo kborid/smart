@@ -36,7 +36,7 @@ public class TextureViewActivity extends BaseActivity<TexturePresenter> implemen
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_texture;
+        return R.layout.act_texture;
     }
 
     @Override

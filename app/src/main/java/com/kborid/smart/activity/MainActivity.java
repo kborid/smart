@@ -59,7 +59,7 @@ public class MainActivity extends SimpleActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_main2;
+        return R.layout.act_main2;
     }
 
     @Override

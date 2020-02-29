@@ -2,7 +2,7 @@ package com.kborid.smart.activity;
 
 import android.os.Bundle;
 
-import com.kborid.library.base.BaseSimpleActivity;
+import com.thunisoft.common.base.BaseSimpleActivity;
 import com.kborid.smart.R;
 import com.kborid.smart.util.ImmersiveStatusBarUtils;
 import com.kborid.smart.widget.MainTitleLayout;

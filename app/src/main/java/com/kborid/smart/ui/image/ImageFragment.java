@@ -6,9 +6,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.widget.GridView;
 
-import com.kborid.library.base.BaseSimpleFragment;
 import com.kborid.smart.R;
 import com.kborid.smart.ui.image.adapter.PictureAdapter;
+import com.thunisoft.common.base.BaseSimpleFragment;
 
 import butterknife.BindView;
 
@@ -24,7 +24,7 @@ public class ImageFragment extends BaseSimpleFragment {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_imageloader;
+        return R.layout.act_imageloader;
     }
 
     @Override

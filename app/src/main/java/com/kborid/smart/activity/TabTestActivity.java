@@ -28,7 +28,7 @@ public class TabTestActivity extends SimpleActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_tablayout_test;
+        return R.layout.act_tablayout_test;
     }
 
     @Override

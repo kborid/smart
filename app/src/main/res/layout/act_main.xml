@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!--底部导航栏-->
+    <com.thunisoft.ui.bottombar.NavigationBottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <com.thunisoft.ui.bottombar.NavigationBottomItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:bottomItemTitle="新闻"
+            app:drawablePadding="5dp"
+            app:drawableTop="@drawable/selector_tab_news"
+            app:iconSize="25dp" />
+
+        <com.thunisoft.ui.bottombar.NavigationBottomItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:bottomItemTitle="图片"
+            app:drawablePadding="5dp"
+            app:drawableTop="@drawable/selector_tab_pic"
+            app:iconSize="25dp" />
+
+        <com.thunisoft.ui.bottombar.NavigationBottomItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:bottomItemTitle="视频"
+            app:drawablePadding="5dp"
+            app:drawableTop="@drawable/selector_tab_video"
+            app:iconSize="25dp" />
+
+        <com.thunisoft.ui.bottombar.NavigationBottomItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:bottomItemTitle="我的"
+            app:drawablePadding="5dp"
+            app:drawableTop="@drawable/selector_tab_user"
+            app:iconSize="25dp" />
+
+    </com.thunisoft.ui.bottombar.NavigationBottomBar>
+</LinearLayout>

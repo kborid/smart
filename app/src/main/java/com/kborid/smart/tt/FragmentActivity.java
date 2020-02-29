@@ -27,7 +27,7 @@ public class FragmentActivity extends SimpleActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_fragment;
+        return R.layout.act_fragment;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class FragmentActivity extends SimpleActivity {
     protected void initEventAndData(Bundle savedInstanceState) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-//        ft.replace(R.id.container, FragmentSecond.newInstance());
+//        ft.replace(R.id.container, VideoTabFragment.newInstance());
         ft.commitAllowingStateLoss();
     }
 

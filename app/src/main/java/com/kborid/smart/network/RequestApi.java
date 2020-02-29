@@ -1,6 +1,7 @@
 package com.kborid.smart.network;
 
 import com.kborid.smart.entity.NewsSummary;
+import com.kborid.smart.entity.PhotoResBean;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,8 @@ public interface RequestApi {
     Observable<ResponseBody> getOkHttpTest();
 
     @GET("nc/article/{type}/{id}/{startPage}-20.html")
-    Observable<Map<String, List<NewsSummary>>> getNewsList(
-            @Path("type") String type, @Path("id") String id,
-            @Path("startPage") int startPage);
+    Observable<Map<String, List<NewsSummary>>> getNewsList(@Path("type") String type, @Path("id") String id, @Path("startPage") int startPage);
+
+    @GET("data/福利/{size}/{page}")
+    Observable<PhotoResBean> getPhotoList(@Path("size") int size, @Path("page") int page);
 }

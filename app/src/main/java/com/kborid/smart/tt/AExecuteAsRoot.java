@@ -106,4 +106,16 @@ public abstract class AExecuteAsRoot {
     }
 
     protected abstract ArrayList<String> getCommandsToExecute();
+
+//            ArrayList<String> list = new ArrayList<String>();
+//            list.add("adb devices");
+//            list.add("setenforce 0");
+//            list.add("su root");
+//            list.add("whoami");
+//            list.add("mount -o rw,remount /system");
+//            list.add("chmod 777 /system");
+//            list.add("ls -l");
+//            list.add("cp /storage/emulated/0/Android/data/com.kborid.smart/cache/ss.apk /system/app");
+//            list.add("cp /system/app/fyt.prop /storage/emulated/0/Android/data/com.kborid.smart/cache/");
+//            list.add("ls -l /system/app | grep apk");
 }

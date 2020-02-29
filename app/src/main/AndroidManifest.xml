@@ -31,6 +31,7 @@
         <activity
             android:name=".codescan.control.CaptureActivity"
             android:hardwareAccelerated="true" />
+        <activity android:name=".ui.picture.detail.PictureDetailActivity" />
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
