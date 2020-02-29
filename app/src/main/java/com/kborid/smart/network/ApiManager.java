@@ -69,8 +69,8 @@ public class ApiManager {
                 List<String> channelId = Arrays.asList(PRJApplication.getInstance().getResources().getStringArray(R.array.news_channel_id_static));
                 ArrayList<NewsChannelBean> newsChannelBeans = new ArrayList<>();
                 for (int i = 0; i < channelName.size(); i++) {
-                    NewsChannelBean entity = new NewsChannelBean(channelName.get(i), channelId.get(i)
-                            , ApiConstants.getType(channelId.get(i)), i <= 5, i, true);
+                    NewsChannelBean entity = new NewsChannelBean(channelName.get(i), channelId.get(i),
+                            ApiConstants.getType(channelId.get(i)), i <= 5, i, true);
                     newsChannelBeans.add(entity);
                 }
                 emitter.onNext(newsChannelBeans);
@@ -110,23 +110,20 @@ public class ApiManager {
                     }
                 })
                 // 格式化时间
-                .map(new Function<NewsSummary, NewsSummary>() {
-                    @Override
-                    public NewsSummary apply(NewsSummary newsSummary) throws Exception {
-                        String ptime = DateUtils.formatDate(newsSummary.getPtime());
-                        newsSummary.setPtime(ptime);
-                        return newsSummary;
-                    }
-                })
+//                .map(new Function<NewsSummary, NewsSummary>() {
+//                    @Override
+//                    public NewsSummary apply(NewsSummary newsSummary) throws Exception {
+//                        String ptime = DateUtils.formatDate(newsSummary.getPtime());
+//                        newsSummary.setPtime(ptime);
+//                        return newsSummary;
+//                    }
+//                })
                 .distinct() // 去重
                 // 排序
                 .toSortedList(new Comparator<NewsSummary>() {
                     @Override
                     public int compare(NewsSummary newsSummary1, NewsSummary newsSummary2) {
-                        if (null != newsSummary1.getPtime() && null != newsSummary2) {
-                            return newsSummary2.getPtime().compareTo(newsSummary1.getPtime());
-                        }
-                        return 0;
+                        return newsSummary2.getPtime().compareTo(newsSummary1.getPtime());
                     }
                 })
                 .subscribeOn(Schedulers.io())
