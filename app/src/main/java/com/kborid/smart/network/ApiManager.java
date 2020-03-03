@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.entity.NewsChannelBean;
+import com.kborid.smart.entity.NewsDetail;
 import com.kborid.smart.entity.NewsSummary;
 import com.kborid.smart.entity.PhotoGirl;
 import com.kborid.smart.entity.PhotoResBean;
@@ -14,7 +15,6 @@ import com.thunisoft.common.network.OkHttpClientFactory;
 import com.thunisoft.common.network.callback.ResponseCallback;
 import com.thunisoft.common.network.func.ApiException;
 import com.thunisoft.common.network.func.ErrorAction;
-import com.thunisoft.common.util.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -161,6 +161,28 @@ public class ApiManager {
                     public void accept(List<PhotoGirl> girls) throws Exception {
                         if (null != callback) {
                             callback.success(girls);
+                        }
+                    }
+                }, new ErrorAction() {
+                    @Override
+                    protected void call(ApiException e) {
+                        if (null != callback) {
+                            callback.failure(e);
+                        }
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    public static void getNewsDetail(String postId, ResponseCallback<NewsDetail> callback) {
+        getApi(HostType.NETEASE_NEWS_VIDEO).getNewDetail(postId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<NewsDetail>() {
+                    @Override
+                    public void accept(NewsDetail newsDetail) throws Exception {
+                        if (null != callback) {
+                            callback.success(newsDetail);
                         }
                     }
                 }, new ErrorAction() {

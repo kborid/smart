@@ -1,6 +1,7 @@
 package com.kborid.smart.ui.news.newslist;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,9 +11,12 @@ import com.kborid.smart.R;
 import com.kborid.smart.contant.AppConstant;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.NewsSummary;
+import com.kborid.smart.listener.RecyclerItemClickListener;
+import com.kborid.smart.ui.news.detail.NewsDetailActivity;
 import com.kborid.smart.ui.news.newslist.adapter.NewsAdapter;
 import com.kborid.smart.ui.news.newslist.presenter.NewsPresenter;
 import com.kborid.smart.ui.news.newslist.presenter.contract.NewsContract;
+import com.kborid.smart.util.ToastUitl;
 
 import java.util.List;
 
@@ -52,6 +56,17 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         mNewsAdapter = new NewsAdapter(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mNewsAdapter);
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                NewsSummary newsSummary = mNewsAdapter.getData().get(position);
+                NewsDetailActivity.startAction(getContext(), newsSummary.getPostid(), newsSummary.getImgsrc());
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+            }
+        }));
     }
 
     @Override

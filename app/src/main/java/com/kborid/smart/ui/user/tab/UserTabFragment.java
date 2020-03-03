@@ -12,8 +12,6 @@ import butterknife.BindView;
 
 public class UserTabFragment extends BaseSimpleFragment {
 
-//    @BindView(R.id.toolbar)
-//    Toolbar toolbar;
     @BindView(R.id.tv_title)
     TextView titleTV;
 
@@ -32,7 +30,6 @@ public class UserTabFragment extends BaseSimpleFragment {
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
-//        toolbar.setTitle(getArguments().getString("type"));
         titleTV.setText(getArguments().getString("type"));
     }
 }

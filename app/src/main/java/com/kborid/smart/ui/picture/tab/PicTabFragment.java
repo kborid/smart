@@ -22,7 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class PicTabFragment extends BaseFragment<PicTabPresenter> implements PicTabContract.View, RecyclerItemClickListener.OnItemClickListener {
+public class PicTabFragment extends BaseFragment<PicTabPresenter> implements PicTabContract.View {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -63,21 +63,20 @@ public class PicTabFragment extends BaseFragment<PicTabPresenter> implements Pic
         adapter = new PicAdapter(getContext());
         recycleView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recycleView.setAdapter(adapter);
-        recycleView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), this));
+        recycleView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                PictureDetailActivity.startPictureDetailActivity(getContext(), adapter.getData().get(position).getUrl());
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+            }
+        }));
     }
 
     @Override
     public void refreshPhotoList(List<PhotoGirl> girls) {
         adapter.setPicList(girls);
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        PictureDetailActivity.startPictureDetailActivity(getContext(), adapter.getData().get(position).getUrl());
-    }
-
-    @Override
-    public void onLongClick(View view, int position) {
-
     }
 }

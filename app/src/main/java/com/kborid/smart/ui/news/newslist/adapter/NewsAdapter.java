@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
@@ -18,8 +21,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -51,18 +52,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.BaseViewHolder
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         int type = getItemViewType(position);
         NewsSummary newsSummary = mNewsSummaries.get(position);
-        if (TITLE_ONLY == type) {
-            NewsOnlyTitleViewHolder viewHolder = (NewsOnlyTitleViewHolder) holder;
-            viewHolder.titleTV.setText(newsSummary.getTitle());
-            viewHolder.timeTV.setText(newsSummary.getPtime());
-            Glide.with(mContext).load(newsSummary.getImgsrc()).apply(mRequestOptions).into(viewHolder.iconIV);
-        } else {
-            NewsNormalViewHolder viewHolder = (NewsNormalViewHolder) holder;
-            viewHolder.titleTV.setText(newsSummary.getTitle());
-            viewHolder.summaryTV.setText(newsSummary.getDigest());
-            viewHolder.timeTV.setText(newsSummary.getPtime());
-            Glide.with(mContext).load(newsSummary.getImgsrc()).apply(mRequestOptions).into(viewHolder.iconIV);
+        if (NORMAL == type) {
+            ((NewsNormalViewHolder) holder).summaryTV.setText(newsSummary.getDigest());
         }
+        holder.titleTV.setText(newsSummary.getTitle());
+        holder.timeTV.setText(newsSummary.getPtime());
+        Glide.with(mContext).load(newsSummary.getImgsrc()).apply(mRequestOptions).into(holder.iconIV);
     }
 
     @Override
@@ -80,37 +75,41 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.BaseViewHolder
         notifyDataSetChanged();
     }
 
+    public List<NewsSummary> getData() {
+        return mNewsSummaries;
+    }
+
     public class BaseViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_title)
+        TextView titleTV;
+        @BindView(R.id.tv_time)
+        TextView timeTV;
+        @BindView(R.id.iv_icon)
+        ImageView iconIV;
+
         public BaseViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
+    /**
+     * 正常布局ViewHolder
+     */
     public class NewsNormalViewHolder extends BaseViewHolder {
 
-        @BindView(R.id.tv_title)
-        TextView titleTV;
         @BindView(R.id.tv_summary)
         TextView summaryTV;
-        @BindView(R.id.tv_time)
-        TextView timeTV;
-        @BindView(R.id.iv_icon)
-        ImageView iconIV;
 
         public NewsNormalViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
 
+    /**
+     * 单图片布局ViewHolder
+     */
     public class NewsOnlyTitleViewHolder extends BaseViewHolder {
-        @BindView(R.id.iv_icon)
-        ImageView iconIV;
-        @BindView(R.id.tv_title)
-        TextView titleTV;
-        @BindView(R.id.tv_time)
-        TextView timeTV;
-
         public NewsOnlyTitleViewHolder(@NonNull View itemView) {
             super(itemView);
         }
