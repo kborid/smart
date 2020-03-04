@@ -130,7 +130,7 @@ public class MainActivity extends SimpleActivity {
          *  同时，ImageView又对activity有引用，所以导致mDrawable间接引用activity，使activity无法被回收。
          */
         ImageView iv = new ImageView(this);
-        mDrawable = getResources().getDrawable(R.mipmap.ic_launcher);
+        mDrawable = getResources().getDrawable(R.mipmap.logo);
         iv.setImageDrawable(mDrawable);
     }
 

@@ -89,9 +89,9 @@ public class LocationService extends Service implements AMapLocationListener {
 
         Intent nfIntent = new Intent(this, MainActivity.class);
         builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher)) // 设置下拉列表中的图标(大图标)
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.logo)) // 设置下拉列表中的图标(大图标)
                 .setContentTitle("正在进行后台定位") // 设置下拉列表里的标题
-                .setSmallIcon(R.mipmap.ic_launcher) // 设置状态栏内的小图标
+                .setSmallIcon(R.mipmap.logo) // 设置状态栏内的小图标
                 .setContentText("点击查看更多") // 设置上下文内容
                 .setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
         Notification notification = builder.build(); // 获取构建好的Notification

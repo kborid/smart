@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">新闻火</string>
+    <string name="app_name">AI新闻</string>
     <string name="app_des">Smart-Description</string>
 
     <plurals name="test_plurals">
