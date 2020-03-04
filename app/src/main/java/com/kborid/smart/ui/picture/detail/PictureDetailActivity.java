@@ -34,12 +34,7 @@ public class PictureDetailActivity extends BaseSimpleActivity {
 
     @Override
     protected void initEventAndData(Bundle bundle) {
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> finish());
 
         String url = getIntent().getStringExtra(AppConstant.PHOTO_DETAIL);
         Glide.with(this).load(url)
@@ -72,12 +67,7 @@ public class PictureDetailActivity extends BaseSimpleActivity {
             }
         });
 
-        photoView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return false;
-            }
-        });
+        photoView.setOnLongClickListener(v -> false);
     }
 
     public static void startPictureDetailActivity(Context context, String url) {

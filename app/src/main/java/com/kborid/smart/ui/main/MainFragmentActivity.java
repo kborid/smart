@@ -71,7 +71,6 @@ public class MainFragmentActivity extends BaseSimpleActivity {
             @Override
             public void onPageSelected(int position) {
                 bottomBar.check(position);
-                changedStatusBar(position);
             }
 
             @Override

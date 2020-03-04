@@ -499,4 +499,10 @@ public class NewsDetail {
             this.cid = cid;
         }
     }
+
+    public static NewsDetail defaultNewsDetail() {
+        NewsDetail newsDetail = new NewsDetail();
+        newsDetail.tid = "error";
+        return newsDetail;
+    }
 }

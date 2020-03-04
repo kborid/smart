@@ -1,10 +1,13 @@
 package com.kborid.smart.ui.user.tab;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.kborid.smart.R;
 import com.thunisoft.common.base.BaseSimpleFragment;
 
@@ -12,8 +15,12 @@ import butterknife.BindView;
 
 public class UserTabFragment extends BaseSimpleFragment {
 
-    @BindView(R.id.tv_title)
-    TextView titleTV;
+    @BindView(R.id.appbar)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.toolbarLayout)
+    CollapsingToolbarLayout toolbarLayout;
 
     @Override
     protected int getLayoutResId() {
@@ -30,6 +37,16 @@ public class UserTabFragment extends BaseSimpleFragment {
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
-        titleTV.setText(getArguments().getString("type"));
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+                if (Math.abs(i) >= appBarLayout.getTotalScrollRange() / 3 * 2) {
+                    toolbarLayout.setTitle(getArguments().getString("type"));
+                } else {
+                    toolbarLayout.setTitle("");
+                }
+            }
+        });
+        toolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(getContext(), R.color.text_black));
     }
 }

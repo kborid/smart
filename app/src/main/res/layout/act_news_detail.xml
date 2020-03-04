@@ -18,11 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="@color/white"
             app:expandedTitleMarginEnd="24dp"
             app:expandedTitleMarginStart="24dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:statusBarScrim="@color/white">
 
             <ImageView
                 android:id="@+id/news_detail_photo_iv"
@@ -40,7 +41,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/transparent30"
                 android:fitsSystemWindows="true"
-                tools:visibility="visible" />
+                tools:visibility="gone" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -52,4 +53,6 @@
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/item_news_detail" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

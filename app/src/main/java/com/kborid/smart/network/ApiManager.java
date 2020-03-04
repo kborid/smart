@@ -13,12 +13,9 @@ import com.kborid.smart.entity.PhotoResBean;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.network.OkHttpClientFactory;
 import com.thunisoft.common.network.callback.ResponseCallback;
-import com.thunisoft.common.network.func.ApiException;
-import com.thunisoft.common.network.func.ErrorAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +24,6 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
@@ -50,7 +46,7 @@ public class ApiManager {
                 .build();
     }
 
-    private static RequestApi getApi(int hostType) {
+    public static RequestApi getApi(int hostType) {
         RequestApi requestApi = apiSparseArray.get(hostType);
         if (requestApi == null) {
             requestApi = getRetrofit(hostType).create(RequestApi.class);
@@ -77,19 +73,13 @@ public class ApiManager {
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<NewsChannelBean>>() {
-                    @Override
-                    public void accept(List<NewsChannelBean> o) throws Exception {
-                        if (null != callback) {
-                            callback.success(o);
-                        }
+                .subscribe(o -> {
+                    if (null != callback) {
+                        callback.success(o);
                     }
-                }, new ErrorAction() {
-                    @Override
-                    protected void call(ApiException e) {
-                        if (null != callback) {
-                            callback.failure(e);
-                        }
+                }, throwable -> {
+                    if (null != callback) {
+                        callback.failure(throwable);
                     }
                 });
     }
@@ -109,38 +99,18 @@ public class ApiManager {
                         return Observable.fromIterable(null != list ? list : new ArrayList<>());
                     }
                 })
-                // 格式化时间
-//                .map(new Function<NewsSummary, NewsSummary>() {
-//                    @Override
-//                    public NewsSummary apply(NewsSummary newsSummary) throws Exception {
-//                        String ptime = DateUtils.formatDate(newsSummary.getPtime());
-//                        newsSummary.setPtime(ptime);
-//                        return newsSummary;
-//                    }
-//                })
                 .distinct() // 去重
                 // 排序
-                .toSortedList(new Comparator<NewsSummary>() {
-                    @Override
-                    public int compare(NewsSummary newsSummary1, NewsSummary newsSummary2) {
-                        return newsSummary2.getPtime().compareTo(newsSummary1.getPtime());
-                    }
-                })
+                .toSortedList((newsSummary1, newsSummary2) -> newsSummary2.getPtime().compareTo(newsSummary1.getPtime()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<NewsSummary>>() {
-                    @Override
-                    public void accept(List<NewsSummary> list) throws Exception {
-                        if (null != callback) {
-                            callback.success(list);
-                        }
+                .subscribe(list -> {
+                    if (null != callback) {
+                        callback.success(list);
                     }
-                }, new ErrorAction() {
-                    @Override
-                    protected void call(ApiException e) {
-                        if (null != callback) {
-                            callback.failure(e);
-                        }
+                }, throwable -> {
+                    if (null != callback) {
+                        callback.failure(throwable);
                     }
                 });
     }
@@ -156,19 +126,13 @@ public class ApiManager {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<PhotoGirl>>() {
-                    @Override
-                    public void accept(List<PhotoGirl> girls) throws Exception {
-                        if (null != callback) {
-                            callback.success(girls);
-                        }
+                .subscribe(girls -> {
+                    if (null != callback) {
+                        callback.success(girls);
                     }
-                }, new ErrorAction() {
-                    @Override
-                    protected void call(ApiException e) {
-                        if (null != callback) {
-                            callback.failure(e);
-                        }
+                }, throwable -> {
+                    if (null != callback) {
+                        callback.failure(throwable);
                     }
                 });
     }
@@ -176,21 +140,21 @@ public class ApiManager {
     @SuppressLint("CheckResult")
     public static void getNewsDetail(String postId, ResponseCallback<NewsDetail> callback) {
         getApi(HostType.NETEASE_NEWS_VIDEO).getNewDetail(postId)
+                .map(stringNewsDetailMap -> {
+                    if (null == stringNewsDetailMap || null == stringNewsDetailMap.get(postId)) {
+                        return NewsDetail.defaultNewsDetail();
+                    }
+                    return stringNewsDetailMap.get(postId);
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<NewsDetail>() {
-                    @Override
-                    public void accept(NewsDetail newsDetail) throws Exception {
-                        if (null != callback) {
-                            callback.success(newsDetail);
-                        }
+                .subscribe(newsDetail -> {
+                    if (null != callback) {
+                        callback.success(newsDetail);
                     }
-                }, new ErrorAction() {
-                    @Override
-                    protected void call(ApiException e) {
-                        if (null != callback) {
-                            callback.failure(e);
-                        }
+                }, throwable -> {
+                    if (null != callback) {
+                        callback.failure(throwable);
                     }
                 });
     }
