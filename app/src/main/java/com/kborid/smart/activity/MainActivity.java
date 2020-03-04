@@ -1,8 +1,6 @@
 package com.kborid.smart.activity;
 
 import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -10,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Message;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -19,9 +16,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.content.FileProvider;
 
 import com.kborid.library.hand2eventbus.EventBusss;
 import com.kborid.library.sample.TestSettings;
@@ -39,6 +33,8 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.content.FileProvider;
 import butterknife.BindView;
 
 public class MainActivity extends SimpleActivity {
@@ -87,9 +83,6 @@ public class MainActivity extends SimpleActivity {
                 case ACTION_SHARE:
                     onShare();
                     break;
-                case ACTION_CONTEXT_PRINT:
-                    onPrintContext();
-                    break;
                 case ACTION_SCAN:
                     startActivity(new Intent(MainActivity.this, CaptureActivity.class));
                     break;
@@ -105,9 +98,6 @@ public class MainActivity extends SimpleActivity {
                 switch (actionType) {
                     case ACTION_SCAN:
                         startActivity(new Intent(MainActivity.this, SnapHelpActivity.class));
-                        break;
-                    case ACTION_SECRET:
-                        startActivity(new Intent(MainActivity.this, TabTestActivity.class));
                         break;
                 }
                 return true;
@@ -198,22 +188,12 @@ public class MainActivity extends SimpleActivity {
         customThread.getInnerHandler().sendMessageDelayed(message, 2000);
     }
 
-    private void onPrintContext() {
-        printContextType(getBaseContext());         //Context
-        printContextType(getApplicationContext());  //ContextWrapper
-        printContextType(this);     //ContextThemeWrapper
-    }
-
-    private void printContextType(Context context) {
-        outputConsoleTextView("Type is [" + context + "]");
-        outputConsoleTextView("It is Context!");
-        if (context instanceof ContextWrapper) {
-            outputConsoleTextView("It is ContextWrapper too!");
-        }
-        if (context instanceof ContextThemeWrapper) {
-            outputConsoleTextView("It is ContextThemeWrapper too!");
-        }
-    }
+    //Context
+    //getBaseContext()
+    //ContextWrapper
+    //getApplicationContext()
+    //ContextThemeWrapper
+    //this
 
     private void onBaidu() {
         Intent intent = new Intent(this, X5WebViewActivity.class);
@@ -230,34 +210,10 @@ public class MainActivity extends SimpleActivity {
     }
 
     private void printTest() {
-        outputConsoleTextView("nothing set===========================");
         TestSettings.instance.reset();
-        printSettings();
-
-        outputConsoleTextView("one set===========================");
         TestSettings.instance.setSettingOne(true);
-        printSettings();
-
-        outputConsoleTextView("one two set===========================");
         TestSettings.instance.setSettingTwo(true);
-        printSettings();
-
-        outputConsoleTextView("one two thr set===========================");
         TestSettings.instance.setSettingThr(true);
-        printSettings();
-
-        outputConsoleTextView(getResources().getQuantityString(R.plurals.test_plurals, 0, 0));
-        outputConsoleTextView(getResources().getQuantityString(R.plurals.test_plurals, 1, 1));
-        outputConsoleTextView(getResources().getQuantityString(R.plurals.test_plurals, 2, 2));
-        outputConsoleTextView(getResources().getQuantityString(R.plurals.test_plurals, 3, 3));
-        outputConsoleTextView(getResources().getQuantityString(R.plurals.test_plurals, 4, 4));
-    }
-
-    private void printSettings() {
-        outputConsoleTextView("current Flag = " + TestSettings.instance.getFlag());
-        outputConsoleTextView("isFlagOne = " + TestSettings.instance.isFlagOne());
-        outputConsoleTextView("isFlagTwo = " + TestSettings.instance.isFlagTwo());
-        outputConsoleTextView("isFlagThr = " + TestSettings.instance.isFlagThr());
     }
 
     private void bindServiceInner() {
@@ -285,10 +241,6 @@ public class MainActivity extends SimpleActivity {
         LogUtils.d("onDestroy()");
         unBindServiceInner();
         EventBusss.getDefault().unRegister(this);
-    }
-
-    private void outputConsoleTextView(String string) {
-        LogUtils.d("outputConsoleTextView() " + string);
     }
 
     public static void scroll2Bottom(final ScrollView scroll, final View inner) {

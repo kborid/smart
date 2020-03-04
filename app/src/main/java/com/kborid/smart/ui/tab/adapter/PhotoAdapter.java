@@ -1,4 +1,4 @@
-package com.kborid.smart.ui.picture.tab.adapter;
+package com.kborid.smart.ui.tab.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -21,13 +21,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicViewHolder> {
+public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PicViewHolder> {
 
     private Context mContext;
     private List<PhotoGirl> girls = new ArrayList<>();
     private RequestOptions requestOptions;
 
-    public PicAdapter(Context context) {
+    public PhotoAdapter(Context context) {
         this.mContext = context;
         this.requestOptions = new RequestOptions()
                 .placeholder(R.mipmap.ic_placeholder)
@@ -39,7 +39,7 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicViewHolder> {
     @NonNull
     @Override
     public PicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_pic, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_photo, parent, false);
         return new PicViewHolder(view);
     }
 

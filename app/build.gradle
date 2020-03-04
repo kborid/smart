@@ -124,7 +124,6 @@ android {
 }
 
 dependencies {
-
     //可以包含多种格式lib包
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     implementation project(':library')
@@ -139,11 +138,6 @@ dependencies {
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    //AMap
-    implementation 'com.amap.api:navi-3dmap:6.5.0_3dmap6.5.0'
-    implementation 'com.amap.api:location:4.5.0'
-    implementation 'com.amap.api:search:6.5.0.1'
-
     //rxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
@@ -156,9 +150,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
-
-    //File Download
-    implementation 'com.liulishuo.filedownloader:library:1.4.3'
 
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.1.0'
@@ -198,10 +189,6 @@ dependencies {
 
     //bugly
     implementation 'com.tencent.bugly:crashreport_upgrade:1.4.1'
-
-    //lombok
-    annotationProcessor 'org.projectlombok:lombok:1.18.10'
-    implementation "org.projectlombok:lombok:1.18.10"
 
     //图片缩放
     implementation 'com.commit451:PhotoView:1.2.4'

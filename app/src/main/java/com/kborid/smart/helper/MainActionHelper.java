@@ -7,7 +7,6 @@ public class MainActionHelper {
         ACTION_OPEN_JS,
         ACTION_REFLECT,
         ACTION_SHARE,
-        ACTION_CONTEXT_PRINT,
         ACTION_SCAN,
         ACTION_SECRET;
 

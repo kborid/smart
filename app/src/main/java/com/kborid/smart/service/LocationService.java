@@ -12,29 +12,21 @@ import android.os.Build;
 import android.os.IBinder;
 import androidx.annotation.Nullable;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
-import com.amap.api.location.AMapLocationQualityReport;
 import com.kborid.smart.R;
 import com.kborid.smart.activity.MainActivity;
-import com.kborid.smart.manager.LocationManagers;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.tool.UIHandler;
 
 /**
  * 高德定位Service
  */
-public class LocationService extends Service implements AMapLocationListener {
+public class LocationService extends Service {
 
     private static final String CHANNEL_ID = "CHANNEL_ID_001";
     private static final String CHANNEL_NAME = "CHANNEL_NAME_001";
 
     private static final String TAG = "LocationService";
     private static final int DURING_TIME = 60000;
-    private AMapLocationClient mLocationClient = null;
-    private AMapLocation mAMapLocation;
 
     @Nullable
     @Override
@@ -45,31 +37,16 @@ public class LocationService extends Service implements AMapLocationListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        mLocationClient = new AMapLocationClient(this);
-        mLocationClient.setLocationListener(this);
-        AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationOption.setOnceLocation(false);
-        mLocationOption.setNeedAddress(true);
-        mLocationOption.setInterval(DURING_TIME);
-        mLocationClient.setLocationOption(mLocationOption);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         UIHandler.getHandler().removeCallbacksAndMessages(null);
-        if (mLocationClient != null) {
-            mLocationClient.onDestroy();
-        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            setServiceForeground();
-//        }
-        mLocationClient.startLocation();
         UIHandler.postDelayed(checkGpsRunnable, DURING_TIME);
         return super.onStartCommand(intent, flags, startId);
     }
@@ -97,36 +74,22 @@ public class LocationService extends Service implements AMapLocationListener {
         Notification notification = builder.build(); // 获取构建好的Notification
 
         startForeground(1101, notification);
-        mLocationClient.enableBackgroundLocation(1101, notification);
     }
 
     private Runnable checkGpsRunnable = new Runnable() {
         @Override
         public void run() {
-            if (mAMapLocation != null) {
-                parseGPSStatusString(mAMapLocation.getLocationQualityReport().getGPSStatus());
-            }
             UIHandler.postDelayed(checkGpsRunnable, DURING_TIME * 2L);
         }
     };
 
-    @Override
-    public void onLocationChanged(AMapLocation aMapLocation) {
-        Logger.t(TAG).d(String.valueOf(aMapLocation));
-        mAMapLocation = aMapLocation;
-        if (aMapLocation != null) {
-            LocationManagers.setLocationInfo(aMapLocation);
-            Logger.t(TAG).d(LocationManagers.print());
-        }
-    }
-
     public static void startLocationService(Context context) {
         Intent intent = new Intent(context, LocationService.class);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            context.startForegroundService(intent);
-//        } else {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(intent);
+        } else {
             context.startService(intent);
-//        }
+        }
     }
 
     public void speck(String str) {
@@ -139,33 +102,33 @@ public class LocationService extends Service implements AMapLocationListener {
      * @param statusCode GPS状态码
      * @return
      */
-    private void parseGPSStatusString(int statusCode) {
-        String str = "";
-        switch (statusCode) {
-            case AMapLocationQualityReport.GPS_STATUS_OK:
-                str = "GPS状态正常";
-                speck("GPS信号正常");
-                break;
-            case AMapLocationQualityReport.GPS_STATUS_NOGPSPROVIDER:
-                str = "手机中没有GPS Provider，无法进行GPS定位";
-                speck("GPS信号弱");
-                break;
-            case AMapLocationQualityReport.GPS_STATUS_OFF:
-                str = "GPS关闭，建议开启GPS，提高定位质量";
-                speck("GPS信号弱");
-                break;
-            case AMapLocationQualityReport.GPS_STATUS_MODE_SAVING:
-                str = "选择的定位模式中不包含GPS定位，建议选择包含GPS定位的模式，提高定位质量";
-                speck("GPS信号弱");
-                break;
-            case AMapLocationQualityReport.GPS_STATUS_NOGPSPERMISSION:
-                str = "没有GPS定位权限，建议开启gps定位权限";
-                speck("GPS信号弱");
-                break;
-                default:
-                    Logger.t(TAG).d("no defined");
-                    break;
-        }
-        Logger.t(TAG).d(str);
-    }
+//    private void parseGPSStatusString(int statusCode) {
+//        String str = "";
+//        switch (statusCode) {
+//            case AMapLocationQualityReport.GPS_STATUS_OK:
+//                str = "GPS状态正常";
+//                speck("GPS信号正常");
+//                break;
+//            case AMapLocationQualityReport.GPS_STATUS_NOGPSPROVIDER:
+//                str = "手机中没有GPS Provider，无法进行GPS定位";
+//                speck("GPS信号弱");
+//                break;
+//            case AMapLocationQualityReport.GPS_STATUS_OFF:
+//                str = "GPS关闭，建议开启GPS，提高定位质量";
+//                speck("GPS信号弱");
+//                break;
+//            case AMapLocationQualityReport.GPS_STATUS_MODE_SAVING:
+//                str = "选择的定位模式中不包含GPS定位，建议选择包含GPS定位的模式，提高定位质量";
+//                speck("GPS信号弱");
+//                break;
+//            case AMapLocationQualityReport.GPS_STATUS_NOGPSPERMISSION:
+//                str = "没有GPS定位权限，建议开启gps定位权限";
+//                speck("GPS信号弱");
+//                break;
+//                default:
+//                    Logger.t(TAG).d("no defined");
+//                    break;
+//        }
+//        Logger.t(TAG).d(str);
+//    }
 }

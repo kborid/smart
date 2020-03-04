@@ -1,12 +1,11 @@
 package com.kborid.smart.activity;
 
+import java.util.Arrays;
+import java.util.List;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @description: fragment适配器

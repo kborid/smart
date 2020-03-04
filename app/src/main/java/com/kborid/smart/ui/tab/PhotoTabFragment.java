@@ -1,4 +1,4 @@
-package com.kborid.smart.ui.picture.tab;
+package com.kborid.smart.ui.tab;
 
 import android.os.Bundle;
 import android.view.View;
@@ -13,16 +13,16 @@ import com.kborid.smart.R;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.PhotoGirl;
 import com.kborid.smart.listener.RecyclerItemClickListener;
-import com.kborid.smart.ui.picture.detail.PictureDetailActivity;
-import com.kborid.smart.ui.picture.tab.adapter.PicAdapter;
-import com.kborid.smart.ui.picture.tab.presenter.PicTabPresenter;
-import com.kborid.smart.ui.picture.tab.presenter.contract.PicTabContract;
+import com.kborid.smart.ui.photo.detail.PhotoDetailActivity;
+import com.kborid.smart.ui.tab.adapter.PhotoAdapter;
+import com.kborid.smart.ui.tab.presenter.PhotoTabPresenter;
+import com.kborid.smart.ui.tab.presenter.contract.PhotoTabContract;
 
 import java.util.List;
 
 import butterknife.BindView;
 
-public class PicTabFragment extends BaseFragment<PicTabPresenter> implements PicTabContract.View {
+public class PhotoTabFragment extends BaseFragment<PhotoTabPresenter> implements PhotoTabContract.View {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -32,7 +32,7 @@ public class PicTabFragment extends BaseFragment<PicTabPresenter> implements Pic
     private static int SIZE = 500;
     private int mStartPage = 1;
 
-    private PicAdapter adapter;
+    private PhotoAdapter adapter;
 
 
     @Override
@@ -49,7 +49,7 @@ public class PicTabFragment extends BaseFragment<PicTabPresenter> implements Pic
     }
 
     public static Fragment newInstance(String type) {
-        Fragment fragment = new PicTabFragment();
+        Fragment fragment = new PhotoTabFragment();
         Bundle args = new Bundle();
         args.putString("type", type);
         fragment.setArguments(args);
@@ -60,13 +60,13 @@ public class PicTabFragment extends BaseFragment<PicTabPresenter> implements Pic
     protected void initEventAndData(Bundle savedInstanceState) {
         toolbar.setTitle(getArguments().getString("type"));
         mPresenter.getPhotoList(SIZE, mStartPage);
-        adapter = new PicAdapter(getContext());
+        adapter = new PhotoAdapter(getContext());
         recycleView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recycleView.setAdapter(adapter);
         recycleView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                PictureDetailActivity.startPictureDetailActivity(getContext(), adapter.getData().get(position).getUrl());
+                PhotoDetailActivity.startPictureDetailActivity(getContext(), adapter.getData().get(position).getUrl());
             }
 
             @Override

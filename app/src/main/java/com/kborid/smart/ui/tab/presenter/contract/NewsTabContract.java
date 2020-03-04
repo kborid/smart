@@ -1,4 +1,4 @@
-package com.kborid.smart.ui.news.tab.presenter.contract;
+package com.kborid.smart.ui.tab.presenter.contract;
 
 import com.kborid.library.base.BasePresenter;
 import com.kborid.library.base.BaseView;

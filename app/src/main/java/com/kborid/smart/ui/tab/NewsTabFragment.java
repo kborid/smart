@@ -1,4 +1,4 @@
-package com.kborid.smart.ui.news.tab;
+package com.kborid.smart.ui.tab;
 
 import android.os.Bundle;
 import android.view.View;
@@ -15,8 +15,8 @@ import com.kborid.smart.contant.AppConstant;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.NewsChannelBean;
 import com.kborid.smart.ui.news.newslist.NewsFragment;
-import com.kborid.smart.ui.news.tab.presenter.NewsTabPresenter;
-import com.kborid.smart.ui.news.tab.presenter.contract.NewsTabContract;
+import com.kborid.smart.ui.tab.presenter.NewsTabPresenter;
+import com.kborid.smart.ui.tab.presenter.contract.NewsTabContract;
 import com.thunisoft.ui.util.ScreenUtils;
 
 import java.util.ArrayList;

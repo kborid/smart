@@ -1,4 +1,4 @@
-package com.kborid.smart.ui.video.tab;
+package com.kborid.smart.ui.tab;
 
 import android.os.Bundle;
 

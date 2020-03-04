@@ -1,9 +1,9 @@
-package com.kborid.smart.ui.news.tab.presenter;
+package com.kborid.smart.ui.tab.presenter;
 
 import com.kborid.library.base.RxPresenter;
 import com.kborid.smart.entity.NewsChannelBean;
 import com.kborid.smart.network.ApiManager;
-import com.kborid.smart.ui.news.tab.presenter.contract.NewsTabContract;
+import com.kborid.smart.ui.tab.presenter.contract.NewsTabContract;
 import com.thunisoft.common.network.callback.ResponseCallback;
 
 import java.util.List;

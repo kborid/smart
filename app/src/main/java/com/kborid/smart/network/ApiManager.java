@@ -32,7 +32,7 @@ import retrofit2.converter.fastjson.FastJsonConverterFactory;
 
 public class ApiManager {
 
-    private static SparseArray<RequestApi> apiSparseArray = new SparseArray<>();
+    private static SparseArray<RequestApi> apiSparseArray = new SparseArray<>(HostType.TYPE_COUNT);
 
     private ApiManager() {
     }

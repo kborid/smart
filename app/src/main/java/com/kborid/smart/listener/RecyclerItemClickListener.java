@@ -1,13 +1,11 @@
 package com.kborid.smart.listener;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.kborid.library.util.LogUtils;
-import com.kborid.smart.ui.picture.tab.PicTabFragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchListener {
     private GestureDetector mGestureDetector;
@@ -31,9 +29,6 @@ public class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchLis
                 }
             }
         });
-    }
-
-    public RecyclerItemClickListener(PicTabFragment picTabFragment, PicTabFragment mListener) {
     }
 
     public interface OnItemClickListener {

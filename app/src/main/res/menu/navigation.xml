@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/news"
+        android:icon="@mipmap/ic_news"
+        android:checked="true"
+        android:orderInCategory="0"
+        android:title="新闻" />
+    <item
+        android:id="@+id/photo"
+        android:icon="@mipmap/ic_photo"
+        android:orderInCategory="1"
+        android:title="图片" />
+    <item
+        android:id="@+id/video"
+        android:icon="@mipmap/ic_video"
+        android:orderInCategory="2"
+        android:title="视频" />
+    <item
+        android:id="@+id/user"
+        android:icon="@mipmap/ic_user"
+        android:orderInCategory="3"
+        android:title="我的" />
+</menu>

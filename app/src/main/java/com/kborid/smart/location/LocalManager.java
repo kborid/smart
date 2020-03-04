@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 
 import com.orhanobut.logger.Logger;
@@ -39,13 +40,11 @@ public enum LocalManager {
     /**
      * Determines whether one Location reading is better than the current Location fix
      *
-     * @param location The new Location that you want to evaluate
+     * @param location            The new Location that you want to evaluate
      * @param currentBestLocation The current Location fix, to which you want to compare the new one
      */
-    protected boolean isBetterLocation(Location location, Location currentBestLocation)
-    {
-        if (currentBestLocation == null)
-        {
+    protected boolean isBetterLocation(Location location, Location currentBestLocation) {
+        if (currentBestLocation == null) {
             // A new location is always better than no location
             return true;
         }
@@ -59,14 +58,11 @@ public enum LocalManager {
         // If it's been more than two minutes since the current location, use
         // the new location
         // because the user has likely moved
-        if (isSignificantlyNewer)
-        {
+        if (isSignificantlyNewer) {
             return true;
             // If the new location is more than two minutes older, it must be
             // worse
-        }
-        else if (isSignificantlyOlder)
-        {
+        } else if (isSignificantlyOlder) {
             return false;
         }
 
@@ -81,26 +77,21 @@ public enum LocalManager {
 
         // Determine location quality using a combination of timeliness and
         // accuracy
-        if (isMoreAccurate)
-        {
+        if (isMoreAccurate) {
             return true;
-        }
-        else if (isNewer && !isLessAccurate)
-        {
+        } else if (isNewer && !isLessAccurate) {
             return true;
-        }
-        else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider)
-        {
+        } else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
             return true;
         }
         return false;
     }
 
-    /** Checks whether two providers are the same */
-    private boolean isSameProvider(String provider1, String provider2)
-    {
-        if (provider1 == null)
-        {
+    /**
+     * Checks whether two providers are the same
+     */
+    private boolean isSameProvider(String provider1, String provider2) {
+        if (provider1 == null) {
             return provider2 == null;
         }
         return provider1.equals(provider2);

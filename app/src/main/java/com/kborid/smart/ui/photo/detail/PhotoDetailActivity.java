@@ -1,11 +1,10 @@
-package com.kborid.smart.ui.picture.detail;
+package com.kborid.smart.ui.photo.detail;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -20,7 +19,7 @@ import com.thunisoft.common.base.BaseSimpleActivity;
 import butterknife.BindView;
 import uk.co.senab.photoview.PhotoView;
 
-public class PictureDetailActivity extends BaseSimpleActivity {
+public class PhotoDetailActivity extends BaseSimpleActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -71,7 +70,7 @@ public class PictureDetailActivity extends BaseSimpleActivity {
     }
 
     public static void startPictureDetailActivity(Context context, String url) {
-        Intent intent = new Intent(context, PictureDetailActivity.class);
+        Intent intent = new Intent(context, PhotoDetailActivity.class);
         intent.putExtra(AppConstant.PHOTO_DETAIL, url);
         context.startActivity(intent);
     }

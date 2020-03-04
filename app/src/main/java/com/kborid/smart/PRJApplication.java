@@ -10,7 +10,6 @@ import com.kborid.library.base.BaseApplication;
 import com.kborid.library.util.ConfigUtils;
 import com.kborid.library.util.LogUtils;
 import com.kborid.smart.service.LocationService;
-import com.liulishuo.filedownloader.FileDownloader;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -48,7 +47,6 @@ public class PRJApplication extends BaseApplication {
             }
         });
         LocationService.startLocationService(this);
-        FileDownloader.init(PRJApplication.getInstance());
         LogUtils.d("=======================" + ConfigUtils.getConfigX());
         LogUtils.d("=======================" + ConfigUtils.getConfigY());
         Bugly.init(getApplicationContext(), "6b298e7c56", BuildConfig.DEBUG);
@@ -64,7 +62,7 @@ public class PRJApplication extends BaseApplication {
             }
         });
         initImageLoaderConfig();
-//        registerActivityLifecycleCallbacks(LifeCycleCallback.activityLifecycleCallbacks);
+        registerActivityLifecycleCallbacks(LifeCycleCallback.activityLifecycleCallbacks);
     }
 
     private void initImageLoaderConfig() {

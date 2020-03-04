@@ -5,8 +5,8 @@ import com.kborid.library.di.module.CommonModule;
 import com.kborid.smart.ui.main.MainFragmentActivity;
 import com.kborid.smart.ui.news.detail.NewsDetailActivity;
 import com.kborid.smart.ui.news.newslist.NewsFragment;
-import com.kborid.smart.ui.news.tab.NewsTabFragment;
-import com.kborid.smart.ui.picture.tab.PicTabFragment;
+import com.kborid.smart.ui.tab.NewsTabFragment;
+import com.kborid.smart.ui.tab.PhotoTabFragment;
 import com.kborid.smart.ui.texture.TextureViewActivity;
 
 import dagger.Component;
@@ -24,5 +24,5 @@ public interface CommonComponent {
 
     void inject(NewsDetailActivity activity);
 
-    void inject(PicTabFragment fragment);
+    void inject(PhotoTabFragment fragment);
 }

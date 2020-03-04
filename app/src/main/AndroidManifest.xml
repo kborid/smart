@@ -35,13 +35,12 @@
         <activity android:name="com.kborid.smart.tt.FragmentActivity" />
         <activity android:name="com.kborid.smart.activity.X5WebViewActivity" />
         <activity android:name=".ui.texture.TextureViewActivity" />
-        <activity android:name=".activity.TabTestActivity" />
         <activity android:name=".ui.snaphelper.SnapHelpActivity" />
         <activity
             android:name=".codescan.control.CaptureActivity"
             android:hardwareAccelerated="true" />
         <activity
-            android:name=".ui.picture.detail.PictureDetailActivity"
+            android:name=".ui.photo.detail.PhotoDetailActivity"
             android:theme="@style/BaseAppTheme.SplashTheme" />
         <activity android:name=".ui.news.detail.NewsDetailActivity"/>
         <activity
@@ -55,10 +54,6 @@
                 <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="@string/amap_key" />
 
         <meta-data
             android:name="env"
@@ -80,8 +75,6 @@
             android:name=".service.LocationService"
             android:process=":location" />
 
-        <service android:name="com.amap.api.location.APSService" />
-
     </application>
 
     <uses-feature android:name="android.hardware.camera" />
@@ -102,7 +95,6 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
