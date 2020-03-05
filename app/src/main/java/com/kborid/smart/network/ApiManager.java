@@ -3,25 +3,19 @@ package com.kborid.smart.network;
 import android.annotation.SuppressLint;
 import android.util.SparseArray;
 
-import com.kborid.smart.PRJApplication;
-import com.kborid.smart.R;
-import com.kborid.smart.entity.NewsChannelBean;
 import com.kborid.smart.entity.NewsDetail;
 import com.kborid.smart.entity.NewsSummary;
 import com.kborid.smart.entity.PhotoGirl;
 import com.kborid.smart.entity.PhotoResBean;
-import com.orhanobut.logger.Logger;
+import com.kborid.smart.entity.VideoData;
 import com.thunisoft.common.network.OkHttpClientFactory;
 import com.thunisoft.common.network.callback.ResponseCallback;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
@@ -53,35 +47,6 @@ public class ApiManager {
             apiSparseArray.put(hostType, requestApi);
         }
         return requestApi;
-    }
-
-    @SuppressLint("CheckResult")
-    public static void loadMainChannel(ResponseCallback<List<NewsChannelBean>> callback) {
-        Observable.create(new ObservableOnSubscribe<List<NewsChannelBean>>() {
-            @Override
-            public void subscribe(ObservableEmitter<List<NewsChannelBean>> emitter) throws Exception {
-                Logger.i("thread: " + Thread.currentThread().getName());
-                List<String> channelName = Arrays.asList(PRJApplication.getInstance().getResources().getStringArray(R.array.news_channel_name_static));
-                List<String> channelId = Arrays.asList(PRJApplication.getInstance().getResources().getStringArray(R.array.news_channel_id_static));
-                ArrayList<NewsChannelBean> newsChannelBeans = new ArrayList<>();
-                for (int i = 0; i < channelName.size(); i++) {
-                    NewsChannelBean entity = new NewsChannelBean(channelName.get(i), channelId.get(i),
-                            ApiConstants.getType(channelId.get(i)), i <= 5, i, true);
-                    newsChannelBeans.add(entity);
-                }
-                emitter.onNext(newsChannelBeans);
-            }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                    if (null != callback) {
-                        callback.success(o);
-                    }
-                }, throwable -> {
-                    if (null != callback) {
-                        callback.failure(throwable);
-                    }
-                });
     }
 
     @SuppressLint("CheckResult")
@@ -151,6 +116,32 @@ public class ApiManager {
                 .subscribe(newsDetail -> {
                     if (null != callback) {
                         callback.success(newsDetail);
+                    }
+                }, throwable -> {
+                    if (null != callback) {
+                        callback.failure(throwable);
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
+    public static void getVideoList(String type, int startPage, ResponseCallback<List<VideoData>> callback) {
+        getApi(HostType.NETEASE_NEWS_VIDEO).getVideoList(type, startPage)
+                .flatMap(new Function<Map<String, List<VideoData>>, ObservableSource<VideoData>>() {
+                    @Override
+                    public ObservableSource<VideoData> apply(Map<String, List<VideoData>> map) throws Exception {
+                        List<VideoData> list = map.get(type);
+                        return Observable.fromIterable(null != list ? list : new ArrayList<>());
+                    }
+                })
+                .distinct() // 去重
+                // 排序
+                .toSortedList((videoData1, videoData2) -> videoData2.getPtime().compareTo(videoData1.getPtime()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    if (null != callback) {
+                        callback.success(list);
                     }
                 }, throwable -> {
                     if (null != callback) {

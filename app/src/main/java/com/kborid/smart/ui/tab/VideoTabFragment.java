@@ -1,22 +1,47 @@
 package com.kborid.smart.ui.tab;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
+import com.kborid.library.base.BaseFragment;
 import com.kborid.smart.R;
-import com.thunisoft.common.base.BaseSimpleFragment;
+import com.kborid.smart.activity.FragmentAdapter;
+import com.kborid.smart.contant.AppConstant;
+import com.kborid.smart.di.DaggerCommonComponent;
+import com.kborid.smart.entity.VideoChannelBean;
+import com.kborid.smart.ui.tab.presenter.VideoTabPresenter;
+import com.kborid.smart.ui.tab.presenter.contract.VideoTabContract;
+import com.kborid.smart.ui.video.list.VideoFragment;
+import com.thunisoft.ui.util.ScreenUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
-public class VideoTabFragment extends BaseSimpleFragment {
+public class VideoTabFragment extends BaseFragment<VideoTabPresenter> implements VideoTabContract.View {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.recycleView)
-    RecyclerView recycleView;
+    @BindView(R.id.tabs)
+    TabLayout tabs;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+
+    private FragmentAdapter adapter;
+
+    @Override
+    protected void initInject() {
+        DaggerCommonComponent.builder()
+                .commonModule(getCommonModule("videoTab"))
+                .build()
+                .inject(this);
+    }
 
     @Override
     protected int getLayoutResId() {
@@ -34,5 +59,57 @@ public class VideoTabFragment extends BaseSimpleFragment {
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
         toolbar.setTitle(getArguments().getString("type"));
+        mPresenter.loadVideoChannel();
+    }
+
+    @Override
+    public void updateVideoChannel(List<VideoChannelBean> data) {
+        if (null != data) {
+            List<String> channelNames = new ArrayList<>();
+            List<Fragment> mNewsFragmentList = new ArrayList<>();
+            for (int i = 0; i < data.size(); i++) {
+                channelNames.add(data.get(i).getChannelName());
+                mNewsFragmentList.add(createListFragments(data.get(i)));
+            }
+
+            if (null == adapter) {
+                adapter = new FragmentAdapter(getChildFragmentManager(), channelNames, mNewsFragmentList);
+            } else {
+                //刷新fragment
+                adapter.setFragments(channelNames, mNewsFragmentList);
+            }
+            viewPager.setAdapter(adapter);
+            tabs.setupWithViewPager(viewPager);
+            dynamicSetTabLayoutMode(tabs);
+        }
+    }
+
+    private Fragment createListFragments(VideoChannelBean newsChannel) {
+        Fragment fragment = new VideoFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AppConstant.VIDEO_TYPE, newsChannel.getChannelId());
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    private void dynamicSetTabLayoutMode(TabLayout tabLayout) {
+        int tabWidth = calculateTabWidth(tabLayout);
+        int screenWidth = ScreenUtils.mScreenWidth;
+
+        if (tabWidth <= screenWidth) {
+            tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        } else {
+            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
+    }
+
+    private int calculateTabWidth(TabLayout tabLayout) {
+        int tabWidth = 0;
+        for (int i = 0; i < tabLayout.getChildCount(); i++) {
+            final View view = tabLayout.getChildAt(i);
+            view.measure(0, 0); // 通知父view测量，以便于能够保证获取到宽高
+            tabWidth += view.getMeasuredWidth();
+        }
+        return tabWidth;
     }
 }

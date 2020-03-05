@@ -59,11 +59,11 @@ public class NewsTabFragment extends BaseFragment<NewsTabPresenter> implements N
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
         toolbar.setTitle(getArguments().getString("type"));
-        mPresenter.loadMainChannel();
+        mPresenter.loadNewsChannel();
     }
 
     @Override
-    public void updateMainChannel(List<NewsChannelBean> data) {
+    public void updateNewsChannel(List<NewsChannelBean> data) {
         if (null != data) {
             List<String> channelNames = new ArrayList<>();
             List<Fragment> mNewsFragmentList = new ArrayList<>();

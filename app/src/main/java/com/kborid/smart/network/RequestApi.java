@@ -3,6 +3,7 @@ package com.kborid.smart.network;
 import com.kborid.smart.entity.NewsDetail;
 import com.kborid.smart.entity.NewsSummary;
 import com.kborid.smart.entity.PhotoResBean;
+import com.kborid.smart.entity.VideoData;
 
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Path;
 import retrofit2.http.Url;
 
@@ -31,4 +33,9 @@ public interface RequestApi {
     // 图片列表
     @GET("data/福利/{size}/{page}")
     Observable<PhotoResBean> getPhotoList(@Path("size") int size, @Path("page") int page);
+
+    @GET("nc/video/list/{type}/n/{startPage}-10.html")
+    Observable<Map<String, List<VideoData>>> getVideoList(
+            @Path("type") String type,
+            @Path("startPage") int startPage);
 }
