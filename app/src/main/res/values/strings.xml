@@ -1,21 +1,11 @@
 <resources>
     <string name="app_name">AI新闻</string>
-    <string name="app_des">Smart-Description</string>
+    <string name="app_des">AI新闻-Description</string>
 
     <plurals name="test_plurals">
         <item quantity="one">test %d</item>
         <item quantity="other">other %d</item>
     </plurals>
-
-    <array name="actions">
-        <item>百度一下</item>
-        <item>文檔</item>
-        <item>反射</item>
-        <item>文本分享</item>
-        <item>Context打印</item>
-        <item>掃碼</item>
-        <item>秘密花园</item>
-    </array>
 
     <array name="BottomBarTitle">
         <item>新闻</item>

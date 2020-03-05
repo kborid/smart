@@ -23,7 +23,6 @@ import com.kborid.smart.entity.NewsDetail;
 import com.kborid.smart.ui.news.detail.presenter.NewsDetailPresenter;
 import com.kborid.smart.ui.news.detail.presenter.contract.NewsDetailContract;
 import com.kborid.smart.util.URLImageGetter;
-import com.thunisoft.common.tool.UIHandler;
 import com.thunisoft.common.util.ToastUtils;
 
 import java.util.List;

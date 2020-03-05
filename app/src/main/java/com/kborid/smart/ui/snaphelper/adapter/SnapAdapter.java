@@ -1,39 +1,41 @@
 package com.kborid.smart.ui.snaphelper.adapter;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.kborid.smart.R;
+import com.kborid.smart.entity.PhotoGirl;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.CustomViewHolder> {
+public class SnapAdapter extends RecyclerView.Adapter<SnapAdapter.SnapViewHolder> {
 
     private Context context;
-    private List<String> mData;
+    private List<PhotoGirl> mData;
 
-    public RecycleAdapter(Context context) {
+    public SnapAdapter(Context context) {
         this.context = context;
     }
 
     @NonNull
     @Override
-    public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.lv_recycle_item, parent, false));
+    public SnapViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new SnapViewHolder(LayoutInflater.from(context).inflate(R.layout.lv_recycle_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-        Glide.with(context).load(mData.get(position)).into(holder.iv_pic);
+    public void onBindViewHolder(@NonNull SnapViewHolder holder, int position) {
+        Glide.with(context).load(mData.get(position).getUrl()).into(holder.iv_pic);
     }
 
     @Override
@@ -44,16 +46,16 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.CustomVi
         return 0;
     }
 
-    public void updateData(List<String> data) {
+    public void updateData(List<PhotoGirl> data) {
         this.mData = data;
         notifyDataSetChanged();
     }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    public class SnapViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_pic)
         ImageView iv_pic;
 
-        public CustomViewHolder(View itemView) {
+        public SnapViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

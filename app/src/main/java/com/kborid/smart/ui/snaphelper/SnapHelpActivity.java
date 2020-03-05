@@ -1,7 +1,9 @@
 package com.kborid.smart.ui.snaphelper;
 
 import android.os.Bundle;
+import android.view.View;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,10 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kborid.library.base.BaseActivity;
 import com.kborid.smart.R;
 import com.kborid.smart.di.DaggerSnapComponent;
-import com.kborid.smart.ui.snaphelper.adapter.RecycleAdapter;
+import com.kborid.smart.ui.snaphelper.adapter.SnapAdapter;
 import com.kborid.smart.ui.snaphelper.presenter.SnapPresenter;
 import com.kborid.smart.ui.snaphelper.presenter.contract.SnapContract;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -22,10 +23,12 @@ public class SnapHelpActivity extends BaseActivity<SnapPresenter> implements Sna
 
     private static final String TAG = SnapHelpActivity.class.getSimpleName();
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.recycleView)
     RecyclerView recycleView;
 
-    private RecycleAdapter adapter;
+    private SnapAdapter adapter;
 
     @Override
     protected void initInject() {
@@ -42,9 +45,15 @@ public class SnapHelpActivity extends BaseActivity<SnapPresenter> implements Sna
 
     @Override
     protected void initEventAndData(Bundle savedInstanceState) {
-        Logger.t(TAG).d("initEventAndData()");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         if (null == adapter) {
-            adapter = new RecycleAdapter(this);
+            adapter = new SnapAdapter(this);
         }
         recycleView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         recycleView.setAdapter(adapter);
@@ -55,7 +64,9 @@ public class SnapHelpActivity extends BaseActivity<SnapPresenter> implements Sna
     }
 
     @Override
-    public void updateData(List<String> list) {
-        adapter.updateData(list);
+    public void updateData(List data) {
+        if (null != adapter) {
+            adapter.updateData(data);
+        }
     }
 }

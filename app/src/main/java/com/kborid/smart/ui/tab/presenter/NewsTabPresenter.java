@@ -26,8 +26,9 @@ public class NewsTabPresenter extends RxPresenter<NewsTabContract.View> implemen
 
             @Override
             public void success(List<NewsChannelBean> newsChannelBeans) {
-                System.out.println("succ");
-                mView.updateMainChannel(newsChannelBeans);
+                if (null != mView) {
+                    mView.updateMainChannel(newsChannelBeans);
+                }
             }
         });
     }

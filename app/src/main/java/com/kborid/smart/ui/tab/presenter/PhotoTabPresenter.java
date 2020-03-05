@@ -27,7 +27,9 @@ public class PhotoTabPresenter extends RxPresenter<PhotoTabContract.View> implem
 
             @Override
             public void success(List<PhotoGirl> girls) {
-                mView.refreshPhotoList(girls);
+                if (null != mView) {
+                    mView.refreshPhotoList(girls);
+                }
             }
         });
     }

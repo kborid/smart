@@ -1,9 +1,11 @@
-package com.kborid.smart.ui.main;
+package com.kborid.smart.ui;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kborid.smart.PRJApplication;
@@ -19,9 +21,6 @@ import com.thunisoft.ui.widget.CustomViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 
 public class MainFragmentActivity extends BaseSimpleActivity {

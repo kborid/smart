@@ -13,7 +13,7 @@ import java.util.Map;
 
 
 /**
- * From time to time to take the act_main2 thread stack,
+ * From time to time to take the act_test thread stack,
  * to speculate the implementation of time-consuming method
  * <p>
  * Created by tsmile on 16/2/26.
@@ -102,7 +102,7 @@ public class MainThreadWatchDog implements Runnable {
     public void run() {
         while (mStarted) {
             long begin = System.nanoTime();
-            // 1 dump act_main2 thread
+            // 1 dump act_test thread
             final Thread mainThread = Looper.getMainLooper().getThread();
             final StackTraceElement[] mainStackTrace = mainThread.getStackTrace();
             long thisTimeDumpTrace = System.nanoTime() / 1000000;

@@ -49,7 +49,7 @@ public class TextureViewActivity extends BaseActivity<TexturePresenter> implemen
         textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-                camera = Camera.open(0);
+                camera = Camera.open();
                 Camera.Parameters parameters = camera.getParameters();
                 if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
                     parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);

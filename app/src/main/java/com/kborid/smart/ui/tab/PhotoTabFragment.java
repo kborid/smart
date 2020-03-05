@@ -77,6 +77,8 @@ public class PhotoTabFragment extends BaseFragment<PhotoTabPresenter> implements
 
     @Override
     public void refreshPhotoList(List<PhotoGirl> girls) {
-        adapter.setPicList(girls);
+        if (null != adapter) {
+            adapter.setPicList(girls);
+        }
     }
 }

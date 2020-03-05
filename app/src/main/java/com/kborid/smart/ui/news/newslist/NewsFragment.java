@@ -16,7 +16,6 @@ import com.kborid.smart.ui.news.detail.NewsDetailActivity;
 import com.kborid.smart.ui.news.newslist.adapter.NewsAdapter;
 import com.kborid.smart.ui.news.newslist.presenter.NewsPresenter;
 import com.kborid.smart.ui.news.newslist.presenter.contract.NewsContract;
-import com.kborid.smart.util.ToastUitl;
 
 import java.util.List;
 

@@ -9,16 +9,16 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 
 @SuppressLint("AppCompatCustomView")
-public class testEditText extends EditText {
-    public testEditText(Context context) {
+public class EditTextTest extends EditText {
+    public EditTextTest(Context context) {
         super(context);
     }
 
-    public testEditText(Context context, AttributeSet attrs) {
+    public EditTextTest(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public testEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EditTextTest(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

@@ -26,7 +26,9 @@ public class NewsPresenter extends RxPresenter<NewsContract.View> implements New
 
             @Override
             public void success(List<NewsSummary> newsSummaryList) {
-                mView.refreshNewsList(newsSummaryList);
+                if (null != mView) {
+                    mView.refreshNewsList(newsSummaryList);
+                }
             }
         });
     }

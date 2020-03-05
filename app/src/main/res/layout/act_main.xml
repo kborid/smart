@@ -16,7 +16,7 @@
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="10dp"
+        app:elevation="5dp"
         app:itemBackground="@color/white"
         app:itemIconTint="@color/selector_comm_tint"
         app:itemTextColor="@color/selector_comm_tint"

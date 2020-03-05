@@ -25,7 +25,9 @@ public class NewsDetailPresenter extends RxPresenter<NewsDetailContract.View> im
 
             @Override
             public void success(NewsDetail newsDetail) {
-                mView.refreshInfo(newsDetail);
+                if (null != mView) {
+                    mView.refreshInfo(newsDetail);
+                }
             }
         });
     }
