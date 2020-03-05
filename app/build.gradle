@@ -16,7 +16,7 @@ android {
 
         //多dex文件支持
         multiDexEnabled true
-
+123
 //        resConfigs('zh-rCN')
 //        ndk {
 //            abiFilters('armeabi', 'armeabi-v7a', 'arm64-v8a')
