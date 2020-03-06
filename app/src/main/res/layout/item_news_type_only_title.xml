@@ -19,6 +19,7 @@
             android:id="@+id/iv_icon"
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:transitionName="@string/news_detail_shared_iv"
             android:scaleType="centerCrop" />
 
         <TextView

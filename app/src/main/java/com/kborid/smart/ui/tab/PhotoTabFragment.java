@@ -66,7 +66,8 @@ public class PhotoTabFragment extends BaseFragment<PhotoTabPresenter> implements
         recycleView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                PhotoDetailActivity.startPictureDetailActivity(getContext(), adapter.getData().get(position).getUrl());
+                PhotoGirl photoGirl = adapter.getData().get(position);
+                PhotoDetailActivity.startPictureDetailActivity(getContext(), photoGirl.getUrl());
             }
 
             @Override

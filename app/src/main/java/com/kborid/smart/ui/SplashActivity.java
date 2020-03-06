@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import com.kborid.smart.R;
 import com.kborid.smart.activity.MainActivity;
 import com.thunisoft.common.base.BaseSimpleActivity;
@@ -16,6 +18,12 @@ public class SplashActivity extends BaseSimpleActivity {
     private static final long DELAY_TIME = 2000;
 
     private boolean isGotoTest = false;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawable(null);
+    }
 
     @Override
     protected int getLayoutResId() {

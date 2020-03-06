@@ -1,10 +1,13 @@
 package com.kborid.smart.ui.news.detail;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +19,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.kborid.library.base.BaseActivity;
+import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.contant.AppConstant;
 import com.kborid.smart.di.DaggerCommonComponent;
@@ -59,23 +63,13 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailPresenter> implem
         return R.layout.act_news_detail;
     }
 
-    public static void startAction(Context context, String postId, String imgUrl) {
+    public static void startAction(Context context, View view, String postId, String imgUrl) {
         Intent intent = new Intent(context, NewsDetailActivity.class);
         intent.putExtra(AppConstant.NEWS_POST_ID, postId);
         intent.putExtra(AppConstant.NEWS_IMG_RES, imgUrl);
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            ActivityOptions options = ActivityOptions
-//                    .makeSceneTransitionAnimation((Activity) mContext,view, AppConstant.TRANSITION_ANIMATION_NEWS_PHOTOS);
-//            mContext.startActivity(intent, options.toBundle());
-//        } else {
-//
-//            //让新的Activity从一个小的范围扩大到全屏
-//            ActivityOptionsCompat options = ActivityOptionsCompat
-//                    .makeScaleUpAnimation(view, view.getWidth() / 2, view.getHeight() / 2, 0, 0);
-//            ActivityCompat.startActivity((Activity) mContext, intent, options.toBundle());
-//        }
-        context.startActivity(intent);
+        ActivityOptions options = ActivityOptions
+                .makeSceneTransitionAnimation((Activity) context, view, PRJApplication.getInstance().getString(R.string.news_detail_shared_iv));
+        context.startActivity(intent, options.toBundle());
     }
 
     @Override
@@ -91,7 +85,7 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailPresenter> implem
                 }
             }
         });
-        toolbar.setNavigationOnClickListener(view -> finish());
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
         String postId = getIntent().getStringExtra(AppConstant.NEWS_POST_ID);
         mPresenter.getNewsDetail(postId);
     }

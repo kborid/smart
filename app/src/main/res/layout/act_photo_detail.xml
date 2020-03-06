@@ -11,6 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <com.kborid.smart.widget.HwLoadingView
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:hlv_color="@color/white"
+        app:hlv_size="50dp" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"

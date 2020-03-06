@@ -17,6 +17,8 @@ import com.kborid.smart.ui.news.newslist.adapter.NewsAdapter;
 import com.kborid.smart.ui.news.newslist.presenter.NewsPresenter;
 import com.kborid.smart.ui.news.newslist.presenter.contract.NewsContract;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -59,7 +61,10 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             @Override
             public void onItemClick(View view, int position) {
                 NewsSummary newsSummary = mNewsAdapter.getData().get(position);
-                NewsDetailActivity.startAction(getContext(), newsSummary.getPostid(), newsSummary.getImgsrc());
+                String postId = newsSummary.getPostid();
+                if (StringUtils.isNotBlank(postId)) {
+                    NewsDetailActivity.startAction(getContext(), view.findViewById(R.id.iv_icon), newsSummary.getPostid(), newsSummary.getImgsrc());
+                }
             }
 
             @Override

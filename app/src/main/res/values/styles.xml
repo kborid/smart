@@ -11,6 +11,8 @@
         <item name="android:windowBackground">@null</item>
         <!--控制状态栏显示明暗主题-->
         <item name="android:windowLightStatusBar">true</item>
+        <!-- enable window content transitions -->
+        <item name="android:windowActivityTransitions">true</item>
     </style>
 
     <!-- App theme. -->
@@ -26,7 +28,7 @@
 
     <!--splashTheme-->
     <style name="BaseAppTheme.SplashTheme">
-        <item name="android:windowBackground">@mipmap/launch_bg</item>
+        <item name="android:windowBackground">@drawable/launch_background</item>
         <!--控制布局全屏显示-->
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowTranslucentStatus">true</item>
