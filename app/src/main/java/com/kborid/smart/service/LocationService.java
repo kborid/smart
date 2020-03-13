@@ -110,7 +110,7 @@ public class LocationService extends Service implements LocationChangedListener 
     @Override
     public void onLocationChanged(Location location) {
         if (null != location) {
-            ToastUitl.showToastWithImg(getLocationAddress(location), R.mipmap.icon);
+            ToastUitl.showToastWithImg(getLocationAddress(location), R.mipmap.logo);
         }
     }
 
@@ -177,7 +177,6 @@ public class LocationService extends Service implements LocationChangedListener 
                 add = address.getAddressLine(0);
             }
         } catch (IOException e) {
-            add = "";
             e.printStackTrace();
         }
         return add;

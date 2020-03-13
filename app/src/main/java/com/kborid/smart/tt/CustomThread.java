@@ -6,6 +6,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import static com.kborid.smart.tt.CodeTypeConst.CODE_TYPE1;
+import static com.kborid.smart.tt.CodeTypeConst.CODE_TYPE2;
+
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class CustomThread extends Thread {
 
@@ -20,6 +23,7 @@ public class CustomThread extends Thread {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             System.out.println("Handler's handleMessage()");
+            getCodeTest(CODE_TYPE1);
         }
     };
 
@@ -33,5 +37,14 @@ public class CustomThread extends Thread {
 
     public Handler getInnerHandler() {
         return innerHandler;
+    }
+
+    public static void getCodeTest(@CodeType int code) {
+        switch (code) {
+            case CODE_TYPE1:
+                break;
+            case CODE_TYPE2:
+                break;
+        }
     }
 }

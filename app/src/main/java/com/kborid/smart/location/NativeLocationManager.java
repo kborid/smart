@@ -58,7 +58,7 @@ public enum NativeLocationManager {
     private GpsStatus.Listener gpsStatusListener = new GpsStatus.Listener() {
         @Override
         public void onGpsStatusChanged(int event) {
-            Logger.t(TAG).d("onGpsStatusChanged() event:" + event);
+//            Logger.t(TAG).d("onGpsStatusChanged() event:" + event);
 //            switch (event) {
 //                case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
 //                    GpsStatus gpsStatus = locationManager.getGpsStatus(null);
