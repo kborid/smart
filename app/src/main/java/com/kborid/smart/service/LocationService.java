@@ -8,20 +8,26 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.IBinder;
-import android.widget.Toast;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import com.kborid.smart.R;
 import com.kborid.smart.activity.MainActivity;
-import com.kborid.smart.location.NativeLocationManager;
 import com.kborid.smart.location.LocationChangedListener;
+import com.kborid.smart.location.NativeLocationManager;
+import com.kborid.smart.util.ToastUitl;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.tool.UIHandler;
-import com.thunisoft.common.util.ToastUtils;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * 高德定位Service
@@ -104,7 +110,7 @@ public class LocationService extends Service implements LocationChangedListener 
     @Override
     public void onLocationChanged(Location location) {
         if (null != location) {
-            ToastUtils.showToast(String.valueOf(location.getTime()), Toast.LENGTH_LONG);
+            ToastUitl.showToastWithImg(getLocationAddress(location), R.mipmap.icon);
         }
     }
 
@@ -147,4 +153,33 @@ public class LocationService extends Service implements LocationChangedListener 
 //        }
 //        Logger.t(TAG).d(str);
 //    }
+
+    /**
+     * 将经纬度转换成中文地址
+     *
+     * @param location
+     * @return
+     */
+    private String getLocationAddress(Location location) {
+        String add = "";
+        Geocoder geoCoder = new Geocoder(getBaseContext(), Locale.CHINESE);
+        try {
+            List<Address> addresses = geoCoder.getFromLocation(
+                    location.getLatitude(), location.getLongitude(),
+                    1);
+            Address address = addresses.get(0);
+            Log.i(TAG, "getLocationAddress: " + address.toString());
+            // Address[addressLines=[0:"中国",1:"北京市海淀区",2:"华奥饭店公司写字间中关村创业大街"]latitude=39.980973,hasLongitude=true,longitude=116.301712]
+            int maxLine = address.getMaxAddressLineIndex();
+            if (maxLine >= 2) {
+                add = address.getAddressLine(0) + address.getAddressLine(1);
+            } else {
+                add = address.getAddressLine(0);
+            }
+        } catch (IOException e) {
+            add = "";
+            e.printStackTrace();
+        }
+        return add;
+    }
 }

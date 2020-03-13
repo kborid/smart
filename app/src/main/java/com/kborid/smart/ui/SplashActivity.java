@@ -49,7 +49,10 @@ public class SplashActivity extends BaseSimpleActivity {
         isGotoTest = true;
     }
 
-    @NeedsPermission({Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION})
+    @NeedsPermission({Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION})
     void dynamicObtainPermission() {
         LocationService.startLocationService(PRJApplication.getInstance());
         UIHandler.postDelayed(new Runnable() {
@@ -61,7 +64,10 @@ public class SplashActivity extends BaseSimpleActivity {
         }, DELAY_TIME);
     }
 
-    @OnPermissionDenied({Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE})
+    @OnPermissionDenied({Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION})
     void showDenied() {
         finish();
     }
