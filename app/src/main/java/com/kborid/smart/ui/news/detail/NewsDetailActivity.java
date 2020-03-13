@@ -14,11 +14,10 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.kborid.library.base.BaseActivity;
+import com.kborid.library.util.ImageLoaderUtils;
 import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.contant.AppConstant;
@@ -130,19 +129,16 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailPresenter> implem
     private String getImgSrcs(NewsDetail newsDetail) {
         List<NewsDetail.ImgBean> imgSrcs = newsDetail.getImg();
         String imgSrc;
-        if (imgSrcs != null && imgSrcs.size() > 0) {
-            imgSrc = imgSrcs.get(0).getSrc();
-        } else {
+//        if (imgSrcs != null && imgSrcs.size() > 0) {
+//            imgSrc = imgSrcs.get(0).getSrc();
+//        } else {
             imgSrc = getIntent().getStringExtra(AppConstant.NEWS_IMG_RES);
-        }
+//        }
         return imgSrc;
     }
 
     private void setNewsDetailPhoto(String imgSrc) {
-        Glide.with(this).load(imgSrc)
-                .apply(new RequestOptions().centerCrop()
-                        .error(R.mipmap.ic_empty_picture))
-                .into(photoIV);
+        ImageLoaderUtils.displayBigPhoto(this, photoIV, imgSrc);
     }
 
     private void setToolbarLayout(String title) {

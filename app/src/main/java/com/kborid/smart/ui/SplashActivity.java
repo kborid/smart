@@ -15,7 +15,7 @@ import butterknife.OnClick;
 
 public class SplashActivity extends BaseSimpleActivity {
 
-    private static final long DELAY_TIME = 2000;
+    private static final long DELAY_TIME = 0;
 
     private boolean isGotoTest = false;
 
@@ -35,11 +35,7 @@ public class SplashActivity extends BaseSimpleActivity {
         UIHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (isGotoTest) {
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                } else {
-                    startActivity(new Intent(SplashActivity.this, MainFragmentActivity.class));
-                }
+                go();
                 finish();
             }
         }, DELAY_TIME);
@@ -48,5 +44,13 @@ public class SplashActivity extends BaseSimpleActivity {
     @OnClick(R.id.test)
     void onClickBtn(View view) {
         isGotoTest = true;
+    }
+
+    private void go() {
+        if (isGotoTest) {
+            startActivity(new Intent(this, MainActivity.class));
+        } else {
+            startActivity(new Intent(this, MainFragmentActivity.class));
+        }
     }
 }

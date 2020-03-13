@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kborid.library.adapter.CommRVAdapter;
+import com.kborid.library.adapter.ViewHolderHelper;
 import com.kborid.library.base.BaseActivity;
 import com.kborid.smart.R;
 import com.kborid.smart.di.DaggerSnapComponent;
-import com.kborid.smart.ui.snaphelper.adapter.SnapAdapter;
+import com.kborid.smart.entity.PhotoGirl;
 import com.kborid.smart.ui.snaphelper.presenter.SnapPresenter;
 import com.kborid.smart.ui.snaphelper.presenter.contract.SnapContract;
 
@@ -28,7 +30,7 @@ public class SnapHelpActivity extends BaseActivity<SnapPresenter> implements Sna
     @BindView(R.id.recycleView)
     RecyclerView recycleView;
 
-    private SnapAdapter adapter;
+    private CommRVAdapter<PhotoGirl> adapter;
 
     @Override
     protected void initInject() {
@@ -53,7 +55,12 @@ public class SnapHelpActivity extends BaseActivity<SnapPresenter> implements Sna
         });
 
         if (null == adapter) {
-            adapter = new SnapAdapter(this);
+            adapter = new CommRVAdapter<PhotoGirl>(this, R.layout.lv_recycle_item) {
+                @Override
+                protected void convert(ViewHolderHelper helper, PhotoGirl photoGirl) {
+                    helper.setImageUrl(R.id.iv_pic, photoGirl.getUrl());
+                }
+            };
         }
         recycleView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         recycleView.setAdapter(adapter);
@@ -66,7 +73,7 @@ public class SnapHelpActivity extends BaseActivity<SnapPresenter> implements Sna
     @Override
     public void updateData(List data) {
         if (null != adapter) {
-            adapter.updateData(data);
+            adapter.set(data);
         }
     }
 }

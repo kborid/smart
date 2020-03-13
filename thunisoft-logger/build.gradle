@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 4
+        versionName "2.0.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // logger
+    implementation 'com.orhanobut:logger:2.2.0'
+}
+
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories.mavenDeployer {
+        if ("true".equals(isLocalMaven)) {
+            repository(url: localRepository)
+        } else {
+            repository(url: remoteReposistory) {
+                authentication(userName: remoteUser, password: remotePassword)
+            }
+        }
+        pom.groupId = 'com.thunisoft.android'
+        pom.artifactId = 'logger'
+        pom.version = '2.0.0'
+    }
+}

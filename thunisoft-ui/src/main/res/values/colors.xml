@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+    <color name="transparent5">#0D000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="dialogText">#333333</color>
+    <color name="dialogSummaryText">#777777</color>
+    <color name="common_divider">#e5e5e5</color>
+    <color name="dialogTitle">#1989fe</color>
+    <color name="dialogBtnPositive">#1989fe</color>
+</resources>

@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.kborid.library.adapter.FragmentAdapter;
 import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
-import com.kborid.smart.activity.FragmentAdapter;
 import com.kborid.smart.ui.tab.NewsTabFragment;
 import com.kborid.smart.ui.tab.PhotoTabFragment;
 import com.kborid.smart.ui.tab.UserTabFragment;

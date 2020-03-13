@@ -8,13 +8,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.kborid.library.adapter.CommRVAdapter;
+import com.kborid.library.adapter.ViewHolderHelper;
 import com.kborid.library.base.BaseFragment;
 import com.kborid.smart.R;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.PhotoGirl;
 import com.kborid.smart.listener.RecyclerItemClickListener;
 import com.kborid.smart.ui.photo.detail.PhotoDetailActivity;
-import com.kborid.smart.ui.tab.adapter.PhotoAdapter;
 import com.kborid.smart.ui.tab.presenter.PhotoTabPresenter;
 import com.kborid.smart.ui.tab.presenter.contract.PhotoTabContract;
 
@@ -32,8 +33,7 @@ public class PhotoTabFragment extends BaseFragment<PhotoTabPresenter> implements
     private static int SIZE = 500;
     private int mStartPage = 1;
 
-    private PhotoAdapter adapter;
-
+    private CommRVAdapter<PhotoGirl> adapter;
 
     @Override
     protected void initInject() {
@@ -60,13 +60,18 @@ public class PhotoTabFragment extends BaseFragment<PhotoTabPresenter> implements
     protected void initEventAndData(Bundle savedInstanceState) {
         toolbar.setTitle(getArguments().getString("type"));
         mPresenter.getPhotoList(SIZE, mStartPage);
-        adapter = new PhotoAdapter(getContext());
+        adapter = new CommRVAdapter<PhotoGirl>(getContext(), R.layout.item_photo) {
+            @Override
+            protected void convert(ViewHolderHelper helper, PhotoGirl photoGirl) {
+                helper.setImageUrl(R.id.iv_pic, photoGirl.getUrl(), 1024, 1024 * 4 / 3);
+            }
+        };
         recycleView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recycleView.setAdapter(adapter);
         recycleView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                PhotoGirl photoGirl = adapter.getData().get(position);
+                PhotoGirl photoGirl = adapter.getAll().get(position);
                 PhotoDetailActivity.startPictureDetailActivity(getContext(), photoGirl.getUrl());
             }
 
@@ -79,7 +84,7 @@ public class PhotoTabFragment extends BaseFragment<PhotoTabPresenter> implements
     @Override
     public void refreshPhotoList(List<PhotoGirl> girls) {
         if (null != adapter) {
-            adapter.setPicList(girls);
+            adapter.set(girls);
         }
     }
 }

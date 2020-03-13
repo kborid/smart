@@ -4,7 +4,7 @@ import com.kborid.library.di.ActivityScope;
 import com.kborid.library.di.module.CommonModule;
 import com.kborid.smart.ui.MainFragmentActivity;
 import com.kborid.smart.ui.news.detail.NewsDetailActivity;
-import com.kborid.smart.ui.news.newslist.NewsFragment;
+import com.kborid.smart.ui.news.list.NewsFragment;
 import com.kborid.smart.ui.tab.NewsTabFragment;
 import com.kborid.smart.ui.tab.PhotoTabFragment;
 import com.kborid.smart.ui.tab.VideoTabFragment;

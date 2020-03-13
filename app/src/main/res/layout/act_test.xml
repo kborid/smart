@@ -21,16 +21,15 @@
 
             <com.kborid.smart.widget.AutoAdjustTextView
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:gravity="center"
                 android:lines="1"
-                android:text="Test1Test1Test1Test1"
+                android:text="TT-TT-TT-TT"
                 android:textSize="50sp" />
 
             <com.kborid.smart.widget.AdaptionSizeTextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_height="50dp"
                 android:text="Test2Test2Test2Test2Test2Test2"
                 android:textSize="30sp" />
         </LinearLayout>

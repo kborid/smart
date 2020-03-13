@@ -7,6 +7,7 @@ import android.os.Environment;
 import androidx.multidex.MultiDex;
 
 import com.kborid.library.base.BaseApplication;
+import com.kborid.library.tools.MainThreadWatchDog;
 import com.kborid.library.util.ConfigUtils;
 import com.kborid.library.util.LogUtils;
 import com.kborid.smart.service.LocationService;
@@ -40,6 +41,7 @@ public class PRJApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        MainThreadWatchDog.defaultInstance().startWatch();
         ThunisoftLogger.initLogger(this, new LoggerConfig() {
             @Override
             public String getTag() {
@@ -88,6 +90,7 @@ public class PRJApplication extends BaseApplication {
         CrashReport.initCrashReport(this, "6b298e7c56", BuildConfig.DEBUG, userStrategy);
         initImageLoaderConfig();
         registerActivityLifecycleCallbacks(LifeCycleCallback.activityLifecycleCallbacks);
+        MainThreadWatchDog.defaultInstance().stopWatch();
     }
 
     private void initImageLoaderConfig() {

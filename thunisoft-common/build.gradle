@@ -1,0 +1,63 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 28
+        versionCode 7
+        versionName "2.0.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.thunisoft.android:logger:2.0.0'
+    //rxAndroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    //rxJava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
+    //retrofit converter
+    implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    //okhttp log intercept
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.0'
+    //ButterKnife
+    implementation 'com.jakewharton:butterknife:10.1.0'
+}
+
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories.mavenDeployer {
+        if ("true".equals(isLocalMaven)) {
+            repository(url: localRepository)
+        } else {
+            repository(url: remoteReposistory) {
+                authentication(userName: remoteUser, password: remotePassword)
+            }
+        }
+        pom.artifactId = 'common'
+        pom.groupId = 'com.thunisoft.android'
+        pom.version = '2.0.0'
+    }
+}
