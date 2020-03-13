@@ -8,19 +8,25 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Build;
 import android.os.IBinder;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 
 import com.kborid.smart.R;
 import com.kborid.smart.activity.MainActivity;
+import com.kborid.smart.location.NativeLocationManager;
+import com.kborid.smart.location.LocationChangedListener;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.tool.UIHandler;
+import com.thunisoft.common.util.ToastUtils;
 
 /**
  * 高德定位Service
  */
-public class LocationService extends Service {
+public class LocationService extends Service implements LocationChangedListener {
 
     private static final String CHANNEL_ID = "CHANNEL_ID_001";
     private static final String CHANNEL_NAME = "CHANNEL_NAME_001";
@@ -42,11 +48,14 @@ public class LocationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        NativeLocationManager.INSTANCE.stopLocation();
         UIHandler.getHandler().removeCallbacksAndMessages(null);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        setServiceForeground();
+        NativeLocationManager.INSTANCE.startLocation(this);
         UIHandler.postDelayed(checkGpsRunnable, DURING_TIME);
         return super.onStartCommand(intent, flags, startId);
     }
@@ -89,6 +98,13 @@ public class LocationService extends Service {
             context.startForegroundService(intent);
         } else {
             context.startService(intent);
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (null != location) {
+            ToastUtils.showToast(String.valueOf(location.getTime()), Toast.LENGTH_LONG);
         }
     }
 

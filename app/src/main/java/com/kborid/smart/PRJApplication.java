@@ -10,7 +10,6 @@ import com.kborid.library.base.BaseApplication;
 import com.kborid.library.tools.MainThreadWatchDog;
 import com.kborid.library.util.ConfigUtils;
 import com.kborid.library.util.LogUtils;
-import com.kborid.smart.service.LocationService;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -53,7 +52,6 @@ public class PRJApplication extends BaseApplication {
                 return com.kborid.library.BuildConfig.DEBUG;
             }
         });
-        LocationService.startLocationService(this);
         LogUtils.d("=======================" + ConfigUtils.getConfigX());
         LogUtils.d("=======================" + ConfigUtils.getConfigY());
         Bugly.init(getApplicationContext(), "6b298e7c56", BuildConfig.DEBUG);

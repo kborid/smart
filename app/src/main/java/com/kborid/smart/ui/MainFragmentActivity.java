@@ -58,21 +58,11 @@ public class MainFragmentActivity extends BaseSimpleActivity {
         viewPager.setCurrentItem(DEFAULT_INDEX);
         viewPager.setOffscreenPageLimit(mBottomBarTitles.length);
         viewPager.setSlidingEnabled(false);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 int itemId = bottomBar.getMenu().getItem(position).getItemId();
                 bottomBar.setSelectedItemId(itemId);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
             }
         });
     }

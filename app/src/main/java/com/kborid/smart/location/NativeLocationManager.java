@@ -2,39 +2,88 @@ package com.kborid.smart.location;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-
+import com.kborid.smart.PRJApplication;
 import com.orhanobut.logger.Logger;
 
-public enum LocalManager {
+public enum NativeLocationManager {
     INSTANCE;
 
-    private static final String TAG = "LocalManager";
-
+    private static final String TAG = "NativeLocationManager";
     private static final int TWO_MINUTES = 1000 * 60 * 2;
+
     public static final String GPS_PROVIDER = LocationManager.GPS_PROVIDER;
     public static final String NET_PROVIDER = LocationManager.NETWORK_PROVIDER;
+    private final LocationManager locationManager = (LocationManager) PRJApplication.getInstance().getSystemService(Context.LOCATION_SERVICE);
 
-    private Location mLocation = null;
+    private Location mCurrLocation = null;
+
+    private LocationChangedListener locationChangedListener = null;
+
+    private LocationListener internalLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            Logger.t(TAG).d("onLocationChanged() location = " + location);
+            if (null != location) {
+                if (null == mCurrLocation || isBetterLocation(location, mCurrLocation)) {
+                    mCurrLocation = location;
+                }
+            }
+            if (null != locationChangedListener) {
+                locationChangedListener.onLocationChanged(mCurrLocation);
+            }
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            Logger.t(TAG).d("onStatusChanged() " + provider + ", " + status);
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            Logger.t(TAG).d("onProviderEnabled() " + provider);
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            Logger.t(TAG).d("onProviderDisabled() " + provider);
+        }
+    };
+
+    private GpsStatus.Listener gpsStatusListener = new GpsStatus.Listener() {
+        @Override
+        public void onGpsStatusChanged(int event) {
+            Logger.t(TAG).d("onGpsStatusChanged() event:" + event);
+//            switch (event) {
+//                case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+//                    GpsStatus gpsStatus = locationManager.getGpsStatus(null);
+//                    Iterable<GpsSatellite> it = gpsStatus.getSatellites();
+//                    break;
+//                default:
+//                    break;
+//            }
+        }
+    };
 
     @SuppressLint("MissingPermission")
-    public Location startGPSLocation(Context context) {
-        LocationManager manager = getLocationManagerService(context);
-        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            mLocation = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    public void startLocation(LocationChangedListener listener) {
+        locationChangedListener = listener;
+        if (locationManager.isProviderEnabled(GPS_PROVIDER)) {
+            mCurrLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
-        return mLocation;
+        locationManager.addGpsStatusListener(gpsStatusListener);
+        locationManager.requestLocationUpdates(GPS_PROVIDER, TWO_MINUTES, 0, internalLocationListener);
+        locationManager.requestLocationUpdates(NET_PROVIDER, TWO_MINUTES, 0, internalLocationListener);
     }
 
-    private LocationManager getLocationManagerService(@NonNull Context context) {
-        return (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+    public void stopLocation() {
+        locationChangedListener = null;
+        locationManager.removeGpsStatusListener(gpsStatusListener);
     }
 
     /**
@@ -95,49 +144,5 @@ public enum LocalManager {
             return provider2 == null;
         }
         return provider1.equals(provider2);
-    }
-
-    @SuppressLint("MissingPermission")
-    public void registerLocationListener(Context context) {
-        final LocationManager manager = getLocationManagerService(context);
-        manager.requestLocationUpdates(GPS_PROVIDER, 2000, 1, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                if (null != location) {
-                    mLocation = location;
-                }
-                Logger.t(TAG).d("onLocationChanged() " + location);
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-                Logger.t(TAG).d("onStatusChanged() " + provider + ", " + status);
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-                Logger.t(TAG).d("onProviderEnabled() " + provider);
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                Logger.t(TAG).d("onProviderDisabled() " + provider);
-            }
-        });
-        manager.addGpsStatusListener(new GpsStatus.Listener() {
-            @Override
-            public void onGpsStatusChanged(int event) {
-                Logger.t(TAG).d("onGpsStatusChanged() event:" + event);
-                Logger.t(TAG).d("onLocationChanged() " + mLocation);
-                switch (event) {
-                    case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
-                        GpsStatus gpsStatus = manager.getGpsStatus(null);
-                        Iterable<GpsSatellite> it = gpsStatus.getSatellites();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
     }
 }
