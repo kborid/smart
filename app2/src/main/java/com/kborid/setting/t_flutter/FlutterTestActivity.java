@@ -1,4 +1,4 @@
-package com.kborid.setting.test;
+package com.kborid.setting.t_flutter;
 
 import android.os.Bundle;
 
@@ -20,4 +20,8 @@ public class FlutterTestActivity extends FlutterActivity {
         super.configureFlutterEngine(flutterEngine);
         GeneratedPluginRegistrant.registerWith(flutterEngine);
     }
+
+    //        startActivity(FlutterActivity.createDefaultIntent(this));
+//        startActivity(FlutterActivity.withNewEngine().initialRoute("hybrid").build(this));
+//        startActivity(FlutterActivity.withCachedEngine("flutter_engine").build(this))
 }

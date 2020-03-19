@@ -47,6 +47,3 @@ dependencies {
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 }
-repositories {
-    mavenCentral()
-}

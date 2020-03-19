@@ -1,4 +1,4 @@
-package com.kborid.setting.plugin;
+package com.kborid.setting.t_flutter.plugin;
 
 import android.content.Context;
 import android.content.Intent;

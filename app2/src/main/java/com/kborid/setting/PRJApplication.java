@@ -3,13 +3,10 @@ package com.kborid.setting;
 import android.content.Context;
 
 import com.kborid.library.base.BaseApplication;
+import com.kborid.setting.t_flutter.FlutterTest;
 import com.thunisoft.ThunisoftLogger;
 import com.thunisoft.common.ThunisoftCommon;
 import com.thunisoft.logger.LoggerConfig;
-
-import io.flutter.embedding.engine.FlutterEngine;
-import io.flutter.embedding.engine.FlutterEngineCache;
-import io.flutter.embedding.engine.dart.DartExecutor;
 
 public class PRJApplication extends BaseApplication {
 
@@ -28,14 +25,11 @@ public class PRJApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        FlutterEngine flutterEngine = new FlutterEngine(this);
-        flutterEngine.getDartExecutor().executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault());
-        FlutterEngineCache.getInstance().put("flutter_engine", flutterEngine);
         ThunisoftCommon.init(this);
         ThunisoftLogger.initLogger(this, new LoggerConfig() {
             @Override
             public String getTag() {
-                return "Smart-setting";
+                return BuildConfig.APPLICATION_ID;
             }
 
             @Override
@@ -43,5 +37,6 @@ public class PRJApplication extends BaseApplication {
                 return BuildConfig.DEBUG;
             }
         });
+        FlutterTest.init();
     }
 }

@@ -1,4 +1,4 @@
-package com.kborid.setting.test;
+package com.kborid.setting.t_rxjava;
 
 import android.annotation.SuppressLint;
 import android.os.Looper;
