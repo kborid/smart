@@ -10,6 +10,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
+import retrofit2.Callback;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
@@ -38,4 +39,7 @@ public interface RequestApi {
     Observable<Map<String, List<VideoData>>> getVideoList(
             @Path("type") String type,
             @Path("startPage") int startPage);
+
+    @GET("data/福利/{size}/{page}")
+    Callback<Object> get(@Path("size") int size, @Path("page") int page);
 }

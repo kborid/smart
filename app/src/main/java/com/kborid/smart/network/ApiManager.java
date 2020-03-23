@@ -11,6 +11,8 @@ import com.kborid.smart.entity.VideoData;
 import com.thunisoft.common.network.OkHttpClientFactory;
 import com.thunisoft.common.network.callback.ResponseCallback;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +66,13 @@ public class ApiManager {
                         return Observable.fromIterable(null != list ? list : new ArrayList<>());
                     }
                 })
-                .distinct() // 去重
+                // 去重
+                .distinct(newsSummary -> {
+                    if (null != newsSummary && StringUtils.isNotBlank(newsSummary.getPostid())) {
+                        return newsSummary.getPostid();
+                    }
+                    return "";
+                })
                 // 排序
                 .toSortedList((newsSummary1, newsSummary2) -> newsSummary2.getPtime().compareTo(newsSummary1.getPtime()))
                 .subscribeOn(Schedulers.io())

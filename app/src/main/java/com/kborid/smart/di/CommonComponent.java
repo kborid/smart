@@ -8,7 +8,6 @@ import com.kborid.smart.ui.news.list.NewsFragment;
 import com.kborid.smart.ui.tab.NewsTabFragment;
 import com.kborid.smart.ui.tab.PhotoTabFragment;
 import com.kborid.smart.ui.tab.VideoTabFragment;
-import com.kborid.smart.ui.texture.TextureViewActivity;
 import com.kborid.smart.ui.video.list.VideoFragment;
 
 import dagger.Component;
@@ -16,8 +15,6 @@ import dagger.Component;
 @ActivityScope
 @Component(modules = CommonModule.class)
 public interface CommonComponent {
-    void inject(TextureViewActivity activity);
-
     void inject(MainFragmentActivity activity);
 
     void inject(NewsTabFragment fragment);

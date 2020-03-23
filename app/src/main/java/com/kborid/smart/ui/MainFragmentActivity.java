@@ -71,12 +71,17 @@ public class MainFragmentActivity extends BaseSimpleActivity {
         Window window = getWindow();
         int flag = window.getDecorView().getSystemUiVisibility();
         if (index == 3) {
-            flag = flag & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            flag &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             window.setStatusBarColor(getResources().getColor(R.color.mainColor, null));
         } else {
-            flag = flag | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            flag |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             window.setStatusBarColor(getResources().getColor(R.color.white, null));
         }
         window.getDecorView().setSystemUiVisibility(flag);
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }

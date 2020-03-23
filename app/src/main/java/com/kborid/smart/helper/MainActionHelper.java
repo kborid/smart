@@ -1,7 +1,7 @@
 package com.kborid.smart.helper;
 
 public class MainActionHelper {
-    public static final String[] actions = {"百度一下", "JS测试", "打开文档", "Handler测试", "SNAP测试", "文本分享", "二维码", "TEXTURE测试"};
+    public static final String[] actions = {"百度一下", "JS测试", "打开文档", "Handler测试", "SNAP测试", "文本分享", "二维码"};
 
     public enum ActionType {
         ACTION_OPEN_BD,
@@ -10,8 +10,7 @@ public class MainActionHelper {
         ACTION_HANDLER,
         ACTION_SNAP,
         ACTION_SHARE,
-        ACTION_CODE,
-        ACTION_TEXTURE;
+        ACTION_CODE;
 
         public static ActionType indexOf(int index) {
             return ActionType.values()[index];

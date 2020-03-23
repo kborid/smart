@@ -37,7 +37,6 @@
             android:launchMode="singleTask" />
         <activity android:name=".tt.FragmentActivity" />
         <activity android:name=".activity.X5WebViewActivity" />
-        <activity android:name=".ui.texture.TextureViewActivity" />
         <activity
             android:name=".ui.snaphelper.SnapHelpActivity"
             android:theme="@style/BaseAppTheme.SplashTheme" />

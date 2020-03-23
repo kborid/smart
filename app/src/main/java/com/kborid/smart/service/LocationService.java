@@ -18,12 +18,12 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.kborid.smart.R;
-import com.kborid.smart.activity.MainActivity;
 import com.kborid.smart.location.LocationChangedListener;
 import com.kborid.smart.location.NativeLocationManager;
-import com.kborid.smart.util.ToastUitl;
+import com.kborid.smart.ui.MainFragmentActivity;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.tool.UIHandler;
+import com.thunisoft.common.util.ToastUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -70,7 +70,7 @@ public class LocationService extends Service implements LocationChangedListener 
         Notification.Builder builder = new Notification.Builder(this.getApplicationContext());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW);
             notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
             NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             if (manager != null) {
@@ -79,7 +79,7 @@ public class LocationService extends Service implements LocationChangedListener 
             builder.setChannelId(CHANNEL_ID);
         }
 
-        Intent nfIntent = new Intent(this, MainActivity.class);
+        Intent nfIntent = new Intent(this, MainFragmentActivity.class);
         builder.setContentIntent(PendingIntent.getActivity(this, 0, nfIntent, 0)) // 设置PendingIntent
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.logo)) // 设置下拉列表中的图标(大图标)
                 .setContentTitle("正在进行后台定位") // 设置下拉列表里的标题
@@ -110,7 +110,7 @@ public class LocationService extends Service implements LocationChangedListener 
     @Override
     public void onLocationChanged(Location location) {
         if (null != location) {
-            ToastUitl.showToastWithImg(getLocationAddress(location), R.mipmap.logo);
+            ToastUtils.showToast(getLocationAddress(location));
         }
     }
 

@@ -24,7 +24,6 @@ import com.kborid.smart.codescan.control.CaptureActivity;
 import com.kborid.smart.helper.MainActionHelper;
 import com.kborid.smart.tt.CustomThread;
 import com.kborid.smart.ui.snaphelper.SnapHelpActivity;
-import com.kborid.smart.ui.texture.TextureViewActivity;
 import com.thunisoft.common.util.ToastUtils;
 
 import java.io.File;
@@ -83,9 +82,6 @@ public class MainActivity extends SimpleActivity {
                     break;
                 case ACTION_CODE:
                     onQRCode();
-                    break;
-                case ACTION_TEXTURE:
-                    onTextureView();
                     break;
             }
         });
@@ -208,10 +204,6 @@ public class MainActivity extends SimpleActivity {
         } catch (ActivityNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    private void onTextureView() {
-        startActivity(new Intent(this, TextureViewActivity.class));
     }
 
     private void onQRCode() {
