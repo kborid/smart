@@ -14,9 +14,8 @@ class MainActivity : BaseActivity() {
         return R.layout.activity_main
     }
 
-    @SuppressLint("SetTextI18n")
     override fun initDataAndEvent(bundle: Bundle?) {
-        tv_name.text = "invoked"
+        tv_name.text = "测试"
         tv_name.setOnClickListener {
             parseJson("{}")
             ToastUtils.showToast(tv_name.text.toString(), Toast.LENGTH_SHORT)

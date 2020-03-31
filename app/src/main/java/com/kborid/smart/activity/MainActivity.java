@@ -23,7 +23,7 @@ import com.kborid.smart.R;
 import com.kborid.smart.codescan.control.CaptureActivity;
 import com.kborid.smart.helper.MainActionHelper;
 import com.kborid.smart.tt.CustomThread;
-import com.kborid.smart.ui.snaphelper.SnapHelpActivity;
+import com.kborid.smart.ui.activity.SnapHelpActivity;
 import com.thunisoft.common.util.ToastUtils;
 
 import java.io.File;

@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_rectangle_bg"
     android:gravity="center"
+    android:backgroundTint="@color/transparent70"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -28,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp"
             tools:text="登录成功" />
     </LinearLayout>

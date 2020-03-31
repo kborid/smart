@@ -20,10 +20,10 @@ import androidx.annotation.Nullable;
 import com.kborid.smart.R;
 import com.kborid.smart.location.LocationChangedListener;
 import com.kborid.smart.location.NativeLocationManager;
-import com.kborid.smart.ui.MainFragmentActivity;
+import com.kborid.smart.ui.activity.MainFragmentActivity;
+import com.kborid.smart.util.ToastDrawableUtil;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.tool.UIHandler;
-import com.thunisoft.common.util.ToastUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -110,7 +110,8 @@ public class LocationService extends Service implements LocationChangedListener 
     @Override
     public void onLocationChanged(Location location) {
         if (null != location) {
-            ToastUtils.showToast(getLocationAddress(location));
+//            ToastUtils.showToast(getLocationAddress(location));
+            ToastDrawableUtil.showImgToast(getLocationAddress(location), R.mipmap.logo);
         }
     }
 

@@ -21,7 +21,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
         <activity
-            android:name=".ui.SplashActivity"
+            android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.SplashTheme">
             <intent-filter>
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MainFragmentActivity"
+            android:name=".ui.activity.MainFragmentActivity"
             android:launchMode="singleTask" />
         <activity
             android:name=".activity.MainActivity"
@@ -38,7 +38,7 @@
         <activity android:name=".tt.FragmentActivity" />
         <activity android:name=".activity.X5WebViewActivity" />
         <activity
-            android:name=".ui.snaphelper.SnapHelpActivity"
+            android:name=".ui.activity.SnapHelpActivity"
             android:theme="@style/BaseAppTheme.SplashTheme" />
         <activity android:name=".activity.ReaderViewActivity">
             <intent-filter>
@@ -51,9 +51,9 @@
             android:name=".codescan.control.CaptureActivity"
             android:hardwareAccelerated="true" />
         <activity
-            android:name=".ui.photo.detail.PhotoDetailActivity"
+            android:name=".ui.activity.PhotoDetailActivity"
             android:theme="@style/BaseAppTheme.SplashTheme" />
-        <activity android:name=".ui.news.detail.NewsDetailActivity" />
+        <activity android:name=".ui.activity.NewsDetailActivity" />
 
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"

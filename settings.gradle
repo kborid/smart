@@ -3,10 +3,10 @@ include ':thunisoft-common'
 include ':thunisoft-logger'
 include ':thunisoft-ui'
 
-setBinding(new Binding([gradle: this]))
-evaluate(new File(
-        settingsDir.parentFile,
-        'flutter_module/.android/include_flutter.groovy'
-))
-include ':flutter_module'
-project(':flutter_module').projectDir = new File('../flutter_module')
+//setBinding(new Binding([gradle: this]))
+//evaluate(new File(
+//        settingsDir.parentFile,
+//        'flutter_module/.android/include_flutter.groovy'
+//))
+//include ':flutter_module'
+//project(':flutter_module').projectDir = new File('../flutter_module')

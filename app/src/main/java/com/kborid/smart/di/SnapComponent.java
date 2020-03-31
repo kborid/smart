@@ -2,7 +2,7 @@ package com.kborid.smart.di;
 
 import com.kborid.library.di.ActivityScope;
 import com.kborid.library.di.module.CommonModule;
-import com.kborid.smart.ui.snaphelper.SnapHelpActivity;
+import com.kborid.smart.ui.activity.SnapHelpActivity;
 
 import dagger.Component;
 
