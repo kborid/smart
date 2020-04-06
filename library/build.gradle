@@ -91,6 +91,9 @@ dependencies {
 
     //apache commons
     api 'org.apache.commons:commons-lang3:3.7'
+
+    //filedownloader
+    api 'com.liulishuo.filedownloader:library:1.7.7'
 }
 
 apply from: '../upload.gradle'
