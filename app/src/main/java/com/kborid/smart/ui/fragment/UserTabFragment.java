@@ -10,8 +10,10 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.kborid.smart.R;
 import com.thunisoft.common.base.BaseSimpleFragment;
+import com.thunisoft.common.util.ToastUtils;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class UserTabFragment extends BaseSimpleFragment {
 
@@ -48,5 +50,10 @@ public class UserTabFragment extends BaseSimpleFragment {
             }
         });
         toolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(getContext(), R.color.text_black));
+    }
+
+    @OnClick(R.id.btn_logout)
+    public void logout() {
+        ToastUtils.showToast("不能退出");
     }
 }

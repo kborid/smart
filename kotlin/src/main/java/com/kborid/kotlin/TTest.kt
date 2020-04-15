@@ -1,6 +1,7 @@
 package com.kborid.kotlin
 
 import com.kborid.kotlin.pojo.CheckInfo
+import com.kborid.kotlin.pojo.UserInfoImpl
 
 /**
  * 1、在顶层声明
@@ -11,11 +12,13 @@ const val TAG: String = "TTest"
 
 class TTest {
 
-
     val oneMillion = 1_000_000
-    val a: Int = 10;
-    val b: Int = 2;
+    val a: Int = 10
+    val b: Int = 2
     val max = if (a > b) a else b
+    var arr = Array(4, { i -> (i + 1) })
+    var arr2 = arr
+    val arr3 = arr2
 
     companion object {
         @JvmStatic
@@ -33,44 +36,52 @@ class TTest {
 }
 
 fun main(args: Array<String>) {
+    println("Hello World By Kotlin!")
+    println(TTest.instance?.sum(3, 9))
+    TTest.instance?.test(TTest.instance?.oneMillion.toString())
+    println(CheckInfo().getCount())
+    val info = UserInfoImpl()
+    println(info.addr)
+    println(info.getAge())
+    println(info.address)
 
-    // begin kotlin
-    println("$TAG, Hello World By Kotlin!")
-
-    // 懒加载，必须val
-    val name: String by lazy {
-        "234"
+    var arr = arrayOfNulls<Int>(3)
+    arr.forEachIndexed { index, i ->
+        run {
+            println(i)
+            arr[index] = (index + 1) * 3
+        }
     }
-    println("$TAG, $name")
+    arr.forEach { i -> println(i) }
 
-    // 延迟加载，必须var
-    lateinit var check: CheckInfo
-    check = CheckInfo()
-    println(check.info)
+    var numA: Int = 4
+    // 在Java中可以这么写，但是Kotlin中直接会报错。
+//  var numB: Int = (numA > 2) ? 3 : 5
 
-    var a = 200
-    var b = "123"
-    var c = 0.4f
-    println(a.tt().toBigDecimal())
+    // kotlin中直接用if..else替代。例：
+    var numB: Int = if (numA > 2) 3 else 5  // 当numA大于2时输出numB的值为3，反之为5
+    println("numB = > $numB")
 
-    val a1 = 128
-    val a1Box: Int? = a1
-    println(a1 === a1Box)
+    // 循环5次，且步长为1的递增
+    for (i in 0 until 5) {
+        print("i => $i \t")
+    }
 
-    val arr: IntArray = intArrayOf(2, 3, 4)
-    arr.map { i -> i.toString() }
-    val arr2 = Array(4, { i -> i * 3 })
-    println(arr2)
+    for (i in "abcdefg") {
+        print("i => $i \t")
+        println()
+    }
 
-    var numA = 100
-    var numB = 10
+    var array = arrayOfNulls<String>(3)
+    when {
+        true -> {
+            println("true")
+        }
+        else -> {
+            println("false")
+        }
+    }
 
-    numA.plus(numB)
-
-    val str: String = "sdklgslndglsdfsf"
-
-    println(str[str.lastIndex])
-    println(str.last())
 }
 
 fun Int.tt(): Int {

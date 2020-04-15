@@ -1,8 +1,8 @@
 package com.kborid.kotlin.pojo
 
-class CheckInfo {
+class CheckInfo : BaseInfo() {
 
-    val info: String by lazy {
-        "check info lazy init"
+    override fun getCount(): Int {
+        return lv * 2
     }
 }

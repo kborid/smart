@@ -4,11 +4,12 @@ import com.alibaba.fastjson.JSONObject
 import com.kborid.kotlin.pojo.CheckInfo
 
 class TestUtil {
-    fun printJson(json: String?): String? {
+    fun printJson(json: String?): String {
         println(json)
-        return json
+        return json!!
     }
 
+    // TestUtil伴生对象
     companion object {
         const val TAG: String = "TestUtil"
 

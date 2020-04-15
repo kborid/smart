@@ -1,12 +1,16 @@
 package com.kborid.smart.activity;
 
+import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.LabeledIntent;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Message;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -19,6 +23,7 @@ import androidx.core.content.FileProvider;
 import com.kborid.library.hand2eventbus.EventBusss;
 import com.kborid.library.sample.TestSettings;
 import com.kborid.library.util.LogUtils;
+import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.codescan.control.CaptureActivity;
 import com.kborid.smart.helper.MainActionHelper;
@@ -31,6 +36,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 
@@ -81,7 +88,8 @@ public class MainActivity extends SimpleActivity {
                     onTextShare();
                     break;
                 case ACTION_CODE:
-                    onQRCode();
+//                    onQRCode();
+                    download();
                     break;
             }
         });
@@ -228,5 +236,60 @@ public class MainActivity extends SimpleActivity {
     public static void main(String[] arg) {
         DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-DDD");
         System.out.println(sdf.format(LocalDate.of(2020, 5, 10)));
+    }
+
+    public void download() {
+        DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+//        Uri uri = Uri.parse(CommonUtil.getHttpServerUrl() + "/update/download");
+//        String secretUrl = "https://cocall.thunisoft.com:8443/update/download";
+        String secretUrl = "http://cocall.thunisoft.com:8888/update/download";
+        Uri uri = Uri.parse(secretUrl);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/CoCall";
+        String flieName = "Cocall123.apk";
+        File file = new File(folder, flieName);
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+        }
+        request.setDestinationUri(Uri.fromFile(file));
+        String appName = getResources().getString(R.string.app_name);
+        request.setTitle(appName);
+        request.setDescription("正在下载升级程序");
+            request.setAllowedOverMetered(false); // 只在wifi下下载
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+
+        final long loadId = downloadManager.enqueue(request);
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                long[] bytesAndStatus = getBytesAndStatus(loadId);
+                if (bytesAndStatus[2] == DownloadManager.STATUS_FAILED) {
+                } else if (bytesAndStatus[2] == DownloadManager.STATUS_SUCCESSFUL) {
+                } else {
+                }
+            }
+        };
+        timer.schedule(task, 0, 100);
+    }
+
+    public static long[] getBytesAndStatus(long downloadId) {
+        long[] bytesAndStatus = new long[]{-1, -1, 0};
+        DownloadManager.Query query = new DownloadManager.Query().setFilterById(downloadId);
+        Cursor c = null;
+        try {
+            DownloadManager manager = (DownloadManager) PRJApplication.getInstance().getSystemService(Context.DOWNLOAD_SERVICE);
+            c = manager.query(query);
+            if (c != null && c.moveToFirst()) {
+                bytesAndStatus[0] = c.getInt(c.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
+                bytesAndStatus[1] = c.getInt(c.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+                bytesAndStatus[2] = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+        return bytesAndStatus;
     }
 }

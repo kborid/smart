@@ -66,13 +66,10 @@ public class ApiManager {
                         return Observable.fromIterable(null != list ? list : new ArrayList<>());
                     }
                 })
+                // 过滤
+                .filter(newsSummary -> null != newsSummary && StringUtils.isNotBlank(newsSummary.getPostid()))
                 // 去重
-                .distinct(newsSummary -> {
-                    if (null != newsSummary && StringUtils.isNotBlank(newsSummary.getPostid())) {
-                        return newsSummary.getPostid();
-                    }
-                    return "";
-                })
+                .distinct(NewsSummary::getPostid)
                 // 排序
                 .toSortedList((newsSummary1, newsSummary2) -> newsSummary2.getPtime().compareTo(newsSummary1.getPtime()))
                 .subscribeOn(Schedulers.io())
