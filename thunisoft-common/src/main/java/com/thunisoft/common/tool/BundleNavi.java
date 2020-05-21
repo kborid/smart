@@ -13,14 +13,14 @@ import java.io.Serializable;
  * @email: duanwei@thunisoft.com
  */
 public class BundleNavi {
-    private BundleUnit bundle;
-    private BundleUnit preBundle;
+    private BundleUnit curUnit;
+    private BundleUnit preUnit;
 
     private static final BundleNavi instance = new BundleNavi();
 
     private BundleNavi() {
-        bundle = BundleUnit.nullBundleUnit;
-        preBundle = BundleUnit.nullBundleUnit;
+        curUnit = BundleUnit.defaultBundleUnit;
+        preUnit = BundleUnit.defaultBundleUnit;
     }
 
     public static BundleNavi getInstance() {
@@ -28,83 +28,81 @@ public class BundleNavi {
     }
 
     /*package*/ void updateBundle(Activity activity) {
-        if (bundle.hashcode == activity.hashCode()) {
+        if (curUnit.hashcode == activity.hashCode()) {
             return;
         }
-        preBundle = bundle;
-        bundle = BundleUnit.create(activity.getClass(), activity.hashCode());
+        preUnit = curUnit;
+        curUnit = BundleUnit.create(activity.getClass(), activity.hashCode());
     }
 
     public boolean containKey(String key) {
-        return preBundle.bundle.containsKey(key);
+        return preUnit.bundle.containsKey(key);
     }
 
     public String getString(String key) {
-        String temp = preBundle.bundle.getString(key);
-        preBundle.bundle.remove(key);
+        String temp = preUnit.bundle.getString(key);
+        preUnit.bundle.remove(key);
         return temp;
     }
 
     public int getInt(String key) {
-        int temp = preBundle.bundle.getInt(key);
-        preBundle.bundle.remove(key);
-        return temp;
+        return getInt(key, 0);
     }
 
     public int getInt(String key, int defaultValue) {
-        int temp = preBundle.bundle.getInt(key, defaultValue);
-        preBundle.bundle.remove(key);
+        int temp = preUnit.bundle.getInt(key, defaultValue);
+        preUnit.bundle.remove(key);
         return temp;
     }
 
     public float getFloat(String key) {
-        float temp = preBundle.bundle.getFloat(key);
-        preBundle.bundle.remove(key);
+        float temp = preUnit.bundle.getFloat(key);
+        preUnit.bundle.remove(key);
         return temp;
     }
 
     public boolean getBoolean(String key) {
-        boolean temp = preBundle.bundle.getBoolean(key);
-        preBundle.bundle.remove(key);
+        boolean temp = preUnit.bundle.getBoolean(key);
+        preUnit.bundle.remove(key);
         return temp;
     }
 
     public Object get(String key) {
-        Object temp = preBundle.bundle.get(key);
-        preBundle.bundle.remove(key);
+        Object temp = preUnit.bundle.get(key);
+        preUnit.bundle.remove(key);
         return temp;
     }
 
     public void putString(String key, String value) {
-        bundle.bundle.putString(key, value);
+        curUnit.bundle.putString(key, value);
     }
 
     public void putInt(String key, int value) {
-        bundle.bundle.putInt(key, value);
+        curUnit.bundle.putInt(key, value);
     }
 
     public void putFloat(String key, float value) {
-        bundle.bundle.putFloat(key, value);
+        curUnit.bundle.putFloat(key, value);
     }
 
     public void putBoolean(String key, boolean value) {
-        bundle.bundle.putBoolean(key, value);
+        curUnit.bundle.putBoolean(key, value);
     }
 
     public void put(String key, Serializable value) {
-        bundle.bundle.putSerializable(key, value);
+        curUnit.bundle.putSerializable(key, value);
     }
 
     public Class<? extends Activity> getPreviousActivityClass() {
-        return preBundle.activityClass;
+        return preUnit.activityClass;
     }
 
     public Class<? extends Activity> getCurrentActivityClass() {
-        return bundle.activityClass;
+        return curUnit.activityClass;
     }
 
     private static class BundleUnit {
-        private static final BundleUnit nullBundleUnit = new BundleUnit(Activity.class, 0);
+        private static final BundleUnit defaultBundleUnit = new BundleUnit(Activity.class, 0);
 
         private final Bundle bundle;
         private final Class<? extends Activity> activityClass;
@@ -120,5 +118,4 @@ public class BundleNavi {
             return new BundleUnit(activityClass, hashcode);
         }
     }
-
 }

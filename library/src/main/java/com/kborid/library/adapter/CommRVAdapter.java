@@ -3,14 +3,11 @@ package com.kborid.library.adapter;
 import android.animation.Animator;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.kborid.library.animation.AlphaInAnimation;
 import com.kborid.library.animation.BaseAnimation;
 
@@ -22,7 +19,7 @@ public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<ViewHolderHe
     private int mLayoutId;
     private List<T> mDatas = new ArrayList<>();
 
-    private OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener<T> mOnItemClickListener;
 
 
     //动画
@@ -32,7 +29,7 @@ public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<ViewHolderHe
     private int mDuration = 300;
     private BaseAnimation mSelectAnimation = new AlphaInAnimation();
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener<T> onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
     }
 
@@ -76,26 +73,20 @@ public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<ViewHolderHe
 
     private void setListener(final ViewGroup parent, final ViewHolderHelper viewHolder, int viewType) {
         if (!isEnabled(viewType)) return;
-        viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnItemClickListener != null) {
-                    int position = getPosition(viewHolder);
-                    mOnItemClickListener.onItemClick(parent, v, mDatas.get(position), position);
-                }
+        viewHolder.getConvertView().setOnClickListener((v) -> {
+            if (mOnItemClickListener != null) {
+                int position = getPosition(viewHolder);
+                mOnItemClickListener.onItemClick(parent, v, mDatas.get(position), position);
             }
         });
 
 
-        viewHolder.getConvertView().setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (mOnItemClickListener != null) {
-                    int position = getPosition(viewHolder);
-                    return mOnItemClickListener.onItemLongClick(parent, v, mDatas.get(position), position);
-                }
-                return false;
+        viewHolder.getConvertView().setOnLongClickListener(v -> {
+            if (mOnItemClickListener != null) {
+                int position = getPosition(viewHolder);
+                return mOnItemClickListener.onItemLongClick(parent, v, mDatas.get(position), position);
             }
+            return false;
         });
     }
 
@@ -111,9 +102,11 @@ public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<ViewHolderHe
                 if (mSelectAnimation != null) {
                     animation = mSelectAnimation;
                 }
-                for (Animator anim : animation.getAnimators(holder.itemView)) {
-                    startAnim(anim, holder.getLayoutPosition());
-                    Log.d("animline", mLastPosition + "");
+                if (null != animation) {
+                    for (Animator anim : animation.getAnimators(holder.itemView)) {
+                        startAnim(anim, holder.getLayoutPosition());
+                        Log.d("animline", mLastPosition + "");
+                    }
                 }
                 mLastPosition = holder.getLayoutPosition();
             }

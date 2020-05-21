@@ -40,7 +40,7 @@ public class PRJApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        MainThreadWatchDog.defaultInstance().startWatch();
+//        MainThreadWatchDog.defaultInstance().startWatch();
         ThunisoftLogger.initLogger(this, new LoggerConfig() {
             @Override
             public String getTag() {
@@ -87,8 +87,8 @@ public class PRJApplication extends BaseApplication {
         });
         CrashReport.initCrashReport(this, "6b298e7c56", BuildConfig.DEBUG, userStrategy);
         initImageLoaderConfig();
-        registerActivityLifecycleCallbacks(LifeCycleCallback.activityLifecycleCallbacks);
-        MainThreadWatchDog.defaultInstance().stopWatch();
+//        registerActivityLifecycleCallbacks(LifeCycleCallback.activityLifecycleCallbacks);
+//        MainThreadWatchDog.defaultInstance().stopWatch();
     }
 
     private void initImageLoaderConfig() {

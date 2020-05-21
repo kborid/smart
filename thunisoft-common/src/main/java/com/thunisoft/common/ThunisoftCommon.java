@@ -22,7 +22,7 @@ public class ThunisoftCommon {
         mContext = context;
 
         SystemParamUtil.init(context);
-        CrashHandler.getInstance().init(context);
+        CrashHandler.getInstance().init();
     }
 
     public static Context getContext() {

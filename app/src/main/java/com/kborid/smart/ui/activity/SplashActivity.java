@@ -2,13 +2,17 @@ package com.kborid.smart.ui.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import androidx.core.view.LayoutInflaterCompat;
 import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.activity.MainActivity;
@@ -29,8 +33,26 @@ public class SplashActivity extends BaseSimpleActivity {
 
     private boolean isGotoTest = false;
 
+    private static long sInflateViewTime = 0L;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        LayoutInflaterCompat.setFactory2(LayoutInflater.from(this), new LayoutInflater.Factory2() {
+            @Override
+            public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+                long startTime = System.currentTimeMillis();
+                View v = getDelegate().createView(parent, name, context, attrs);
+                long spend = System.currentTimeMillis() - startTime;
+                sInflateViewTime += spend;
+                System.out.println("创建" + name + "\n花费时间：" + spend + "ms," + "total:" + sInflateViewTime + "ms");
+                return v;
+            }
+
+            @Override
+            public View onCreateView(String name, Context context, AttributeSet attrs) {
+                return null;
+            }
+        });
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawable(null);
     }

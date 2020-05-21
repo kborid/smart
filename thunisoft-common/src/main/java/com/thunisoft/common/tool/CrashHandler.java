@@ -1,10 +1,7 @@
 package com.thunisoft.common.tool;
 
-import android.content.Context;
 import android.os.Looper;
 import android.os.Process;
-
-import com.orhanobut.logger.Logger;
 import com.thunisoft.common.util.CrashInfoUtils;
 import com.thunisoft.common.util.ToastUtils;
 
@@ -38,10 +35,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
     /**
      * 初始化
-     *
-     * @param context
      */
-    public void init(Context context) {
+    public void init() {
         // 获取系统默认的 UncaughtException 处理器
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         // 设置该 CrashHandler 为程序的默认处理器
@@ -60,10 +55,11 @@ public class CrashHandler implements UncaughtExceptionHandler {
             mDefaultHandler.uncaughtException(thread, e);
         } else {
             // 等待处理完成
+            // TODO 为什么要等？ 等什么？
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ex) {
-                Logger.t(TAG).e(ex, "an error occurred");
+                ex.printStackTrace();
             }
             // 退出程序
             System.exit(1);
@@ -74,15 +70,17 @@ public class CrashHandler implements UncaughtExceptionHandler {
     /**
      * 自定义错误处理，收集错误信息，发送错误报告等操作均在此完成
      *
-     * @param e
+     * @param e 异常
      * @return true：如果处理了该异常信息；否则返回 false
      */
     private boolean handleException(Throwable e) {
-        if (e == null) {
-            return false;
+        BundleNavi.getInstance().putInt("testKey", 123);
+        BundleNavi.getInstance().getInt("testKey");
+        if (null != e) {
+            CrashInfoUtils.collectDeviceInfo(e);
+            return true;
         }
-        CrashInfoUtils.collectDeviceInfo(e);
-        return true;
+        return false;
     }
 
     private void showCrashToast() {
