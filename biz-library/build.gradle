@@ -76,9 +76,9 @@ dependencies {
     implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
 
     //thunisoft
-    api 'com.thunisoft.android:ui:2.0.0'
-    api 'com.thunisoft.android:common:2.0.0'
-    api 'com.thunisoft.android:logger:2.0.0'
+//    api 'com.thunisoft.android:ui:2.0.0'
+//    api 'com.thunisoft.android:common:2.0.0'
+//    api 'com.thunisoft.android:logger:2.0.0'
 //    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 //    implementation 'com.thunisoft.android:jsbridge:1.0.1'
 //    implementation 'com.kborid.smart:jsbridge:1.0.3'
@@ -89,11 +89,11 @@ dependencies {
     //eventbus
     api 'org.greenrobot:eventbus:3.1.1'
 
-    //apache commons
-    api 'org.apache.commons:commons-lang3:3.7'
-
     //filedownloader
     api 'com.liulishuo.filedownloader:library:1.7.7'
+    api project(path: ':thunisoft-ui')
+    api project(path: ':thunisoft-common')
+    api project(path: ':thunisoft-logger')
 }
 
 apply from: '../upload.gradle'

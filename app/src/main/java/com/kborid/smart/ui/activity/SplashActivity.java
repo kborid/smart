@@ -55,6 +55,16 @@ public class SplashActivity extends BaseSimpleActivity {
         });
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawable(null);
+
+        new Thread("leak-thread"){
+            @Override
+            public void run() {
+                super.run();
+                while (true) {
+                    // TODO
+                }
+            }
+        }.start();
     }
 
     @Override

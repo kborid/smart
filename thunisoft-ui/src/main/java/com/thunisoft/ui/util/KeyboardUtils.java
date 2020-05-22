@@ -1,4 +1,4 @@
-package com.thunisoft.common.util;
+package com.thunisoft.ui.util;
 
 import android.content.Context;
 import android.graphics.Rect;

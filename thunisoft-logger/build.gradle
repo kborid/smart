@@ -30,7 +30,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // logger
-    implementation 'com.orhanobut:logger:2.2.0'
+    api 'com.orhanobut:logger:2.2.0'
 }
 
 apply plugin: 'maven'

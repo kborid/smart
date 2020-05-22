@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -19,7 +20,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.thunisoft.common.tool.UIHandler;
 import com.thunisoft.ui.R;
 import com.thunisoft.ui.widget.NoScrollListView;
 
@@ -344,7 +344,7 @@ public class CustomDialog extends Dialog {
                     }
                 }
             };
-            UIHandler.post(new Runnable() {
+            new Handler().post(new Runnable() {
                 @Override
                 public void run() {
                     if (p.mCheckedItem > -1) {

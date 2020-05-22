@@ -1,25 +1,17 @@
 package com.thunisoft.logger;
 
 import android.content.Context;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.text.TextUtils;
-
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.LogStrategy;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.orhanobut.logger.Logger.ASSERT;
-import static com.orhanobut.logger.Logger.DEBUG;
-import static com.orhanobut.logger.Logger.ERROR;
-import static com.orhanobut.logger.Logger.INFO;
-import static com.orhanobut.logger.Logger.VERBOSE;
-import static com.orhanobut.logger.Logger.WARN;
+import static com.orhanobut.logger.Logger.*;
 
 /**
  * @Author: kborid

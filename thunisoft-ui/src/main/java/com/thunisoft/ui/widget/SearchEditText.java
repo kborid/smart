@@ -11,8 +11,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.thunisoft.common.util.KeyboardUtils;
 import com.thunisoft.ui.R;
+import com.thunisoft.ui.util.KeyboardUtils;
 
 /**
  * SearchEditText

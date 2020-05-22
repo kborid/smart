@@ -87,7 +87,7 @@ public class PRJApplication extends BaseApplication {
         });
         CrashReport.initCrashReport(this, "6b298e7c56", BuildConfig.DEBUG, userStrategy);
         initImageLoaderConfig();
-//        registerActivityLifecycleCallbacks(LifeCycleCallback.activityLifecycleCallbacks);
+        registerActivityLifecycleCallbacks(LifeCycleCallback.activityLifecycleCallbacks);
 //        MainThreadWatchDog.defaultInstance().stopWatch();
     }
 

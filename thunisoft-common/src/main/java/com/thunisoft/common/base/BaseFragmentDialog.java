@@ -2,6 +2,7 @@ package com.thunisoft.common.base;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +31,7 @@ public abstract class BaseFragmentDialog extends DialogFragment {
         super.onStart();
         Window window = getDialog().getWindow();
         if (null != window) {
-            window.setBackgroundDrawableResource(R.color.transparent);
+            window.setBackgroundDrawableResource(Color.TRANSPARENT);
         }
     }
 
