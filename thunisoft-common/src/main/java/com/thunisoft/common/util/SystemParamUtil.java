@@ -34,7 +34,9 @@ public final class SystemParamUtil {
         try {
             ApplicationInfo appInfo = context.getPackageManager()
                     .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            value = appInfo.metaData.getString(key);
+            if (null != appInfo && null != appInfo.metaData) {
+                value = appInfo.metaData.getString(key);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
