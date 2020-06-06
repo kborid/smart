@@ -1,28 +1,28 @@
-package com.kborid.kotlin
+package com.kborid.kotlin.ui
 
 import android.os.Bundle
-import android.widget.Toast
 import com.alibaba.fastjson.JSONObject
+import com.kborid.kotlin.R
+import com.kborid.kotlin.TestStaticUtil
+import com.kborid.kotlin.TestUtil
 import com.kborid.kotlin.pojo.CheckInfo
 import com.thunisoft.common.base.BaseActivity
-import com.thunisoft.common.util.ToastUtils
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_test.*
+import org.jetbrains.anko.toast
 
 const val TTT: String = "TTT"
 
-class MainActivity : BaseActivity() {
-
-    val TAG: String = MainActivity::class.java.simpleName
+class TestActivity : BaseActivity() {
 
     override fun getLayoutResId(): Int {
-        return R.layout.activity_main
+        return R.layout.activity_test;
     }
 
-    override fun initDataAndEvent(bundle: Bundle?) {
+    override fun initDataAndEvent(savedInstanceState: Bundle?) {
         tv_name.text = "测试"
         tv_name.setOnClickListener {
             parseJson("{}")
-            ToastUtils.showToast(tv_name.text.toString(), Toast.LENGTH_SHORT)
+            toast(tv_name.text)
         }
     }
 
@@ -32,6 +32,5 @@ class MainActivity : BaseActivity() {
         TestUtil().printJson(json)
         TestUtil.parseJson(json)
         TestStaticUtil.printJson(json)
-        TTest.instance?.test(json)
     }
 }
