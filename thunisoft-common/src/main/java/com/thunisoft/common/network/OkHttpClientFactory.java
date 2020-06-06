@@ -18,9 +18,7 @@ import java.security.KeyStore;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
@@ -47,6 +45,7 @@ public class OkHttpClientFactory {
 
     // HTTPS证书
     private static KeyStore mHttpsKeyStore = null;
+    private static TrustManager mTrustManager = null;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static OkHttpClient newOkHttpClient() {
@@ -59,13 +58,8 @@ public class OkHttpClientFactory {
         builder.retryOnConnectionFailure(true);
 
         //设置Https证书
-        builder.sslSocketFactory(newSslSocketFactory(getX509TrustManager()), getX509TrustManager());
-        builder.hostnameVerifier(new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-                return StringUtils.equals("https", "https");
-            }
-        });
+//        builder.sslSocketFactory(newSslSocketFactory(getX509TrustManager()), getX509TrustManager());
+//        builder.hostnameVerifier((hostname, session) -> StringUtils.equals("https", "https"));
 
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new LoggerInterceptor());
@@ -110,21 +104,24 @@ public class OkHttpClientFactory {
      */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private static X509TrustManager getX509TrustManager() {
-        try {
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(
-                    TrustManagerFactory.getDefaultAlgorithm());
-            // 默认用空证书初始化
+        if (null == mTrustManager) {
+            try {
+                TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(
+                        TrustManagerFactory.getDefaultAlgorithm());
+                // 默认用空证书初始化
 //            trustManagerFactory.init((KeyStore) null);
-            trustManagerFactory.init(getHttpsKeyStore());
-            TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
-            if (trustManagers.length != 1 || !(trustManagers[0] instanceof X509TrustManager)) {
-                throw new IllegalStateException("Unexpected default trust managers:"
-                        + Arrays.toString(trustManagers));
+                trustManagerFactory.init(getHttpsKeyStore());
+                TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
+                if (trustManagers.length != 1 || !(trustManagers[0] instanceof X509TrustManager)) {
+                    throw new IllegalStateException("Unexpected default trust managers:"
+                            + Arrays.toString(trustManagers));
+                }
+                mTrustManager = trustManagers[0];
+            } catch (GeneralSecurityException e) {
+                throw new AssertionError("No System TLS", e); // The system has no TLS. Just give up.
             }
-            return (X509TrustManager) trustManagers[0];
-        } catch (GeneralSecurityException e) {
-            throw new AssertionError("No System TLS", e); // The system has no TLS. Just give up.
         }
+        return (X509TrustManager) mTrustManager;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
