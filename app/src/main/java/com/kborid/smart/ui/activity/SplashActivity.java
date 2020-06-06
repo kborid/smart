@@ -11,13 +11,12 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import androidx.core.view.LayoutInflaterCompat;
+
 import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.activity.MainActivity;
 import com.kborid.smart.service.LocationService;
-import com.kborid.smart.ui.activity.SplashActivityPermissionsDispatcher;
 import com.thunisoft.common.base.BaseSimpleActivity;
 import com.thunisoft.common.tool.UIHandler;
 
@@ -56,7 +55,7 @@ public class SplashActivity extends BaseSimpleActivity {
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawable(null);
 
-        new Thread("leak-thread"){
+        new Thread("leak-thread") {
             @Override
             public void run() {
                 super.run();

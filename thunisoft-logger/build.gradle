@@ -31,6 +31,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // logger
     api 'com.orhanobut:logger:2.2.0'
+
+    // logback
+    api 'org.slf4j:slf4j-api:1.7.25'
+    api 'com.github.tony19:logback-android:2.0.0'
 }
 
 apply plugin: 'maven'
