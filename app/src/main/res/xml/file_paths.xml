@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <external-path path="Android/data/com.kborid.smart/" name="files_root"/>
-    <external-path path="." name="root"/>
+    <!--
+        root-path	            / 根目录（禁止使用，不符合FileProvider设计思想）
+        files-path	            /data/user/0/<package_name>/files 或者 /data/data/<package_name>/files（这两个目录指向相同的位置）
+        cache-path	            /data/user/0/<package_name>/cache 或者 /data/data/<package_name>/cache
+        external-path	        /storage/emulated/0 或者 /sdcard/
+        external-files-path	    /storage/emulated/0/Android/data/<package_name>/files 或者 /sdcard/Android/data/<package_name>/files
+        external-cache-path	    /storage/emulated/0/Android/data/<package_name>/cache 或者 /sdcard/Android/data/<package_name>/cache
+    -->
+    <root-path name="root" />
+    <files-path
+        name="files"
+        path="." />
+    <external-path
+        name="sd"
+        path="." />
 </paths>
