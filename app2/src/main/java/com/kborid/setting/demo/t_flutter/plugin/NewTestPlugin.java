@@ -1,14 +1,4 @@
-package com.kborid.setting.t_flutter.plugin;
-
-import android.os.Build;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import com.kborid.setting.PRJApplication;
-import com.orhanobut.logger.Logger;
-import com.thunisoft.common.tool.UIHandler;
-import com.thunisoft.common.util.ToastUtils;
+package com.kborid.setting.demo.t_flutter.plugin;
 
 //import io.flutter.embedding.engine.plugins.FlutterPlugin;
 //import io.flutter.embedding.engine.plugins.activity.ActivityAware;

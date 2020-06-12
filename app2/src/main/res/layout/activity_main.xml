@@ -2,11 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:onClick="onClick"
         android:src="@mipmap/ic_quick_change" />
+
+    <TextView
+        android:id="@+id/tv_tt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="T.TT"
+        android:textSize="40sp"
+        android:textStyle="bold|italic" />
 </LinearLayout>

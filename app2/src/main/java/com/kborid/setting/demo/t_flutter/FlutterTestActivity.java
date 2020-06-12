@@ -1,8 +1,4 @@
-package com.kborid.setting.t_flutter;
-
-import android.os.Bundle;
-
-import com.kborid.setting.R;
+package com.kborid.setting.demo.t_flutter;
 
 //import io.flutter.embedding.android.FlutterActivity;
 //import io.flutter.embedding.engine.FlutterEngine;

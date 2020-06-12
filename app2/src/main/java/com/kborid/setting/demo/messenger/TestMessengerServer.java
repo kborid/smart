@@ -1,4 +1,4 @@
-package com.kborid.setting.test;
+package com.kborid.setting.demo.messenger;
 
 import android.app.Service;
 import android.content.Intent;

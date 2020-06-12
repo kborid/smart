@@ -32,13 +32,16 @@
 
         <activity
             android:name=".ui.FragmentActivity"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar"
             android:configChanges="orientation|keyboard|screenSize" />
 
-        <service android:name=".test.TestIntentService" />
+        <service android:name=".demo.IntentServiceDemo" />
         <service
-            android:name=".test.TestJopService"
+            android:name=".demo.JobServiceDemo"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service android:name=".test.TestMessengerServer" />
+        <service android:name=".demo.messenger.TestMessengerServer" />
 
         <meta-data
             android:name="flutterEmbedding"

@@ -1,4 +1,4 @@
-package com.kborid.setting.test;
+package com.kborid.setting.demo;
 
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 import java.util.concurrent.Executors;
 
 /**
- * TestJopService
+ * JobServiceDemo
  *
  * @description:
  * @author: duanwei
@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
  * @version: 1.0.0
  * @date: 2019/12/4
  */
-public class TestJopService<T extends JobInfo> extends JobService {
+public class JobServiceDemo<T extends JobInfo> extends JobService {
 
     private JobParameters params;
     

@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply from: "../sign.gradle"
+apply plugin: 'realm-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion mCompileSdkVersion
@@ -42,4 +44,19 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+
+    // realm
+//    implementation "io.realm:realm-android:0.87.5"
+}
+
+buildscript {
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath "io.realm:realm-gradle-plugin:3.1.0"
+    }
 }

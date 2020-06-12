@@ -1,6 +1,4 @@
-package com.kborid.setting.t_flutter;
-
-import com.kborid.setting.PRJApplication;
+package com.kborid.setting.demo.t_flutter;
 
 //import io.flutter.embedding.engine.FlutterEngine;
 //import io.flutter.embedding.engine.FlutterEngineCache;

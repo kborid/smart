@@ -1,11 +1,21 @@
-package com.kborid.setting.test;
+package com.kborid.setting.demo;
 
 import android.app.IntentService;
 import android.content.Intent;
+
 import androidx.annotation.Nullable;
 
-public class TestIntentService extends IntentService {
-    public TestIntentService() {
+/**
+ * IntentServiceDemo
+ *
+ * @description: IntentServer演示
+ * @author: duanwei
+ * @email: duanwei@thunisoft.com
+ * @version: 1.0.0
+ * @date: 2020/6/12
+ */
+public class IntentServiceDemo extends IntentService {
+    public IntentServiceDemo() {
         super("Kborid Intent Service");
     }
 

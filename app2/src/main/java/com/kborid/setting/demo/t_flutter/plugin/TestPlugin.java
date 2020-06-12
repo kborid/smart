@@ -1,14 +1,4 @@
-package com.kborid.setting.t_flutter.plugin;
-
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import androidx.annotation.NonNull;
-import android.widget.Toast;
-
-import com.orhanobut.logger.Logger;
-import com.thunisoft.common.tool.UIHandler;
-import com.thunisoft.common.util.ToastUtils;
+package com.kborid.setting.demo.t_flutter.plugin;
 
 //import io.flutter.plugin.common.MethodCall;
 //import io.flutter.plugin.common.MethodChannel;
