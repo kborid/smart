@@ -1,4 +1,4 @@
-package com.kborid.smart.provider;
+package com.kborid.setting.provider;
 
 import android.os.IBinder;
 import android.os.Parcel;

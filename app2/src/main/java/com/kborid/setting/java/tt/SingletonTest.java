@@ -1,8 +1,9 @@
-package com.kborid.smart.tt;
+package com.kborid.setting.java.tt;
 
 import java.util.HashMap;
 
 public class SingletonTest {
+
     //1、懒汉
     public static class Singleton1 {
         private static final Singleton1 instance = new Singleton1();
@@ -32,7 +33,7 @@ public class SingletonTest {
         }
     }
 
-    //3、double check + volatile
+    //3、double check lock + volatile
     public static class Singleton3 {
         private static volatile Singleton3 instance = null;
 
@@ -54,7 +55,7 @@ public class SingletonTest {
     //4、静态内部类
     public static class Singleton4 {
         private static class Singleton4Instance {
-            static Singleton4 instance = new Singleton4();
+            private static Singleton4 instance = new Singleton4();
         }
 
         private Singleton4() {

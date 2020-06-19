@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -69,16 +70,24 @@ public class OkHttpHelper {
      * @param url 请求地址
      * @return 响应体
      */
-    public Response syncGet(String url) {
-        Request req = new Request.Builder().url(url).tag(url).build();
+    public synchronized Response syncGet(String url) {
         Response res = null;
+        ReentrantLock lock = new ReentrantLock();
         try {
-            res = okHttpClient.newCall(req).execute();
-            if (res.isSuccessful()) {
-                return res;
+            lock.lock();
+            Request req = new Request.Builder().url(url).tag(url).build();
+            try {
+                res = okHttpClient.newCall(req).execute();
+                if (res.isSuccessful()) {
+                    return res;
+                }
+            } catch (Exception e) {
+                log.error("同步GET请求失败", e);
             }
         } catch (Exception e) {
-            log.error("同步GET请求失败", e);
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
         }
         return res;
     }

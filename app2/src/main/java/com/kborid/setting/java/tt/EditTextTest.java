@@ -1,4 +1,4 @@
-package com.kborid.smart.tt;
+package com.kborid.setting.java.tt;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

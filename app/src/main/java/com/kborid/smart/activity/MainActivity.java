@@ -27,7 +27,7 @@ import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.codescan.control.CaptureActivity;
 import com.kborid.smart.helper.MainActionHelper;
-import com.kborid.smart.tt.CustomThread;
+import com.kborid.setting.java.tt.CustomThread;
 import com.kborid.smart.ui.activity.SnapHelpActivity;
 import com.thunisoft.common.util.ToastUtils;
 

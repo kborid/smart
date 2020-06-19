@@ -25,6 +25,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -33,6 +37,8 @@ import okhttp3.Response;
 public class MainActivity extends BaseActivity {
 
     private final static Logger logger = LoggerFactory.getLogger(MainActivity.class);
+
+    private final static String T_URL = "http://publicobject.com/helloworld.txt";
 
     private LifecycleObserver lifecycleObserver;
 
@@ -77,9 +83,20 @@ public class MainActivity extends BaseActivity {
     }
 
     private Runnable requestRunnable = () -> {
-        String host = "http://publicobject.com/helloworld.txt";
-        Response res = OkHttpHelper.getInstance().syncGet(host);
+        Response res = OkHttpHelper.getInstance().syncGet(T_URL);
         logger.info(res.toString());
+        URL url = null;
+        try {
+            url = new URL(T_URL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            if (connection.getResponseCode() == 200) {
+                logger.info("res = {}", connection.getResponseMessage());
+            }
+        } catch (MalformedURLException e) {
+            logger.error("url失败", e);
+        } catch (IOException ioe) {
+            logger.error("IO失败", ioe);
+        }
     };
 
     public void onClick(View view) {

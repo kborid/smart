@@ -1,4 +1,4 @@
-package com.kborid.smart.tt;
+package com.kborid.setting.java.tt;
 
 public interface CodeTypeConst {
     public static final int CODE_TYPE1 = 0;

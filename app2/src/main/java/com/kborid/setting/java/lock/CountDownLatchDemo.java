@@ -1,4 +1,4 @@
-package com.kborid.smart.lock;
+package com.kborid.setting.java.lock;
 
 import com.kborid.library.util.DateTestUtils;
 

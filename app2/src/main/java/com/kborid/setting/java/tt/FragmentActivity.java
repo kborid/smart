@@ -1,17 +1,18 @@
-package com.kborid.smart.tt;
+package com.kborid.setting.java.tt;
 
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 
-import com.kborid.smart.R;
-import com.kborid.smart.activity.SimpleActivity;
-import com.kborid.smart.provider.BinderParcelable;
+import com.kborid.setting.R;
+import com.kborid.setting.provider.BinderParcelable;
+import com.thunisoft.common.base.BaseSimpleActivity;
 
-public class FragmentActivity extends SimpleActivity {
 
-//    private static final String AUTHORITY = "com.kborid.smart.provider";
+public class FragmentActivity extends BaseSimpleActivity {
+
+//    private static final String AUTHORITY = "com.kborid.setting.provider";
 //    private static final String METHOD_GET_LOGIN_INFO = "METHOD_GET_LOGIN_INFO";
 //    private static final String METHOD_GET_SESSION = "METHOD_GET_SESSION";
 //    private static final String KEY_SESSION = "KEY_SESSION";
