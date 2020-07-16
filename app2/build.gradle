@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: "../sign.gradle"
 apply plugin: 'realm-android'
-apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion mCompileSdkVersion
@@ -19,10 +18,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
-        }
-        debug {
-            minifyEnabled false
         }
     }
 
@@ -33,6 +28,10 @@ android {
 
     lintOptions {
         abortOnError false
+    }
+
+    dataBinding {
+        enabled = true
     }
 }
 

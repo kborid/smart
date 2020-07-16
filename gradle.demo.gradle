@@ -1,0 +1,12 @@
+def Task hello = task(hello)
+hello.doLast {
+    println("hello world");
+}
+
+tasks.create('hello2') << {
+    println('hello2 world')
+}
+
+task hello2 {
+    println('hello');
+}

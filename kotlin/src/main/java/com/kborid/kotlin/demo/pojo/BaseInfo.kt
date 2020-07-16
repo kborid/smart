@@ -1,4 +1,4 @@
-package com.kborid.kotlin.pojo
+package com.kborid.kotlin.demo.pojo
 
 open class BaseInfo {
     var lv: Int = 10

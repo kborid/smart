@@ -1,6 +1,4 @@
-package com.kborid.kotlin.pojo
-
-import com.kborid.kotlin.IUserInfo
+package com.kborid.kotlin.demo.pojo
 
 class UserInfoImpl : BaseInfo(), IUserInfo {
     override fun getName(): String {

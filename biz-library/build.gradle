@@ -94,6 +94,7 @@ dependencies {
     api project(path: ':thunisoft-ui')
     api project(path: ':thunisoft-common')
     api project(path: ':thunisoft-logger')
+    implementation project(path: ':stub')
 }
 
 apply from: '../upload.gradle'

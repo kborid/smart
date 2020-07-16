@@ -1,3 +1,4 @@
+include ':stub'
 include ':app', ':app2', ':kotlin', ':biz-library'
 include ':thunisoft-common'
 include ':thunisoft-logger'

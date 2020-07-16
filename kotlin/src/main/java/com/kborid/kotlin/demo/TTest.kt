@@ -1,7 +1,7 @@
-package com.kborid.kotlin
+package com.kborid.kotlin.demo
 
-import com.kborid.kotlin.pojo.CheckInfo
-import com.kborid.kotlin.pojo.UserInfoImpl
+import com.kborid.kotlin.demo.pojo.CheckInfo
+import com.kborid.kotlin.demo.pojo.UserInfoImpl
 
 /**
  * 1、在顶层声明
@@ -47,12 +47,12 @@ class TTest {
         }
         arr.forEach { i -> println(i) }
 
-        var numA: Int = 4
+        val numA: Int = 4
         // 在Java中可以这么写，但是Kotlin中直接会报错，kotlin不支持...?...:...三目运算符。
 //    var numB: Int = (numA > 2) ? 3 : 5
 
         // kotlin中直接用if..else替代。例：
-        var numB: Int = if (numA > 2) 3 else 5  // 当numA大于2时输出numB的值为3，反之为5
+        val numB: Int = if (numA > 2) 3 else 5  // 当numA大于2时输出numB的值为3，反之为5
         println("numB = > $numB")
 
         // 循环5次，且步长为1的递增
