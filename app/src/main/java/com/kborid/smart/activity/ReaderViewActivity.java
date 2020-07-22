@@ -79,8 +79,8 @@ public class ReaderViewActivity extends SimpleActivity implements TbsReaderView.
     }
 
     @Override
-    protected void initEventAndData(Bundle savedInstanceState) {
-        super.initEventAndData(savedInstanceState);
+    protected void initDataAndEvent(Bundle savedInstanceState) {
+        super.initDataAndEvent(savedInstanceState);
         dealIntent();
         initViews();
         initReaderView();

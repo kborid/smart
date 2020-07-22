@@ -39,7 +39,7 @@ public class MainFragmentActivity extends BaseSimpleActivity {
     }
 
     @Override
-    protected void initEventAndData(Bundle savedInstanceState) {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         initFragment();
         bottomBar.setOnNavigationItemSelectedListener(menuItem -> {
             int order = menuItem.getOrder();

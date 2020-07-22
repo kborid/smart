@@ -2,11 +2,11 @@ package com.kborid.kotlin.ui
 
 import android.os.Bundle
 import com.kborid.kotlin.R
-import com.thunisoft.common.base.BaseActivity
+import com.thunisoft.common.base.BaseSimpleActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseSimpleActivity() {
 
     val TAG: String = MainActivity::class.java.simpleName
 
@@ -14,7 +14,7 @@ class MainActivity : BaseActivity() {
         return R.layout.activity_main
     }
 
-    override fun initDataAndEvent(bundle: Bundle?) {
+    override fun initDataAndEvent(savedInstanceState: Bundle?) {
         tv_name.text = "世界，你好"
         runOnUiThread { toast(tv_name.text) }
 

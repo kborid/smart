@@ -27,7 +27,6 @@ import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.codescan.control.CaptureActivity;
 import com.kborid.smart.helper.MainActionHelper;
-import com.kborid.setting.java.tt.CustomThread;
 import com.kborid.smart.ui.activity.SnapHelpActivity;
 import com.thunisoft.common.util.ToastUtils;
 
@@ -62,7 +61,7 @@ public class MainActivity extends SimpleActivity {
     }
 
     @Override
-    protected void initEventAndData(Bundle savedInstanceState) {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         printTest();
 
         listView.setAdapter(new ArrayAdapter<String>(this, R.layout.view_action_item, MainActionHelper.actions));
@@ -147,18 +146,6 @@ public class MainActivity extends SimpleActivity {
     }
 
     private void onHandler() {
-        CustomThread customThread = new CustomThread();
-        customThread.start();
-//        customThread.getInnerHandler().sendEmptyMessage(1);
-//        customThread.getInnerHandler().sendEmptyMessageDelayed(2, 1000);
-        Message message = Message.obtain(/*customThread.getInnerHandler(), new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("Message's callback");
-            }
-        }*/);
-        message.what = 3;
-        customThread.getInnerHandler().sendMessageDelayed(message, 2000);
     }
 
     //Context
@@ -255,8 +242,8 @@ public class MainActivity extends SimpleActivity {
         String appName = getResources().getString(R.string.app_name);
         request.setTitle(appName);
         request.setDescription("正在下载升级程序");
-            request.setAllowedOverMetered(false); // 只在wifi下下载
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setAllowedOverMetered(false); // 只在wifi下下载
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
         final long loadId = downloadManager.enqueue(request);
         Timer timer = new Timer();

@@ -17,7 +17,7 @@ public abstract class SimpleActivity extends BaseSimpleActivity {
     protected MainTitleLayout titleView;
 
     @Override
-    protected void initEventAndData(Bundle savedInstanceState) {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         titleView = (MainTitleLayout) findViewById(R.id.title_layout);
         if (needStatusBarImmersive()) {
             ImmersiveStatusBarUtils.initAfterSetContentView(this, titleView);

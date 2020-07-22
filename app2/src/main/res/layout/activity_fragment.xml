@@ -1,110 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#f5f6faf8"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="23dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="23dp"
-                android:layout_height="23dp"
-                android:layout_alignParentLeft="true"
-                android:layout_gravity="center"
-                android:layout_marginLeft="18dp"
-                android:src="@mipmap/logo_small" />
-
-            <ImageView
-                android:id="@+id/cancel_disp"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="8dp"
-                android:src="@mipmap/cancel_add_dis_group" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:padding="5dp">
-
-                <FrameLayout
-                    android:id="@+id/contactImg_lyt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/corner_style_content_cell_circle"
-                    android:padding="1px">
-
-                    <com.thunisoft.ui.widget.CircleImageView
-                        android:id="@+id/contactImg"
-                        android:layout_width="53dp"
-                        android:layout_height="53dp"
-                        android:src="@mipmap/ic_av_default_male"
-                        app:border_color="@color/transparent"
-                        app:border_width="0dp" />
-                </FrameLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/contactImg_lyt"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_toRightOf="@+id/contactImg_lyt"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/contacts_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:text="孙明东"
-                        android:textColor="#000000"
-                        android:textSize="19dp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/contact_ogn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/contactImg_lyt"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/contactImg_lyt"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="北京华宇信息/研究院"
-                    android:textColor="#555555"
-                    android:textSize="15dp" />
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
+        android:text="Fragment"
+        android:textSize="40sp" />
 
 </LinearLayout>

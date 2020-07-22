@@ -1,19 +1,20 @@
 package com.thunisoft.common.base;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-
-import com.thunisoft.common.R;
 
 /**
  * @description: base fragment dialog
@@ -26,6 +27,7 @@ public abstract class BaseFragmentDialog extends DialogFragment {
     protected View mView;
     protected Context mContext;
 
+    @SuppressLint("ResourceType")
     @Override
     public void onStart() {
         super.onStart();

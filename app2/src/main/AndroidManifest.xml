@@ -16,14 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name="com.kborid.setting.ui.MainActivity"
-            android:theme="@style/AppTheme.TranslateTheme">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--        <activity android:name=".ui.TransActivity"-->
+        <!--            android:theme="@style/AppTheme.TranslateTheme">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
+
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
         <activity
             android:name="io.flutter.embedding.android.FlutterActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -31,17 +38,19 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name=".ui.TransActivity"
+            android:configChanges="orientation|keyboard|screenSize"
+            android:theme="@style/AppTheme.TranslateTheme" />
+
+        <activity
             android:name=".ui.FragmentActivity"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar"
             android:configChanges="orientation|keyboard|screenSize" />
 
-        <service android:name=".demo.IntentServiceDemo" />
+        <service android:name="com.kborid.demo.IntentServiceDemo" />
         <service
-            android:name=".demo.JobServiceDemo"
+            android:name="com.kborid.demo.JobServiceDemo"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service android:name=".demo.messenger.TestMessengerServer" />
+        <service android:name="com.kborid.demo.messenger.TestMessengerServer" />
 
         <meta-data
             android:name="flutterEmbedding"

@@ -25,7 +25,7 @@ public abstract class BaseSimpleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
         mUnBinder = ButterKnife.bind(this);
-        initEventAndData(savedInstanceState);
+        initDataAndEvent(savedInstanceState);
     }
 
     @Override
@@ -36,5 +36,5 @@ public abstract class BaseSimpleActivity extends AppCompatActivity {
 
     protected abstract int getLayoutResId();
 
-    protected abstract void initEventAndData(Bundle savedInstanceState);
+    protected abstract void initDataAndEvent(Bundle savedInstanceState);
 }

@@ -2,7 +2,20 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
+        <variable
+            name="mainViewModel"
+            type="com.kborid.setting.viewmodel.MainViewModel" />
+
+        <variable
+            name="address"
+            type="com.kborid.setting.pojo.AddressInfo" />
+
+        <variable
+            name="handle"
+            type="com.kborid.setting.ui.MainActivity" />
     </data>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,20 +23,32 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:onClick="onClick"
-            android:src="@mipmap/ic_quick_change" />
-
         <TextView
-            android:id="@+id/tv_tt"
-            android:layout_width="match_parent"
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="T.TT"
+            android:onClick="@{() -> handle.doClick(address.province + ',' + address.city)}"
+            android:text="@{address.test}"
             android:textSize="40sp"
             android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:onClick="@{() -> mainViewModel.onClick()}"
+            android:text="@{mainViewModel.title}"
+            android:textSize="60sp"
+            android:textStyle="bold|italic" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> handle.onBtnClick()}"
+            android:text="跳转" />
     </LinearLayout>
 </layout>

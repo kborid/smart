@@ -65,8 +65,8 @@ public class X5WebViewActivity extends SimpleActivity {
     }
 
     @Override
-    protected void initEventAndData(Bundle savedInstanceState) {
-        super.initEventAndData(savedInstanceState);
+    protected void initDataAndEvent(Bundle savedInstanceState) {
+        super.initDataAndEvent(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
             String from = bundle.getString("from");

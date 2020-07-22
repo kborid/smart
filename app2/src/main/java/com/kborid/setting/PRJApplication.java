@@ -3,7 +3,7 @@ package com.kborid.setting;
 import android.content.Context;
 
 import com.kborid.library.base.BaseApplication;
-import com.kborid.setting.demo.t_flutter.FlutterTest;
+import com.kborid.demo.t_flutter.FlutterTest;
 import com.thunisoft.ThunisoftLogger;
 import com.thunisoft.common.ThunisoftCommon;
 import com.thunisoft.logger.LoggerConfig;

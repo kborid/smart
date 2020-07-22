@@ -28,6 +28,7 @@ fun main() {
     TestStaticUtil.printJson(json)
 }
 
+// 对象生命/单例模式
 object TestStaticUtil {
     const val TAG: String = "TestStaticUtil"
     fun printJson(json: String): String {

@@ -83,7 +83,7 @@ public final class CaptureActivity extends BaseSimpleActivity implements
     }
 
     @Override
-    protected void initEventAndData(Bundle savedInstanceState) {
+    protected void initDataAndEvent(Bundle savedInstanceState) {
         hasSurface = false;
         beepManager = new BeepManager(this);
     }

@@ -2,11 +2,11 @@ package com.kborid.kotlin.ui
 
 import android.os.Bundle
 import com.kborid.kotlin.R
-import com.thunisoft.common.base.BaseActivity
+import com.thunisoft.common.base.BaseSimpleActivity
 import kotlinx.android.synthetic.main.activity_test.*
 import org.jetbrains.anko.toast
 
-class TestActivity : BaseActivity() {
+class TestActivity : BaseSimpleActivity() {
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_test;

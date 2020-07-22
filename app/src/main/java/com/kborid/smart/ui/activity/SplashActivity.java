@@ -72,7 +72,7 @@ public class SplashActivity extends BaseSimpleActivity {
     }
 
     @Override
-    protected void initEventAndData(Bundle bundle) {
+    protected void initDataAndEvent(Bundle bundle) {
         SplashActivityPermissionsDispatcher.dynamicObtainPermissionWithPermissionCheck(this);
     }
 

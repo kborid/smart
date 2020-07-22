@@ -45,7 +45,7 @@ public class PhotoDetailActivity extends BaseSimpleActivity {
     }
 
     @Override
-    protected void initEventAndData(Bundle bundle) {
+    protected void initDataAndEvent(Bundle bundle) {
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         String url = getIntent().getStringExtra(AppConstant.PHOTO_DETAIL);
