@@ -3,17 +3,23 @@
 
     <data>
 
+        <import type="com.kborid.setting.R" />
+
         <variable
             name="mainViewModel"
-            type="com.kborid.setting.viewmodel.MainViewModel" />
+            type="com.kborid.setting.vm.MainViewModel" />
 
         <variable
             name="address"
-            type="com.kborid.setting.pojo.AddressInfo" />
+            type="com.kborid.setting.pojo.Address" />
 
         <variable
             name="handle"
             type="com.kborid.setting.ui.MainActivity" />
+
+        <variable
+            name="constant"
+            type="com.kborid.setting.vm.constant.Constant" />
     </data>
 
 
@@ -25,13 +31,14 @@
 
         <TextView
             android:id="@+id/tv_name"
+            bgColor="@{R.color.red}"
+            fgColor="@{R.color.white}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:gravity="center"
             android:onClick="@{() -> handle.doClick(address.province + ',' + address.city)}"
-            android:text="@{address.test}"
-            android:textSize="40sp"
+            android:text="@{address.p}"
+            android:textSize="45sp"
             android:textStyle="bold|italic" />
 
         <TextView
@@ -39,11 +46,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:gravity="center"
             android:onClick="@{() -> mainViewModel.onClick()}"
             android:text="@{mainViewModel.title}"
             android:textSize="60sp"
             android:textStyle="bold|italic" />
+
+        <ImageView
+            imgUrl="@{constant.imgUrl}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name" />
 
         <Button
             android:layout_width="wrap_content"

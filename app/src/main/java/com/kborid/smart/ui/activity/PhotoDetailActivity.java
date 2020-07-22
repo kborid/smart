@@ -17,7 +17,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.kborid.library.util.ImageLoaderUtils;
 import com.kborid.smart.R;
-import com.kborid.smart.contant.AppConstant;
+import com.kborid.smart.constant.AppConstant;
 import com.kborid.smart.widget.HwLoadingView;
 import com.thunisoft.common.base.BaseSimpleActivity;
 

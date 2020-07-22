@@ -1,4 +1,4 @@
-package com.kborid.setting.viewmodel;
+package com.kborid.setting.vm;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -15,6 +15,9 @@ public class MainViewModel extends ViewModel {
         title.setValue("快，点我！");
     }
 
+    /**
+     * 同步点击事件
+     */
     public void onClick() {
         Random random = new Random();
         int value = random.nextInt(100);
@@ -24,6 +27,9 @@ public class MainViewModel extends ViewModel {
             title.setValue(String.valueOf(value));
     }
 
+    /**
+     * 异步点击事件
+     */
     public void onAsyncClick() {
         final Random random = new Random();
         UIHandler.postDelayed(new Runnable() {

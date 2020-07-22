@@ -1,4 +1,4 @@
-package com.kborid.setting.Fragment;
+package com.kborid.setting.ui.Fragment;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.kborid.setting.R;
 import com.kborid.setting.provider.BinderParcelable;
 import com.thunisoft.common.base.BaseSimpleFragment;
 import com.thunisoft.common.tool.MultiTaskHandler;
@@ -59,7 +58,7 @@ public class TestAFragment extends BaseSimpleFragment {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_testa;
+        return 0;
     }
 
     @Override

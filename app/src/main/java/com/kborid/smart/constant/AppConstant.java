@@ -1,4 +1,4 @@
-package com.kborid.smart.contant;
+package com.kborid.smart.constant;
 
 /**
  * des:

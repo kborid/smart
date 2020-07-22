@@ -1,4 +1,4 @@
-package com.kborid.setting;
+package com.kborid.setting.widget;
 
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -6,8 +6,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import static com.kborid.setting.CodeTypeConst.CODE_TYPE1;
-import static com.kborid.setting.CodeTypeConst.CODE_TYPE2;
+import com.kborid.setting.constant.CodeType;
+
+import static com.kborid.setting.constant.CodeTypeConst.CODE_TYPE1;
+import static com.kborid.setting.constant.CodeTypeConst.CODE_TYPE2;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class CustomThread extends Thread {

@@ -1,4 +1,4 @@
-package com.kborid.setting;
+package com.kborid.setting.constant;
 
 public interface CodeTypeConst {
     public static final int CODE_TYPE1 = 0;

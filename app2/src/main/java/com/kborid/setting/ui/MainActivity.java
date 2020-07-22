@@ -8,16 +8,15 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.kborid.setting.R;
 import com.kborid.setting.databinding.ActivityMainBinding;
-import com.kborid.setting.pojo.AddressInfo;
-import com.kborid.setting.viewmodel.MainViewModel;
-import com.kborid.setting.viewmodel.ViewModelsProvider;
+import com.kborid.setting.pojo.Address;
+import com.kborid.setting.vm.MainViewModel;
+import com.kborid.setting.vm.constant.Constant;
 import com.thunisoft.common.base.BaseSimpleActivity;
 import com.thunisoft.common.tool.UIHandler;
 import com.thunisoft.common.util.ToastUtils;
 
 public class MainActivity extends BaseSimpleActivity {
 
-    MainViewModel mainViewModel;
     ActivityMainBinding mBinding;
 
     @Override
@@ -28,10 +27,10 @@ public class MainActivity extends BaseSimpleActivity {
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mBinding.setAddress(new AddressInfo("成都", "四川"));
+        mBinding.setAddress(new Address("成都", "四川"));
         mBinding.setHandle(this);
-        mainViewModel = ViewModelsProvider.of(this).get(MainViewModel.class);
-        mBinding.setMainViewModel(mainViewModel);
+        mBinding.setMainViewModel(getViewModel(MainViewModel.class));
+        mBinding.setConstant(getViewModel(Constant.class));
         mBinding.setLifecycleOwner(this);
     }
 
@@ -43,12 +42,9 @@ public class MainActivity extends BaseSimpleActivity {
     public void onBtnClick() {
         Intent intent1 = new Intent(this, TransActivity.class);
         startActivity(intent1);
-        UIHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent2 = new Intent(MainActivity.this, FragmentActivity.class);
-                startActivity(intent2);
-            }
+        UIHandler.postDelayed(() -> {
+            Intent intent2 = new Intent(MainActivity.this, FragmentActivity.class);
+            startActivity(intent2);
         }, 1000);
     }
 

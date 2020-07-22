@@ -12,7 +12,7 @@ import com.kborid.library.adapter.ViewHolderHelper;
 import com.kborid.library.base.BaseFragment;
 import com.kborid.library.util.ImageLoaderUtils;
 import com.kborid.smart.R;
-import com.kborid.smart.contant.AppConstant;
+import com.kborid.smart.constant.AppConstant;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.VideoData;
 import com.kborid.smart.listener.RecyclerItemClickListener;

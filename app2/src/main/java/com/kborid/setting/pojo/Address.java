@@ -2,13 +2,13 @@ package com.kborid.setting.pojo;
 
 import androidx.lifecycle.MutableLiveData;
 
-public class AddressInfo {
+public class Address {
     private MutableLiveData<String> test = new MutableLiveData<>();
     private String province;
     private String city;
     private String p;
 
-    public AddressInfo(String province, String city) {
+    public Address(String province, String city) {
         this.province = province;
         this.city = city;
         this.p = province + ", " + city;

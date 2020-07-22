@@ -1,4 +1,4 @@
-package com.kborid.setting;
+package com.kborid.setting.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

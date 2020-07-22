@@ -11,7 +11,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.kborid.library.adapter.FragmentAdapter;
 import com.kborid.library.base.BaseFragment;
 import com.kborid.smart.R;
-import com.kborid.smart.contant.AppConstant;
+import com.kborid.smart.constant.AppConstant;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.VideoChannelBean;
 import com.kborid.smart.presenter.VideoTabPresenter;
