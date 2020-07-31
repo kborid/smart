@@ -16,6 +16,7 @@
  */
 package com.kborid.smart.util;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
@@ -37,6 +38,7 @@ import java.io.InputStream;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
@@ -90,40 +92,18 @@ public class URLImageGetter implements Html.ImageGetter {
         return (int) (mPicWidth * rate);
     }
 
-    @NonNull
     private Drawable getDrawableFromNet(final String source) {
-        ApiManager.getApi(HostType.NEWS_DETAIL_HTML_PHOTO).getNewsBodyHtmlPhoto(source)
-                .map(new Function<ResponseBody, Boolean>() {
-                    @Override
-                    public Boolean apply(ResponseBody responseBody) throws Exception {
-                        return WritePicToDisk(responseBody, source);
-                    }
-                })
+        Disposable subscribe = ApiManager.getApi(HostType.NEWS_DETAIL_HTML_PHOTO).getNewsBodyHtmlPhoto(source)
+                .map(responseBody -> WritePicToDisk(responseBody, source))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Boolean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
+                .subscribe(aBoolean -> {
+                    mPicCount++;
+                    if (aBoolean && (mPicCount == mPicTotal - 1)) {
+                        mTextView.setText(Html.fromHtml(mNewsBody, URLImageGetter.this, null));
                     }
-
-                    @Override
-                    public void onNext(Boolean isLoadSuccess) {
-                        mPicCount++;
-                        if (isLoadSuccess && (mPicCount == mPicTotal - 1)) {
-                            mTextView.setText(Html.fromHtml(mNewsBody, URLImageGetter.this, null));
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
+                }, throwable -> {
+                    ToastDrawableUtil.showImgToast("URLImageGetter中，获取图片失败");
                 });
         return createPicPlaceholder();
     }

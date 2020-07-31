@@ -1,17 +1,17 @@
-package com.kborid.smart.presenter.contract;
+package com.kborid.smart.ui.presenter.contract;
 
 import com.kborid.library.base.BasePresenter;
 import com.kborid.library.base.BaseView;
-import com.kborid.smart.entity.NewsChannelBean;
+import com.kborid.smart.entity.PhotoGirl;
 
 import java.util.List;
 
-public class NewsTabContract {
+public class PhotoTabContract {
     public interface View extends BaseView {
-        void updateNewsChannel(List<NewsChannelBean> data);
+        void refreshPhotoList(List<PhotoGirl> girls);
     }
 
     public interface Presenter extends BasePresenter<View> {
-        void loadNewsChannel();
+        void getPhotoList(int size, int page);
     }
 }

@@ -1,4 +1,4 @@
-package com.kborid.smart.widget.letterIndex;
+package com.kborid.library.widget.letterIndex;
 
 import android.graphics.drawable.Drawable;
 import androidx.recyclerview.widget.LinearLayoutManager;

@@ -54,7 +54,6 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask" />
-        <activity android:name="com.kborid.setting.FragmentActivity" />
         <activity android:name=".activity.X5WebViewActivity" />
         <activity
             android:name=".ui.activity.SnapHelpActivity"

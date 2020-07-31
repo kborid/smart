@@ -1,9 +1,9 @@
-package com.kborid.smart.presenter;
+package com.kborid.smart.ui.presenter;
 
 import com.kborid.library.base.RxPresenter;
 import com.kborid.smart.entity.NewsDetail;
 import com.kborid.smart.network.ApiManager;
-import com.kborid.smart.presenter.contract.NewsDetailContract;
+import com.kborid.smart.ui.presenter.contract.NewsDetailContract;
 import com.thunisoft.common.network.callback.ResponseCallback;
 import com.thunisoft.common.util.ToastUtils;
 

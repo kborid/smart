@@ -1,9 +1,9 @@
-package com.kborid.smart.presenter;
+package com.kborid.smart.ui.presenter;
 
 import com.kborid.library.base.RxPresenter;
-import com.kborid.smart.entity.PhotoGirl;
+import com.kborid.smart.entity.VideoData;
 import com.kborid.smart.network.ApiManager;
-import com.kborid.smart.presenter.contract.SnapContract;
+import com.kborid.smart.ui.presenter.contract.VideoContract;
 import com.thunisoft.common.network.callback.ResponseCallback;
 import com.thunisoft.common.util.ToastUtils;
 
@@ -11,25 +11,23 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class SnapPresenter extends RxPresenter<SnapContract.View> implements SnapContract.Presenter {
-
+public class VideoPresenter extends RxPresenter<VideoContract.View> implements VideoContract.Presenter {
     @Inject
-    public SnapPresenter(String name) {
-        System.out.println(name);
+    public VideoPresenter() {
     }
 
     @Override
-    public void request() {
-        ApiManager.getPhotoList(20, 2, new ResponseCallback<List<PhotoGirl>>() {
+    public void getVideoList(String type, int start) {
+        ApiManager.getVideoList(type, start, new ResponseCallback<List<VideoData>>() {
             @Override
             public void failure(Throwable throwable) {
                 ToastUtils.showToast(throwable.getMessage());
             }
 
             @Override
-            public void success(List<PhotoGirl> girls) {
+            public void success(List<VideoData> videoDatas) {
                 if (null != mView) {
-                    mView.updateData(girls);
+                    mView.refreshVideoList(videoDatas);
                 }
             }
         });

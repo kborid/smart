@@ -16,8 +16,8 @@ import com.kborid.smart.constant.AppConstant;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.VideoData;
 import com.kborid.smart.listener.RecyclerItemClickListener;
-import com.kborid.smart.presenter.VideoPresenter;
-import com.kborid.smart.presenter.contract.VideoContract;
+import com.kborid.smart.ui.presenter.VideoPresenter;
+import com.kborid.smart.ui.presenter.contract.VideoContract;
 
 import java.util.List;
 

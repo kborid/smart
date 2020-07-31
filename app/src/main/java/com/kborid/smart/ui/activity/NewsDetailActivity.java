@@ -23,8 +23,8 @@ import com.kborid.smart.R;
 import com.kborid.smart.constant.AppConstant;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.NewsDetail;
-import com.kborid.smart.presenter.NewsDetailPresenter;
-import com.kborid.smart.presenter.contract.NewsDetailContract;
+import com.kborid.smart.ui.presenter.NewsDetailPresenter;
+import com.kborid.smart.ui.presenter.contract.NewsDetailContract;
 import com.kborid.smart.util.URLImageGetter;
 import com.thunisoft.common.util.ToastUtils;
 

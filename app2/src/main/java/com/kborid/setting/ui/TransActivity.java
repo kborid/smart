@@ -11,9 +11,11 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.collection.SimpleArrayMap;
 import androidx.core.view.LayoutInflaterCompat;
 import androidx.lifecycle.LifecycleObserver;
 
+import com.kborid.setting.PRJApplication;
 import com.kborid.setting.R;
 import com.kborid.demo.SimpleLifecycleObserver;
 import com.kborid.demo.t_okhttp.OkHttpHelper;
@@ -80,6 +82,7 @@ public class TransActivity extends BaseSimpleActivity {
         getLifecycle().addObserver(lifecycleObserver);
         RxJavaTest.test();
         new Thread(requestRunnable).start();
+        SimpleArrayMap
     }
 
     private Runnable requestRunnable = () -> {

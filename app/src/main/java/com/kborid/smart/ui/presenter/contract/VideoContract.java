@@ -1,17 +1,18 @@
-package com.kborid.smart.presenter.contract;
+package com.kborid.smart.ui.presenter.contract;
 
 import com.kborid.library.base.BasePresenter;
 import com.kborid.library.base.BaseView;
-import com.kborid.smart.entity.PhotoGirl;
+import com.kborid.smart.entity.VideoData;
 
 import java.util.List;
 
-public class PhotoTabContract {
+public class VideoContract {
+
     public interface View extends BaseView {
-        void refreshPhotoList(List<PhotoGirl> girls);
+        void refreshVideoList(List<VideoData> videoDatas);
     }
 
     public interface Presenter extends BasePresenter<View> {
-        void getPhotoList(int size, int page);
+        void getVideoList(String type, int start);
     }
 }

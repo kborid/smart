@@ -14,8 +14,8 @@ import com.kborid.library.base.BaseActivity;
 import com.kborid.smart.R;
 import com.kborid.smart.di.DaggerSnapComponent;
 import com.kborid.smart.entity.PhotoGirl;
-import com.kborid.smart.presenter.SnapPresenter;
-import com.kborid.smart.presenter.contract.SnapContract;
+import com.kborid.smart.ui.presenter.SnapPresenter;
+import com.kborid.smart.ui.presenter.contract.SnapContract;
 
 import java.util.List;
 

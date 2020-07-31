@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.*;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.kborid.library.base.BaseFragment;
 import com.kborid.smart.R;
@@ -16,8 +19,11 @@ import com.kborid.smart.entity.NewsSummary;
 import com.kborid.smart.listener.RecyclerItemClickListener;
 import com.kborid.smart.ui.activity.NewsDetailActivity;
 import com.kborid.smart.ui.adapter.NewsAdapter;
-import com.kborid.smart.presenter.NewsPresenter;
-import com.kborid.smart.presenter.contract.NewsContract;
+import com.kborid.smart.ui.presenter.NewsPresenter;
+import com.kborid.smart.ui.presenter.contract.NewsContract;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -27,6 +33,8 @@ import butterknife.BindView;
 
 public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsContract.View {
 
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.recycleView)
     RecyclerView recyclerView;
 
@@ -102,10 +110,25 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             public void onLongClick(View view, int position) {
             }
         }));
+
+        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                mStartPage++;
+                mPresenter.getNewsList(mNewsType, mNewsId, mStartPage);
+            }
+
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                mStartPage = 0;
+                mPresenter.getNewsList(mNewsType, mNewsId, mStartPage);
+            }
+        });
     }
 
     @Override
     public void refreshNewsList(List<NewsSummary> newsSummaryList) {
+        smartRefreshLayout.finishRefresh();
         if (null != newsSummaryList) {
             mNewsAdapter.setNewsData(newsSummaryList);
         }

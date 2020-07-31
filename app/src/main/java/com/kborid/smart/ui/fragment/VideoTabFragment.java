@@ -14,8 +14,8 @@ import com.kborid.smart.R;
 import com.kborid.smart.constant.AppConstant;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.VideoChannelBean;
-import com.kborid.smart.presenter.VideoTabPresenter;
-import com.kborid.smart.presenter.contract.VideoTabContract;
+import com.kborid.smart.ui.presenter.VideoTabPresenter;
+import com.kborid.smart.ui.presenter.contract.VideoTabContract;
 import com.thunisoft.ui.util.ScreenUtils;
 
 import java.util.ArrayList;

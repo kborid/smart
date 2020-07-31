@@ -1,4 +1,4 @@
-package com.kborid.smart.widget.letterIndex;
+package com.kborid.library.widget.letterIndex;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.kborid.smart.R;
+import com.kborid.library.R;
 
 import java.util.ArrayList;
 import java.util.List;

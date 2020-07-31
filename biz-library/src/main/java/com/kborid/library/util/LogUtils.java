@@ -14,9 +14,7 @@ public class LogUtils {
 
     public static void i(String msg) {
         if (isDebug) {
-            TagInfo tagInfo = getMethodNames(new Throwable().getStackTrace());
-            msg = createLogWithoutFileName(tagInfo, msg);
-            Log.i(TAG, msg);
+            i(TAG, msg);
         }
     }
 
@@ -30,9 +28,7 @@ public class LogUtils {
 
     public static void d(String msg) {
         if (isDebug) {
-            TagInfo tagInfo = getMethodNames(new Throwable().getStackTrace());
-            msg = createLogWithoutFileName(tagInfo, msg);
-            Log.d(TAG, msg);
+            d(TAG, msg);
         }
     }
 
@@ -46,9 +42,7 @@ public class LogUtils {
 
     public static void e(String msg) {
         if (isDebug) {
-            TagInfo tagInfo = getMethodNames(new Throwable().getStackTrace());
-            msg = createLogWithoutFileName(tagInfo, msg);
-            Log.e(TAG, msg);
+            e(TAG, msg);
         }
     }
 
@@ -61,10 +55,7 @@ public class LogUtils {
     }
 
     public static void e(Throwable e) {
-        String msg = e.getClass().getName() + " : " + e.getMessage();
-        TagInfo tagInfo = getMethodNames(new Throwable().getStackTrace());
-        msg = createLogWithoutFileName(tagInfo, msg);
-        Log.e(TAG, msg, e);
+        e(TAG, e);
     }
 
     public static void e(String tag, Throwable e) {
@@ -76,9 +67,7 @@ public class LogUtils {
 
     public static void w(String msg) {
         if (isDebug) {
-            TagInfo tagInfo = getMethodNames(new Throwable().getStackTrace());
-            msg = createLogWithoutFileName(tagInfo, msg);
-            Log.w(TAG, msg);
+            w(TAG, msg);
         }
     }
 
@@ -91,15 +80,13 @@ public class LogUtils {
     }
 
     private static String createLogWithoutFileName(TagInfo tagInfo, String log, Object... args) {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("[");
-        buffer.append(tagInfo.fileName);
-        buffer.append("(line:").append(tagInfo.lineNumber).append(")").append(" ");
-        buffer.append(tagInfo.methodName).append("()");
-        buffer.append("]");
-        buffer.append(" ");
-        buffer.append(formatString(log, args));
-        return buffer.toString();
+        return "[" +
+                tagInfo.fileName +
+                "(line:" + tagInfo.lineNumber + ")" + " " +
+                tagInfo.methodName + "()" +
+                "]" +
+                " " +
+                formatString(log, args);
     }
 
     private static TagInfo getMethodNames(StackTraceElement[] sElements) {

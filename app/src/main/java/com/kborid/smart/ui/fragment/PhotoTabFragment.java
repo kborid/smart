@@ -16,8 +16,8 @@ import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.PhotoGirl;
 import com.kborid.smart.listener.RecyclerItemClickListener;
 import com.kborid.smart.ui.activity.PhotoDetailActivity;
-import com.kborid.smart.presenter.PhotoTabPresenter;
-import com.kborid.smart.presenter.contract.PhotoTabContract;
+import com.kborid.smart.ui.presenter.PhotoTabPresenter;
+import com.kborid.smart.ui.presenter.contract.PhotoTabContract;
 
 import java.util.List;
 
