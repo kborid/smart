@@ -82,7 +82,6 @@ public class TransActivity extends BaseSimpleActivity {
         getLifecycle().addObserver(lifecycleObserver);
         RxJavaTest.test();
         new Thread(requestRunnable).start();
-        SimpleArrayMap
     }
 
     private Runnable requestRunnable = () -> {
