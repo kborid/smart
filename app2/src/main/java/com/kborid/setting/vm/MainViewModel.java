@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.thunisoft.common.tool.UIHandler;
+import com.thunisoft.common.util.ToastUtils;
 
 import java.util.Random;
 
@@ -25,6 +26,7 @@ public class MainViewModel extends ViewModel {
             title.setValue("Congratulation~~!");
         else
             title.setValue(String.valueOf(value));
+        ToastUtils.showToast(String.valueOf(value));
     }
 
     /**

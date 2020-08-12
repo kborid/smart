@@ -3,6 +3,7 @@ package com.kborid.setting.ui;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -10,17 +11,16 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.collection.SimpleArrayMap;
 import androidx.core.view.LayoutInflaterCompat;
 import androidx.lifecycle.LifecycleObserver;
 
-import com.kborid.setting.PRJApplication;
-import com.kborid.setting.R;
 import com.kborid.demo.SimpleLifecycleObserver;
 import com.kborid.demo.t_okhttp.OkHttpHelper;
 import com.kborid.demo.t_realm.entity.User;
 import com.kborid.demo.t_rxjava.RxJavaTest;
+import com.kborid.setting.R;
 import com.thunisoft.common.base.BaseSimpleActivity;
 
 import org.slf4j.Logger;
@@ -101,6 +101,7 @@ public class TransActivity extends BaseSimpleActivity {
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void onClick(View view) {
         ContentResolver resolver = getContentResolver();
         try {

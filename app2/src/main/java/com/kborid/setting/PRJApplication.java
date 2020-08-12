@@ -9,6 +9,7 @@ import com.thunisoft.logger.LoggerConfig;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.realm.Realm;
 
@@ -33,5 +34,11 @@ public class PRJApplication extends BaseApplication {
         Realm.init(this);
 
         RxJavaPlugins.setOnObservableSubscribe(PRJApplication::apply);
+//        RxJavaPlugins.setOnObservableSubscribe(new BiFunction<Observable, Observer, Observer>() {
+//            @Override
+//            public Observer apply(Observable observable, Observer observer) throws Exception {
+//                return null;
+//            }
+//        });
     }
 }

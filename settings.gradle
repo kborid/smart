@@ -1,8 +1,9 @@
-include ':stub'
-include ':app', ':app2', ':kotlin', ':biz-library'
+include ':app', ':app2'
+include ':biz-library'
 include ':thunisoft-common'
 include ':thunisoft-logger'
 include ':thunisoft-ui'
+include ':stub'
 
 //setBinding(new Binding([gradle: this]))
 //evaluate(new File(

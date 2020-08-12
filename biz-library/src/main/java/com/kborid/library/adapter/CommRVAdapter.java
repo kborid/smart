@@ -11,10 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kborid.library.animation.AlphaInAnimation;
 import com.kborid.library.animation.BaseAnimation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<ViewHolderHelper> implements DataIO<T> {
+    private final static Logger logger = LoggerFactory.getLogger(CommRVAdapter.class);
     private Context mContext;
     private int mLayoutId;
     private List<T> mDatas = new ArrayList<>();
@@ -47,13 +51,15 @@ public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<ViewHolderHe
     @NonNull
     @Override
     public ViewHolderHelper onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        logger.info("执行onCreateViewHolder()方法~~");
         ViewHolderHelper viewHolder = ViewHolderHelper.get(mContext, null, parent, mLayoutId, -1);
         setListener(parent, viewHolder, viewType);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolderHelper holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolderHelper holder, int position) {
+        logger.info("执行onBindViewHolder()方法~~，holder：{}，position：{}", holder, position);
         holder.updatePosition(position);
         //添加动画
         addAnimation(holder);
