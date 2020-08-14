@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kborid.library.listener.IDataAdapter;
 import com.kborid.library.util.ImageLoaderUtils;
 import com.kborid.smart.R;
 import com.kborid.smart.entity.NewsSummary;
@@ -23,7 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.BaseViewHolder> {
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.BaseViewHolder> implements IDataAdapter<NewsSummary> {
 
     private static final int NORMAL = 1;
     private static final int TITLE_ONLY = 2;
@@ -80,8 +81,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.BaseViewHolder
         notifyDataSetChanged();
     }
 
+    @Override
     public List<NewsSummary> getData() {
-        return mNewsSummaries;
+        return this.mNewsSummaries;
     }
 
     public class BaseViewHolder extends RecyclerView.ViewHolder {

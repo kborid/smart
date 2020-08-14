@@ -2,6 +2,7 @@ package com.thunisoft.ui.util;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.WindowManager;
 
 import java.lang.reflect.Field;
@@ -39,7 +40,7 @@ public class ScreenUtils {
             int x = Integer.parseInt(field.get(obj).toString());
             mStateBarHeight = context.getResources().getDimensionPixelSize(x);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("ScreenUtils", "状态栏高度获取失败", e);
         }
     }
 

@@ -13,9 +13,7 @@ public class LogUtils {
     }
 
     public static void i(String msg) {
-        if (isDebug) {
-            i(TAG, msg);
-        }
+        i(TAG, msg);
     }
 
     public static void i(String tag, String msg) {
@@ -27,9 +25,7 @@ public class LogUtils {
     }
 
     public static void d(String msg) {
-        if (isDebug) {
-            d(TAG, msg);
-        }
+        d(TAG, msg);
     }
 
     public static void d(String tag, String msg) {
@@ -40,35 +36,24 @@ public class LogUtils {
         }
     }
 
-    public static void e(String msg) {
-        if (isDebug) {
-            e(TAG, msg);
-        }
-    }
-
-    public static void e(String tag, String msg) {
-        if (isDebug) {
-            TagInfo tagInfo = getMethodNames(new Throwable().getStackTrace());
-            msg = createLogWithoutFileName(tagInfo, msg);
-            Log.e(tag, msg);
-        }
-    }
-
     public static void e(Throwable e) {
         e(TAG, e);
     }
 
     public static void e(String tag, Throwable e) {
-        String msg = e.getClass().getName() + " : " + e.getMessage();
-        TagInfo tagInfo = getMethodNames(new Throwable().getStackTrace());
-        msg = createLogWithoutFileName(tagInfo, msg);
-        Log.e(tag, msg, e);
+        e(tag, e.getClass().getName() + " : " + e.getMessage(), e);
+    }
+
+    public static void e(String tag, String msg, Throwable throwable) {
+        if (isDebug) {
+            TagInfo tagInfo = getMethodNames(new Throwable().getStackTrace());
+            msg = createLogWithoutFileName(tagInfo, msg);
+            Log.e(tag, msg, throwable);
+        }
     }
 
     public static void w(String msg) {
-        if (isDebug) {
-            w(TAG, msg);
-        }
+        w(TAG, msg);
     }
 
     public static void w(String tag, String msg) {

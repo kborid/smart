@@ -6,67 +6,72 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.kborid.library.animation.AlphaInAnimation;
-import com.kborid.library.animation.BaseAnimation;
+
+import com.kborid.library.anim.AlphaInAnimation;
+import com.kborid.library.anim.BaseAnimation;
+import com.kborid.library.listener.IDataIO;
+import com.kborid.library.listener.OnItemClickListener;
+import com.kborid.library.listener.SimpleDataIOImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<ViewHolderHelper> implements DataIO<T> {
+public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<RViewHolder> {
     private final static Logger logger = LoggerFactory.getLogger(CommRVAdapter.class);
+
     private Context mContext;
     private int mLayoutId;
-    private List<T> mDatas = new ArrayList<>();
 
-    private OnItemClickListener<T> mOnItemClickListener;
-
-
-    //动画
+    // 动画
     private int mLastPosition = -1;
     private boolean mOpenAnimationEnable = true;
-    private Interpolator mInterpolator = new LinearInterpolator();
     private int mDuration = 300;
+    private Interpolator mInterpolator = new LinearInterpolator();
     private BaseAnimation mSelectAnimation = new AlphaInAnimation();
+
+    // 接口
+    private OnItemClickListener<T> mOnItemClickListener;
+    private IDataIO<T> mDataIO;
 
     public void setOnItemClickListener(OnItemClickListener<T> onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
     }
 
     public CommRVAdapter(Context context, int layoutId, List<T> mDatas) {
+
         this.mContext = context;
         this.mLayoutId = layoutId;
-        this.mDatas = mDatas;
+        this.mDataIO = new SimpleDataIOImpl<>(mDatas, this);
     }
 
     public CommRVAdapter(Context context, int layoutId) {
-        this.mContext = context;
-        this.mLayoutId = layoutId;
+        this(context, layoutId, null);
     }
 
     @NonNull
     @Override
-    public ViewHolderHelper onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         logger.info("执行onCreateViewHolder()方法~~");
-        ViewHolderHelper viewHolder = ViewHolderHelper.get(mContext, null, parent, mLayoutId, -1);
-        setListener(parent, viewHolder, viewType);
+        RViewHolder viewHolder = RViewHolder.get(mContext, null, parent, mLayoutId, -1);
+        setItemListener(parent, viewHolder, viewType);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderHelper holder, int position) {
+    public void onBindViewHolder(@NonNull RViewHolder holder, int position) {
         logger.info("执行onBindViewHolder()方法~~，holder：{}，position：{}", holder, position);
         holder.updatePosition(position);
         //添加动画
         addAnimation(holder);
-        convert(holder, mDatas.get(position));
+        convert(holder, mDataIO.get(position));
     }
 
-    protected abstract void convert(ViewHolderHelper helper, T t);
+    protected abstract void convert(RViewHolder viewHolder, T t);
 
     private int getPosition(RecyclerView.ViewHolder viewHolder) {
         return viewHolder.getAdapterPosition();
@@ -77,12 +82,12 @@ public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<ViewHolderHe
     }
 
 
-    private void setListener(final ViewGroup parent, final ViewHolderHelper viewHolder, int viewType) {
+    private void setItemListener(final ViewGroup parent, final RViewHolder viewHolder, int viewType) {
         if (!isEnabled(viewType)) return;
         viewHolder.getConvertView().setOnClickListener((v) -> {
             if (mOnItemClickListener != null) {
                 int position = getPosition(viewHolder);
-                mOnItemClickListener.onItemClick(parent, v, mDatas.get(position), position);
+                mOnItemClickListener.onItemClick(parent, v, mDataIO.get(position), position);
             }
         });
 
@@ -90,7 +95,7 @@ public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<ViewHolderHe
         viewHolder.getConvertView().setOnLongClickListener(v -> {
             if (mOnItemClickListener != null) {
                 int position = getPosition(viewHolder);
-                return mOnItemClickListener.onItemLongClick(parent, v, mDatas.get(position), position);
+                return mOnItemClickListener.onItemLongClick(parent, v, mDataIO.get(position), position);
             }
             return false;
         });
@@ -150,104 +155,10 @@ public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<ViewHolderHe
 
     @Override
     public int getItemCount() {
-        return mDatas.size();
+        return mDataIO.getSize();
     }
 
-    @Override
-    public void add(T element) {
-        mDatas.add(element);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void addAt(int position, T element) {
-        mDatas.add(position, element);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void addAll(List<T> elements) {
-        mDatas.addAll(elements);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void addAllAt(int position, List<T> elements) {
-        mDatas.addAll(position, elements);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void remove(T element) {
-        mDatas.remove(element);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void removeAt(int index) {
-        mDatas.remove(index);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void removeAll(List<T> elements) {
-        mDatas.removeAll(elements);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void clear() {
-        if (mDatas != null && mDatas.size() > 0) {
-            mDatas.clear();
-            notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void replace(T oldElem, T newElem) {
-        replaceAt(mDatas.indexOf(oldElem), newElem);
-    }
-
-    @Override
-    public void replaceAt(int index, T element) {
-        mDatas.set(index, element);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void replaceAll(List<T> elements) {
-        if (mDatas.size() > 0) {
-            mDatas.clear();
-        }
-        mDatas.addAll(elements);
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public T get(int position) {
-        if (position >= mDatas.size())
-            return null;
-        return mDatas.get(position);
-    }
-
-    @Override
-    public List<T> getAll() {
-        return mDatas;
-    }
-
-    @Override
-    public int getSize() {
-        return mDatas.size();
-    }
-
-    @Override
-    public boolean contains(T element) {
-        return mDatas.contains(element);
-    }
-
-    @Override
-    public void set(List<T> elements) {
-        mDatas = elements;
-        notifyDataSetChanged();
+    public IDataIO<T> getDataIO() {
+        return mDataIO;
     }
 }

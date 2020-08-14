@@ -4,13 +4,15 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 
+import com.kborid.library.util.LogUtils;
+
 import java.lang.reflect.Field;
 
-public class ActivityCallbackHandler implements Handler.Callback {
+public class CustomHandler implements Handler.Callback {
     private Handler handler;
     private int launchActivity = -1;
 
-    public ActivityCallbackHandler(Handler handler) {
+    public CustomHandler(Handler handler) {
         this.handler = handler;
         try {
             Class<?> innerClass = Class.forName("android.app.ActivityThread$H");
@@ -18,7 +20,7 @@ public class ActivityCallbackHandler implements Handler.Callback {
             field.setAccessible(true);
             launchActivity = (int) field.get(null);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtils.e(e);
         }
 
     }
@@ -43,7 +45,7 @@ public class ActivityCallbackHandler implements Handler.Callback {
 //                intentValue.setComponent(rawIntent.getComponent());
 //            }
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtils.e(e);
         }
     }
 }

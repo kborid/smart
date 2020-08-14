@@ -1,6 +1,7 @@
 package com.thunisoft.common.util;
 
 import android.util.Base64;
+import android.util.Log;
 
 import java.math.BigInteger;
 import java.security.KeyFactory;
@@ -39,7 +40,7 @@ public class EncryptUtils {
             md.update(data);
             return md.digest();
         }catch(NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            Log.e("EncryptUtils", "MD5加密失败", e);
         }
         return new byte[0];
     }
@@ -104,7 +105,7 @@ public class EncryptUtils {
             return base64Encode2String(cipher.doFinal(data.getBytes()));
 
         } catch (Exception e){
-            e.printStackTrace();
+            Log.e("EncryptUtils", "RSA加密失败", e);
             return null;
         }
     }

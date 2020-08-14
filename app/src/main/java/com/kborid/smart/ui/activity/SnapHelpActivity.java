@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kborid.library.adapter.CommRVAdapter;
-import com.kborid.library.adapter.ViewHolderHelper;
+import com.kborid.library.adapter.RViewHolder;
 import com.kborid.library.base.BaseActivity;
 import com.kborid.smart.R;
 import com.kborid.smart.di.DaggerSnapComponent;
@@ -57,7 +57,7 @@ public class SnapHelpActivity extends BaseActivity<SnapPresenter> implements Sna
         if (null == adapter) {
             adapter = new CommRVAdapter<PhotoGirl>(this, R.layout.lv_recycle_item) {
                 @Override
-                protected void convert(ViewHolderHelper helper, PhotoGirl photoGirl) {
+                protected void convert(RViewHolder helper, PhotoGirl photoGirl) {
                     helper.setImageUrl(R.id.iv_pic, photoGirl.getUrl());
                 }
             };
@@ -73,7 +73,7 @@ public class SnapHelpActivity extends BaseActivity<SnapPresenter> implements Sna
     @Override
     public void updateData(List data) {
         if (null != adapter) {
-            adapter.set(data);
+            adapter.getDataIO().set(data);
         }
     }
 }

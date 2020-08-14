@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.RemoteException;
 import android.text.TextUtils;
 
+import com.kborid.library.util.LogUtils;
 import com.thunisoft.common.util.ReflectUtil;
 
 import java.io.File;
@@ -34,7 +35,7 @@ public class PackageManagerImpl {
             installMethod = packageManager.getClass().getMethod("installPackage", installParamClazz);
             unInstallMethod = packageManager.getClass().getMethod("deletePackage", unInstallParamClazz);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtils.e("PackageManagerImpl", "反射获取PackageManager方法失败", e);
         }
     }
 

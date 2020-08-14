@@ -16,7 +16,7 @@ import com.kborid.smart.R;
 import com.kborid.smart.constant.AppConstant;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.NewsSummary;
-import com.kborid.smart.listener.RecyclerItemClickListener;
+import com.kborid.library.listener.RecyclerItemClickListener;
 import com.kborid.smart.ui.activity.NewsDetailActivity;
 import com.kborid.smart.ui.adapter.NewsAdapter;
 import com.kborid.smart.ui.presenter.NewsPresenter;
@@ -78,36 +78,23 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), RecyclerView.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutAnimationListener(null);
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                super.onDraw(c, parent, state);
-            }
-
-            @Override
-            public void onDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                super.onDrawOver(c, parent, state);
-            }
-
-            @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-            }
-        });
         recyclerView.setAdapter(mNewsAdapter);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener<>(getContext(), new RecyclerItemClickListener.OnItemClickListener<NewsSummary>() {
             @Override
-            public void onItemClick(View view, int position) {
-                NewsSummary newsSummary = mNewsAdapter.getData().get(position);
-                String postId = newsSummary.getPostid();
-                List<NewsSummary.ImgextraBean> imageExtra = newsSummary.getImgextra();
+            public void onItemClick(View view, NewsSummary entity, int position) {
+                if (null == entity) {
+                    return;
+                }
+                String postId = entity.getPostid();
+                List<NewsSummary.ImgextraBean> imageExtra = entity.getImgextra();
                 if (StringUtils.isNotBlank(postId) && (null == imageExtra || imageExtra.size() == 0)) {
-                    NewsDetailActivity.startAction(getContext(), view.findViewById(R.id.iv_icon), newsSummary.getPostid(), newsSummary.getImgsrc());
+                    NewsDetailActivity.startAction(getContext(), view.findViewById(R.id.iv_icon), entity.getPostid(), entity.getImgsrc());
                 }
             }
 
             @Override
-            public void onLongClick(View view, int position) {
+            public void onItemLongClick(View view, NewsSummary entity, int position) {
+
             }
         }));
 
@@ -129,6 +116,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     @Override
     public void refreshNewsList(List<NewsSummary> newsSummaryList) {
         smartRefreshLayout.finishRefresh();
+        smartRefreshLayout.finishLoadMore();
         if (null != newsSummaryList) {
             mNewsAdapter.setNewsData(newsSummaryList);
         }

@@ -10,6 +10,8 @@ import android.os.RemoteException;
 
 import androidx.annotation.Nullable;
 
+import com.kborid.library.util.LogUtils;
+
 public class TestMessengerServer extends Service {
 
     private Messenger serviceMessenger = new Messenger(new Handler() {
@@ -25,7 +27,7 @@ public class TestMessengerServer extends Service {
             try {
                 msg.replyTo.send(m);
             } catch (RemoteException e) {
-                e.printStackTrace();
+                LogUtils.e("MessengerServer", "远端方法调用失败", e);
             }
         }
     });

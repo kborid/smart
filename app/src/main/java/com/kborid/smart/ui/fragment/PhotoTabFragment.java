@@ -2,6 +2,7 @@ package com.kborid.smart.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -9,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.kborid.library.adapter.CommRVAdapter;
-import com.kborid.library.adapter.ViewHolderHelper;
+import com.kborid.library.adapter.RViewHolder;
 import com.kborid.library.base.BaseFragment;
+import com.kborid.library.listener.OnItemClickListener;
 import com.kborid.smart.R;
 import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.PhotoGirl;
-import com.kborid.smart.listener.RecyclerItemClickListener;
 import com.kborid.smart.ui.activity.PhotoDetailActivity;
 import com.kborid.smart.ui.presenter.PhotoTabPresenter;
 import com.kborid.smart.ui.presenter.contract.PhotoTabContract;
@@ -62,29 +63,29 @@ public class PhotoTabFragment extends BaseFragment<PhotoTabPresenter> implements
         mPresenter.getPhotoList(SIZE, mStartPage);
         adapter = new CommRVAdapter<PhotoGirl>(getContext(), R.layout.item_photo) {
             @Override
-            protected void convert(ViewHolderHelper helper, PhotoGirl photoGirl) {
+            protected void convert(RViewHolder helper, PhotoGirl photoGirl) {
                 helper.setImageUrl(R.id.iv_pic, photoGirl.getUrl(), 1024, 1024 * 4 / 3);
             }
         };
         recycleView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recycleView.setAdapter(adapter);
-        recycleView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+        adapter.setOnItemClickListener(new OnItemClickListener<PhotoGirl>() {
             @Override
-            public void onItemClick(View view, int position) {
-                PhotoGirl photoGirl = adapter.getAll().get(position);
-                PhotoDetailActivity.startPictureDetailActivity(getContext(), photoGirl.getUrl());
+            public void onItemClick(ViewGroup parent, View view, PhotoGirl entity, int position) {
+                PhotoDetailActivity.startPictureDetailActivity(getContext(), entity.getUrl());
             }
 
             @Override
-            public void onLongClick(View view, int position) {
+            public boolean onItemLongClick(ViewGroup parent, View view, PhotoGirl entity, int position) {
+                return false;
             }
-        }));
+        });
     }
 
     @Override
     public void refreshPhotoList(List<PhotoGirl> girls) {
         if (null != adapter) {
-            adapter.set(girls);
+            adapter.getDataIO().set(girls);
         }
     }
 }

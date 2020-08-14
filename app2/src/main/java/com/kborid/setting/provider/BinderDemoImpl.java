@@ -33,7 +33,7 @@ public class BinderDemoImpl {
                 try {
                     bundle = contentResolver.call(uri, METHOD_GET_SESSION, null, null);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("ContentProvider调用失败", e);
                 }
                 if (null != bundle) {
                     com.orhanobut.logger.Logger.d("session = " + bundle.getString(KEY_SESSION));

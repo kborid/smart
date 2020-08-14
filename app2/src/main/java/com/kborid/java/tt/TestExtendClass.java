@@ -12,7 +12,6 @@ public class TestExtendClass {
             return a * a;
 //            throw new NullPointerException("123");
         } catch (Exception e) {
-            e.printStackTrace();
             return a + a + a;
         } finally {
             LogUtils.d("finally()");

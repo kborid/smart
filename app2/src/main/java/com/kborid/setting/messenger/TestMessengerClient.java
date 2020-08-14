@@ -10,6 +10,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 
+import com.kborid.library.util.LogUtils;
 import com.kborid.setting.PRJApplication;
 
 public class TestMessengerClient {
@@ -54,7 +55,7 @@ public class TestMessengerClient {
         try {
             serviceMessenger.send(message);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            LogUtils.e("MessengerClient", "远端方法调用失败", e);
         }
     }
 }

@@ -1,8 +1,8 @@
-package com.kborid.library.adapter;
+package com.kborid.library.listener;
 
 import java.util.List;
 
-public interface DataIO<T> {
+public interface IDataIO<T> {
 
     void set(List<T> elements);
 

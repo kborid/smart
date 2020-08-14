@@ -2,6 +2,8 @@ package com.thunisoft.common.tool;
 
 import android.os.Looper;
 import android.os.Process;
+import android.util.Log;
+
 import com.thunisoft.common.util.CrashInfoUtils;
 import com.thunisoft.common.util.ToastUtils;
 
@@ -59,7 +61,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ex) {
-                ex.printStackTrace();
+                Log.e(TAG, "出现中断异常", e);
             }
             // 退出程序
             System.exit(1);

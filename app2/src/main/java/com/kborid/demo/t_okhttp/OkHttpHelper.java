@@ -76,16 +76,12 @@ public class OkHttpHelper {
         try {
             lock.lock();
             Request req = new Request.Builder().url(url).tag(url).build();
-            try {
-                res = okHttpClient.newCall(req).execute();
-                if (res.isSuccessful()) {
-                    return res;
-                }
-            } catch (Exception e) {
-                log.error("同步GET请求失败", e);
+            res = okHttpClient.newCall(req).execute();
+            if (res.isSuccessful()) {
+                return res;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("同步GET请求失败", e);
         } finally {
             lock.unlock();
         }

@@ -3,6 +3,7 @@ package com.kborid.library.adapter;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -19,17 +20,16 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragments;
 
     public FragmentAdapter(FragmentManager fm, String[] title, List<Fragment> fragments) {
-        super(fm);
-        this.mTitles = Arrays.asList(title);
-        this.mFragments = fragments;
+        this(fm, Arrays.asList(title), fragments);
     }
 
     public FragmentAdapter(FragmentManager fm, List<String> title, List<Fragment> fragments) {
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.mTitles = title;
         this.mFragments = fragments;
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         return mFragments.get(position);

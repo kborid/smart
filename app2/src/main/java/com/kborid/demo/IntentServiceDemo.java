@@ -5,6 +5,8 @@ import android.content.Intent;
 
 import androidx.annotation.Nullable;
 
+import com.kborid.library.util.LogUtils;
+
 /**
  * IntentServiceDemo
  *
@@ -30,7 +32,7 @@ public class IntentServiceDemo extends IntentService {
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LogUtils.e(e);
         }
         System.out.println("onHandleIntent() end");
     }

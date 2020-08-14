@@ -3,6 +3,8 @@ package com.kborid.smart;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+
+import com.kborid.library.util.LogUtils;
 import com.thunisoft.common.util.ToastUtils;
 
 import java.lang.ref.Reference;
@@ -65,7 +67,7 @@ public class LifeCycleCallback {
                             Activity act = weak.get();
                             System.out.println("weak = " + act + " " + refer);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            LogUtils.e(e);
                         }
                     }
                 }

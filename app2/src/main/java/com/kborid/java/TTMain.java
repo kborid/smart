@@ -1,6 +1,7 @@
 package com.kborid.java;
 
 import com.kborid.java.dto.PersonInfo;
+import com.kborid.library.util.LogUtils;
 
 import java.lang.reflect.Constructor;
 
@@ -30,10 +31,10 @@ public class TTMain {
                 PersonInfo personInfo1 = (PersonInfo) con.newInstance(new Object[]{"dd", 3});
                 System.out.println(personInfo1.toString());
             } catch (Exception e) {
-                e.printStackTrace();
+                LogUtils.e(e);
             }
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            LogUtils.e(e);
         }
     }
 
@@ -56,7 +57,7 @@ public class TTMain {
             s.length();
             return "normal";
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtils.e(e);
             return "exception";
         } finally {
             return "finally";

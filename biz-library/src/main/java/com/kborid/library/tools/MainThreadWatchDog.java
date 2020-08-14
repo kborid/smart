@@ -74,11 +74,7 @@ public class MainThreadWatchDog implements Runnable {
         PriorityStackTraceProfile lastProfile = null;
         for (int i = priorityStackTraceProfileList.size() - 1; i >= 0; i--) {
             PriorityStackTraceProfile profile = priorityStackTraceProfileList.get(i);
-            if (lastProfile != null && lastProfile.contains(profile)) {
-                profile.isDuplicate = true;
-            } else {
-                profile.isDuplicate = false;
-            }
+            profile.isDuplicate = lastProfile != null && lastProfile.contains(profile);
             lastProfile = profile;
         }
 
@@ -174,7 +170,6 @@ public class MainThreadWatchDog implements Runnable {
 
     private static class PriorityStackTraceProfile implements
             Comparable<PriorityStackTraceProfile> {
-        private static NumberFormat percent = NumberFormat.getPercentInstance();
         public String stackString;
         public TimeCounter timeCounter;
         public String incPercent;
@@ -182,7 +177,7 @@ public class MainThreadWatchDog implements Runnable {
 
         PriorityStackTraceProfile(WrappedStackTraceElement wrappedStackTraceElement,
                                   TimeCounter timeCounter, double incPercent) {
-            percent = new DecimalFormat("0.00#%");
+            NumberFormat percent = new DecimalFormat("0.00#%");
             this.timeCounter = timeCounter;
             this.stackString = wrappedStackTraceElement.stackTraceElement.toString() + "\n" +
                     wrappedStackTraceElement.callStackString;
@@ -205,13 +200,7 @@ public class MainThreadWatchDog implements Runnable {
             if (countDiff == 0) {
                 int anotherStackLength = another.stackString.length();
                 int thisStackLength = this.stackString.length();
-                if (anotherStackLength > thisStackLength) {
-                    return 1;
-                } else if (anotherStackLength == thisStackLength) {
-                    return 0;
-                } else {
-                    return -1;
-                }
+                return Integer.compare(anotherStackLength, thisStackLength);
             } else {
                 return countDiff;
             }

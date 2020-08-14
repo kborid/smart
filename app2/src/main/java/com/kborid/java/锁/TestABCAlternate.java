@@ -1,5 +1,7 @@
 package com.kborid.java.锁;
 
+import com.kborid.library.util.LogUtils;
+
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -44,7 +46,7 @@ public class TestABCAlternate {
             condition2.signal();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtils.e(e);
         } finally {
             // 释放锁
             lock.unlock();
@@ -72,7 +74,7 @@ public class TestABCAlternate {
             condition3.signal();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtils.e(e);
         } finally {
             // 释放锁
             lock.unlock();
@@ -100,7 +102,7 @@ public class TestABCAlternate {
             condition1.signal();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtils.e(e);
         } finally {
             // 释放锁
             lock.unlock();

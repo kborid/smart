@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Environment;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -35,7 +36,7 @@ public class BitmapUtil {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("BitmapUtil", "创建文件失败", e);
             }
         }
 
@@ -50,7 +51,7 @@ public class BitmapUtil {
             fos.flush();
             fos.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("BitmapUtil", "文件流失败", e);
         }
     }
 
@@ -82,14 +83,14 @@ public class BitmapUtil {
                 byte[] bitmapBytes = baos.toByteArray();
                 result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("BitmapUtil", "文件流失败", e);
             } finally {
                 try {
                     if (baos != null) {
                         baos.close();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e("BitmapUtil", "流关闭失败", e);
                 }
             }
         }

@@ -53,7 +53,6 @@ public class DiskLogStrategy implements LogStrategy {
                 fileWriter.flush();
                 fileWriter.close();
             } catch (IOException e) {
-                e.printStackTrace();
                 if (fileWriter != null) {
                     try {
                         fileWriter.flush();

@@ -1,5 +1,7 @@
 package com.thunisoft.common.tool;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.util.Collection;
@@ -56,7 +58,7 @@ public class MultiTaskHandler {
             sTHREAD_POOL_EXECUTOR.execute(r);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("MultiTaskHandler", "任务不能为null", e);
         }
         return false;
     }

@@ -7,7 +7,6 @@ import android.os.Environment;
 import androidx.multidex.MultiDex;
 
 import com.kborid.library.base.BaseApplication;
-import com.kborid.library.tools.MainThreadWatchDog;
 import com.kborid.library.util.ConfigUtils;
 import com.kborid.library.util.LogUtils;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -73,7 +72,7 @@ public class PRJApplication extends BaseApplication {
                 try {
                     return "Extra data.".getBytes("UTF-8");
                 } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                    LogUtils.e(e);
                     return null;
                 }
             }

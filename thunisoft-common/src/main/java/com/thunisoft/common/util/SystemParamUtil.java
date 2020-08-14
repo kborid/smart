@@ -3,6 +3,7 @@ package com.thunisoft.common.util;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import com.orhanobut.logger.Logger;
 
@@ -38,7 +39,7 @@ public final class SystemParamUtil {
                 value = appInfo.metaData.getString(key);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "获取MetaData失败", e);
         }
         return value;
     }

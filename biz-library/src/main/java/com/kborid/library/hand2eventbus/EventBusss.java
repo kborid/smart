@@ -2,11 +2,11 @@ package com.kborid.library.hand2eventbus;
 
 import android.os.Looper;
 
+import com.kborid.library.util.LogUtils;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.tool.MultiTaskHandler;
 import com.thunisoft.common.tool.UIHandler;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,10 +104,8 @@ public class EventBusss {
     private void invoke(Method method, Object object, Object type) {
         try {
             method.invoke(object, type);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            LogUtils.e("EventBusss", "反射调用失败", e);
         }
     }
 }

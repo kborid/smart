@@ -11,7 +11,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kborid.demo.SimpleLifecycleObserver
 import com.kborid.library.adapter.CommRVAdapter
-import com.kborid.library.adapter.ViewHolderHelper
+import com.kborid.library.adapter.RViewHolder
 import com.kborid.setting.R
 import com.kborid.setting.databinding.FragmentDashboardBinding
 import com.kborid.setting.tool.TestDataHelper
@@ -58,8 +58,8 @@ class DashboardFragment : Fragment() {
      */
     class DashAdapter constructor(context: Context?, resId: Int, data: List<String>) : CommRVAdapter<String>(context, resId, data) {
 
-        override fun convert(helper: ViewHolderHelper?, t: String?) {
-            helper!!.setText(R.id.fruit_name, t)
+        override fun convert(r: RViewHolder?, t: String?) {
+            r!!.setText(R.id.fruit_name, t)
         }
     }
 }

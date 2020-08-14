@@ -1,4 +1,4 @@
-package com.kborid.library.animation;
+package com.kborid.library.anim;
 
 import android.animation.Animator;
 import android.view.View;
