@@ -94,9 +94,7 @@ public abstract class AExecuteAsRoot {
                     ex.printStackTrace();
                 }
             }
-        } catch (IOException ex) {
-            Logger.t(TAG).d("Can't get root access", ex);
-        } catch (SecurityException ex) {
+        } catch (IOException | SecurityException ex) {
             Logger.t(TAG).d("Can't get root access", ex);
         } catch (Exception ex) {
             Logger.t(TAG).d("Error executing internal operation", ex);

@@ -95,6 +95,12 @@ dependencies {
     api project(path: ':thunisoft-common')
     api project(path: ':thunisoft-logger')
     implementation project(path: ':stub')
+
+    // 内存泄漏和卡顿监测
+    debugApi 'com.github.markzhai:blockcanary-android:1.5.0'
+    releaseApi 'com.github.markzhai:blockcanary-no-op:1.5.0'
+    debugApi 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
 
 apply from: '../upload.gradle'

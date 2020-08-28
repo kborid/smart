@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import com.kborid.library.base.BaseApplication;
 import com.orhanobut.logger.Logger;
+import com.thunisoft.common.util.CloseUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -58,13 +59,12 @@ public class InstallUtil {
             }
             result = new String(baos.toByteArray());
             LogUtils.d("result = " + result);
-            if (inIs != null)
-                inIs.close();
-            if (errIs != null)
-                errIs.close();
             process.destroy();
         } catch (IOException e) {
             result = e.getMessage();
+        } finally {
+            CloseUtil.closeQuietly(inIs);
+            CloseUtil.closeQuietly(errIs);
         }
         return result;
     }

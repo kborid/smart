@@ -45,11 +45,10 @@ public class BitmapUtil {
         canvas.drawColor(Color.WHITE);
         canvas.drawBitmap(bitmap, 0, 0, null);
 
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
+
+        try (FileOutputStream fos = new FileOutputStream(file)) {
             outB.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
-            fos.close();
         } catch (Exception e) {
             Log.e("BitmapUtil", "文件流失败", e);
         }
@@ -75,23 +74,13 @@ public class BitmapUtil {
     public static String bitmapToBase64(Bitmap bitmap) {
         String result = null;
         if (null != bitmap) {
-            ByteArrayOutputStream baos = null;
-            try {
-                baos = new ByteArrayOutputStream();
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                 baos.flush();
                 byte[] bitmapBytes = baos.toByteArray();
                 result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
             } catch (IOException e) {
                 Log.e("BitmapUtil", "文件流失败", e);
-            } finally {
-                try {
-                    if (baos != null) {
-                        baos.close();
-                    }
-                } catch (IOException e) {
-                    Log.e("BitmapUtil", "流关闭失败", e);
-                }
             }
         }
         return result;

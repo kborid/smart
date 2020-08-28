@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.kborid.library.util.LogUtils;
+import com.squareup.leakcanary.LeakCanary;
 import com.thunisoft.common.ThunisoftCommon;
 import com.thunisoft.common.tool.CrashHandler;
 import com.thunisoft.ui.ThunisoftUI;
@@ -34,6 +35,14 @@ public class BaseApplication extends Application {
         CrashHandler.getInstance().init();
         LogUtils.init();
         LogUtils.d(TAG, "onCreate()");
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+
         ThunisoftCommon.init(this);
         ThunisoftUI.init(this);
 //        PackageManagerImpl.init(this);

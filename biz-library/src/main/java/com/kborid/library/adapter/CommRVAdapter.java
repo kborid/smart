@@ -77,10 +77,14 @@ public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<RViewHolder>
         return viewHolder.getAdapterPosition();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return mDataIO.get(position).hashCode() ^ position >>> 16;
+    }
+
     private boolean isEnabled(int viewType) {
         return true;
     }
-
 
     private void setItemListener(final ViewGroup parent, final RViewHolder viewHolder, int viewType) {
         if (!isEnabled(viewType)) return;

@@ -67,6 +67,7 @@ public class PhotoTabFragment extends BaseFragment<PhotoTabPresenter> implements
                 helper.setImageUrl(R.id.iv_pic, photoGirl.getUrl(), 1024, 1024 * 4 / 3);
             }
         };
+        adapter.setHasStableIds(true);
         recycleView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recycleView.setAdapter(adapter);
         adapter.setOnItemClickListener(new OnItemClickListener<PhotoGirl>() {

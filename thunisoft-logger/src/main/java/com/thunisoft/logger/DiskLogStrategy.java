@@ -3,6 +3,7 @@ package com.thunisoft.logger;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 
 import com.orhanobut.logger.LogStrategy;
 
@@ -11,11 +12,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * @Author: kborid
- * @Date: 2019/5/6
- * @Version: 1.0.0
- * @Description: 日志写入磁盘工具handlerThread
- * @Copyright kborid@aliyun.com
+ * DiskLogStrategy
+ *
+ * @description: 日志写入磁盘工具handlerThread
+ * @author: duanwei
+ * @email: duanwei@thunisoft.com
+ * @version: 1.0.0
+ * @date: 2020/8/18
  */
 public class DiskLogStrategy implements LogStrategy {
 
@@ -45,20 +48,12 @@ public class DiskLogStrategy implements LogStrategy {
         @Override
         public void handleMessage(Message msg) {
             String content = (String) msg.obj;
-            FileWriter fileWriter = null;
             File logFile = getLogFile(nFolder, LoggerUtils.FILE_NAME_PREFIX);
-            try {
-                fileWriter = new FileWriter(logFile, true);
+            try (FileWriter fileWriter = new FileWriter(logFile, true)) {
                 writeLog(fileWriter, content);
                 fileWriter.flush();
-                fileWriter.close();
             } catch (IOException e) {
-                if (fileWriter != null) {
-                    try {
-                        fileWriter.flush();
-                        fileWriter.close();
-                    } catch (IOException e1) { /* fail silently */ }
-                }
+                Log.e("Logger", "日志写入出错", e);
             }
         }
 

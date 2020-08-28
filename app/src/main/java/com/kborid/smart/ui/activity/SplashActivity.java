@@ -9,10 +9,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.activity.MainActivity;
-import com.kborid.smart.service.LocationService;
 import com.thunisoft.common.base.BaseSimpleActivity;
 import com.thunisoft.common.tool.UIHandler;
 
@@ -68,11 +66,11 @@ public class SplashActivity extends BaseSimpleActivity {
     }
 
     @NeedsPermission({Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_PHONE_STATE/*,
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION})
+            Manifest.permission.ACCESS_COARSE_LOCATION*/})
     void dynamicObtainPermission() {
-        LocationService.startLocationService(PRJApplication.getInstance());
+//        LocationService.startLocationService(PRJApplication.getInstance());
         UIHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -83,9 +81,9 @@ public class SplashActivity extends BaseSimpleActivity {
     }
 
     @OnPermissionDenied({Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_PHONE_STATE/*,
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION})
+            Manifest.permission.ACCESS_COARSE_LOCATION*/})
     void showDenied() {
         finish();
     }

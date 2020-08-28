@@ -8,10 +8,10 @@ import android.os.Environment;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.ThunisoftCommon;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -33,22 +33,20 @@ public class CrashInfoUtils {
 
     /**
      * 保存错误信息到文件中
-     * *
      *
      * @param ex
      * @param infos
-     * @return 返回文件名称, 便于将文件传送到服务器
      */
-    private static String saveCrashInfo2File(Throwable ex, Map<String, String> infos) {
+    private static void saveCrashInfo2File(Throwable ex, Map<String, String> infos) {
         Date date = new Date();
         String time4Log = DateUtils.formatDate("======yyyy-MM-dd HH:mm:ss======", date);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         String lineSeparator = System.getProperty("line.separator", "\n");
-        sb.append(lineSeparator + lineSeparator + time4Log).append(lineSeparator + lineSeparator);
+        sb.append(lineSeparator).append(lineSeparator).append(time4Log).append(lineSeparator).append(lineSeparator);
         for (Map.Entry<String, String> entry : infos.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            sb.append(key + "=" + value + "\n");
+            sb.append(key).append("=").append(value).append("\n");
         }
 
         Writer writer = new StringWriter();
@@ -79,31 +77,22 @@ public class CrashInfoUtils {
             }
 
             File dir = new File(filePath);
-            Logger.t(TAG).i(dir.getAbsolutePath());
             if (!dir.exists()) {
-                dir.mkdirs();
-            }
-            outStream = new FileOutputStream(dir.getAbsolutePath() + File.separator + fileName, true);
-            outStream.write(sb.toString().getBytes());
-            return fileName;
-        } catch (FileNotFoundException e) {
-            Logger.t(TAG).e(e, "an error occurred while writing file...");
-            //如果是因为没有文件写入权限可能会引起递归收集错误日志，所以就不记录了
-//            PackageUtils.collectDeviceInfo(PRJApplication.getInstance(),e);
-        } catch (Exception e1) {
-            Logger.t(TAG).e(e1, "an error occurred while writing file...");
-            CrashInfoUtils.collectDeviceInfo(e1);
-        } finally {
-            if (outStream != null) {
-                try {
-                    outStream.close();
-                } catch (IOException e) {
-                    Logger.t(TAG).e(e, "an error occurred");
+                boolean ret = dir.mkdirs();
+                if (ret) {
+                    Logger.t(TAG).i("文件目录创建成功");
                 }
             }
+            Logger.t(TAG).i("Crash文件存放目录：" + dir.getAbsolutePath());
+            outStream = new FileOutputStream(dir.getAbsolutePath() + File.separator + fileName, true);
+            outStream.write(sb.toString().getBytes());
+        } catch (Exception e) {
+            Logger.t(TAG).e(e, "保存Crash信息到文件出错");
+            CrashInfoUtils.collectDeviceInfo(e);
+        } finally {
+            CloseUtil.closeQuietly(outStream);
         }
 
-        return null;
     }
 
     /**
@@ -117,8 +106,8 @@ public class CrashInfoUtils {
             PackageInfo pi = pm.getPackageInfo(ThunisoftCommon.getContext().getPackageName(), PackageManager.GET_ACTIVITIES);
 
             if (pi != null) {
-                String versionName = pi.versionName == null ? "null" : pi.versionName;
-                String versionCode = pi.versionCode + "";
+                String versionName = StringUtils.defaultString(pi.versionName, "null");
+                String versionCode = String.valueOf(pi.versionCode);
                 infos.put("versionName", versionName);
                 infos.put("versionCode", versionCode);
             }
@@ -132,7 +121,6 @@ public class CrashInfoUtils {
             try {
                 field.setAccessible(true);
                 infos.put(field.getName(), field.get(null).toString());
-//                Logger.t(TAG).i(field.getName() + " : " + field.get(null));
             } catch (Exception e) {
                 Logger.t(TAG).e(e, "an error occurred when collect crash info");
                 CrashInfoUtils.collectDeviceInfo(e);

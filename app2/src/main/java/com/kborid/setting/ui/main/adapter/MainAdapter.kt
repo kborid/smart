@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.kborid.kotlin.classT.T
 import com.kborid.setting.R
 import org.slf4j.LoggerFactory
 
@@ -34,10 +35,14 @@ class MainAdapter(context: Context, data: ArrayList<String>) : BaseAdapter() {
             viewHolder = view.tag as TestViewHolder
         }
 
-        viewHolder.name.text = data?.get(position) ?: ""
-        viewHolder.icon.setImageResource(R.mipmap.logo_small)
+        bindView(viewHolder, data?.get(position))
 
         return view
+    }
+
+    private fun <T> bindView(holder: TestViewHolder, data: T) {
+        holder.name.text = data.toString()
+        holder.icon.setImageResource(R.mipmap.logo_small)
     }
 
     override fun getItem(position: Int): Any {

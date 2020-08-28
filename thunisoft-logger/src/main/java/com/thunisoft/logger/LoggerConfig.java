@@ -2,23 +2,39 @@ package com.thunisoft.logger;
 
 public class LoggerConfig {
     //默认TAG
-    private static final String TAG_DEFAULT = "TAG_DEFAULT";
+    static final String TAG_DEFAULT = "TAG_DEFAULT";
+
+    private String mTag;
+    private boolean mIsDebug;
 
     /**
      * 设置logger的打印Tag
      *
-     * @return
+     * @return 主tag
      */
     public String getTag() {
-        return TAG_DEFAULT;
+        return mTag;
     }
 
     /**
      * 设置debug or release
      *
-     * @return
+     * @return 是否debug模式
      */
     public boolean isDebug() {
-        return false;
+        return mIsDebug;
+    }
+
+    private LoggerConfig(String tag, boolean isDebug) {
+        this.mTag = tag;
+        this.mIsDebug = isDebug;
+    }
+
+    public static LoggerConfig createLoggerConfig(String tag, boolean isDebug) {
+        return new LoggerConfig(tag, isDebug);
+    }
+
+    public static LoggerConfig defaultLoggerConfig() {
+        return new LoggerConfig(TAG_DEFAULT, false);
     }
 }

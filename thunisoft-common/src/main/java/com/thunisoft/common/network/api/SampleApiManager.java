@@ -6,9 +6,11 @@ import com.thunisoft.common.network.OkHttpClientFactory;
 import com.thunisoft.common.network.callback.ResponseCallback;
 import com.thunisoft.common.network.comm.CommResBean;
 import com.thunisoft.common.network.func.ResponseFunc;
+import com.thunisoft.common.network.util.RxUtil;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -22,6 +24,7 @@ public class SampleApiManager {
 
     private static final String baseUrl = "";
 
+    @SuppressLint("NewApi")
     private static Retrofit getRetrofit() {
         return new Retrofit.Builder()
                 .client(OkHttpClientFactory.newOkHttpClient())
@@ -46,32 +49,19 @@ public class SampleApiManager {
                 .map(new ResponseFunc<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((o -> {
-                    if (null != responseCallback) {
-                        responseCallback.success(o);
+                .subscribe(RxUtil.createDefaultSubscriber(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+
                     }
-                }), (e) -> {
-                    if (null != responseCallback) {
-                        responseCallback.failure(e);
-                    }
-                });
+                }));
     }
 
     @SuppressLint("CheckResult")
-    public static void testGet(String code, final ResponseCallback<Object> responseCallback) {
-        getApi().get(code)
-                .map(new ResponseFunc<>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((o -> {
-                    if (null != responseCallback) {
-                        responseCallback.success(o);
-                    }
-                }), (e) -> {
-                    if (null != responseCallback) {
-                        responseCallback.failure(e);
-                    }
-                });
+    public static Observable<Object> testGet(String code) {
+        return getApi().get(code)
+                .compose(RxUtil.handleResult())
+                .compose(RxUtil.rxSchedulerHelper());
     }
 
     /**

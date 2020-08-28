@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +27,11 @@ import com.thunisoft.common.base.BaseSimpleActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -122,6 +126,20 @@ public class TransActivity extends BaseSimpleActivity {
             System.out.println(results.size());
         } catch (Exception e) {
             logger.error("插入数据库失败", e);
+        }
+
+        try {
+            File storage = Environment.getExternalStorageDirectory();
+            File file = new File(storage, "test_demo.log");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            OutputStream outputStream = new FileOutputStream(file, true);
+            outputStream.write("测试内容".getBytes());
+            outputStream.flush();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

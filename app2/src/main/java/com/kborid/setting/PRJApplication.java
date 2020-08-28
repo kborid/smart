@@ -1,15 +1,19 @@
 package com.kborid.setting;
 
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.StrictMode;
+
 import com.kborid.demo.t_flutter.FlutterTest;
 import com.kborid.library.base.BaseApplication;
+import com.kborid.setting.broadcast.LaunchLockerBroadcastReceiver;
+import com.kborid.setting.constant.Constants;
+import com.kborid.setting.service.CoCallService;
 import com.thunisoft.ThunisoftLogger;
 import com.thunisoft.common.ThunisoftCommon;
+import com.thunisoft.common.util.SystemInfoUtils;
 import com.thunisoft.logger.LoggerConfig;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiFunction;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.realm.Realm;
 
@@ -19,17 +23,7 @@ public class PRJApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         ThunisoftCommon.init(this);
-        ThunisoftLogger.initLogger(this, new LoggerConfig() {
-            @Override
-            public String getTag() {
-                return BuildConfig.APPLICATION_ID;
-            }
-
-            @Override
-            public boolean isDebug() {
-                return BuildConfig.DEBUG;
-            }
-        });
+        ThunisoftLogger.initLogger(this, LoggerConfig.createLoggerConfig(BuildConfig.APPLICATION_ID, BuildConfig.DEBUG));
         FlutterTest.init();
         Realm.init(this);
 
@@ -40,5 +34,27 @@ public class PRJApplication extends BaseApplication {
 //                return null;
 //            }
 //        });
+
+//        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+//                .detectAll()
+//                .penaltyLog()
+//                .build());
+//        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+//                .detectLeakedSqlLiteObjects()
+//                .detectLeakedClosableObjects()
+//                .penaltyLog()
+//                .penaltyDeath()
+//                .build());
+
+        initRegisterBroadcast();
+    }
+
+    private void initRegisterBroadcast() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Constants.BROADCAST_LOCKED_LAUNCHER);
+        registerReceiver(new LaunchLockerBroadcastReceiver(), intentFilter);
+
+        System.out.println("devicesId:" + SystemInfoUtils.getDeviceId(this));
+        System.out.println("Imei:" + SystemInfoUtils.getIMEI(this));
     }
 }

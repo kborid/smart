@@ -28,15 +28,7 @@ class KotlinApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
         ThunisoftCommon.init(this)
-        ThunisoftLogger.initLogger(this, object : LoggerConfig() {
-            override fun getTag(): String {
-                return "Smart-kotlin"
-            }
-
-            override fun isDebug(): Boolean {
-                return BuildConfig.DEBUG
-            }
-        })
+        ThunisoftLogger.initLogger(this, LoggerConfig.createLoggerConfig("Smart-kotlin", com.kborid.setting.BuildConfig.DEBUG))
         RxJavaPlugins.setOnObservableSubscribe { t1, t2 -> apply(t1 as Observable<String>?, t2 as Observer<String>?) }
     }
 }

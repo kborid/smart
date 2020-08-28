@@ -19,13 +19,16 @@ public class ThunisoftLogger {
      * @param context
      * @param config
      */
-    public static void initLogger(Context context, final LoggerConfig config) {
+    public static void initLogger(Context context, LoggerConfig config) {
 
         if (!(context instanceof Application)) {
             throw new IllegalArgumentException("must be use application context init it");
         }
 
         // logger打印策略
+        if (null == config) {
+            config = LoggerConfig.defaultLoggerConfig();
+        }
         FormatStrategy mFormatStrategy = PrettyFormatStrategy.newBuilder()
                 .showThreadInfo(true)   // (Optional) Whether to show thread info or not. Default true
                 .methodCount(2)         // (Optional) How many method line to show. Default 2
@@ -34,10 +37,11 @@ public class ThunisoftLogger {
                 .build();
 
         // android log设置
+        boolean isDebug = config.isDebug();
         Logger.addLogAdapter(new AndroidLogAdapter(mFormatStrategy) {
             @Override
             public boolean isLoggable(int priority, String tag) {
-                return config.isDebug();
+                return isDebug;
             }
         });
 

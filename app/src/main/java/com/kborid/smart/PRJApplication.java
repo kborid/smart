@@ -40,17 +40,7 @@ public class PRJApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
 //        MainThreadWatchDog.defaultInstance().startWatch();
-        ThunisoftLogger.initLogger(this, new LoggerConfig() {
-            @Override
-            public String getTag() {
-                return getString(R.string.app_name);
-            }
-
-            @Override
-            public boolean isDebug() {
-                return com.kborid.library.BuildConfig.DEBUG;
-            }
-        });
+        ThunisoftLogger.initLogger(this, LoggerConfig.createLoggerConfig(getString(R.string.app_name), BuildConfig.DEBUG));
         LogUtils.d("=======================" + ConfigUtils.getConfigX());
         LogUtils.d("=======================" + ConfigUtils.getConfigY());
         Bugly.init(getApplicationContext(), "6b298e7c56", BuildConfig.DEBUG);
