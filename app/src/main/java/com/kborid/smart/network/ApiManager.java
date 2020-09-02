@@ -57,7 +57,9 @@ public class ApiManager {
     }
 
     public static Single<List<NewsSummary>> getNewsList(String type, String id, int startPage) {
-        return getApi(HostType.NETEASE_NEWS_VIDEO).getNewsList(type, id, startPage)
+        int startIndex = startPage * 20;
+        int endIndex = startIndex + 20;
+        return getApi(HostType.NETEASE_NEWS_VIDEO).getNewsList(type, id, startIndex, endIndex)
                 .flatMap(new Function<Map<String, List<NewsSummary>>, ObservableSource<NewsSummary>>() {
                     @Override
                     public ObservableSource<NewsSummary> apply(Map<String, List<NewsSummary>> map) throws Exception {

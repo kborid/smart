@@ -17,9 +17,11 @@ import com.kborid.smart.ui.activity.NewsDetailActivity;
 import com.kborid.smart.ui.adapter.NewsAdapter;
 import com.kborid.smart.ui.presenter.NewsPresenter;
 import com.kborid.smart.ui.presenter.contract.NewsContract;
+import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.thunisoft.common.util.ToastUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -56,7 +58,6 @@ public class NewsFragment extends AppFragment<NewsPresenter> implements NewsCont
             mNewsId = getArguments().getString(AppConstant.NEWS_ID);
             mNewsType = getArguments().getString(AppConstant.NEWS_TYPE);
         }
-        mPresenter.getNewsList(mNewsType, mNewsId, mStartPage);
         mNewsAdapter = new NewsAdapter(getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -95,23 +96,34 @@ public class NewsFragment extends AppFragment<NewsPresenter> implements NewsCont
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                 mStartPage++;
-                mPresenter.getNewsList(mNewsType, mNewsId, mStartPage);
+                mPresenter.getNewsList(mNewsType, mNewsId, mStartPage, false);
             }
 
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 mStartPage = 0;
-                mPresenter.getNewsList(mNewsType, mNewsId, mStartPage);
+                mPresenter.getNewsList(mNewsType, mNewsId, mStartPage, true);
             }
         });
+
+        smartRefreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
+        smartRefreshLayout.autoRefresh(100);
     }
 
     @Override
-    public void refreshNewsList(List<NewsSummary> newsSummaryList) {
+    public void refreshNewsList(List<NewsSummary> newsSummaryList, boolean refresh) {
         smartRefreshLayout.finishRefresh();
         smartRefreshLayout.finishLoadMore();
         if (null != newsSummaryList) {
-            mNewsAdapter.setNewsData(newsSummaryList);
+            if (refresh) {
+                mNewsAdapter.setNewsData(newsSummaryList);
+            } else {
+                if (newsSummaryList.isEmpty()) {
+                    ToastUtils.showToast("没有数据");
+                    mStartPage--;
+                }
+                mNewsAdapter.addNewsData(newsSummaryList);
+            }
         }
     }
 }

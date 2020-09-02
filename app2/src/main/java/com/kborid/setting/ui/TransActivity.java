@@ -15,9 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.LayoutInflaterCompat;
-import androidx.lifecycle.LifecycleObserver;
 
-import com.kborid.demo.SimpleLifecycleObserver;
 import com.kborid.demo.t_okhttp.OkHttpHelper;
 import com.kborid.demo.t_realm.entity.User;
 import com.kborid.demo.t_rxjava.RxJavaTest;
@@ -45,8 +43,6 @@ public class TransActivity extends BaseSimpleActivity {
     private final static Logger logger = LoggerFactory.getLogger(TransActivity.class);
 
     private final static String T_URL = "http://publicobject.com/helloworld.txt";
-
-    private LifecycleObserver lifecycleObserver;
 
     @Override
     protected int getLayoutResId() {
@@ -82,8 +78,6 @@ public class TransActivity extends BaseSimpleActivity {
 
     @Override
     protected void initDataAndEvent(@Nullable Bundle bundle) {
-        lifecycleObserver = new SimpleLifecycleObserver(this.getClass().getSimpleName());
-        getLifecycle().addObserver(lifecycleObserver);
         RxJavaTest.test();
         new Thread(requestRunnable).start();
     }
@@ -146,7 +140,6 @@ public class TransActivity extends BaseSimpleActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        getLifecycle().removeObserver(lifecycleObserver);
 //        final String permission = "com.kborid.smart.permission.BROADCAST.TT";
 //        Intent intent = new Intent("com.kborid.smart.ACTION.TT");
 //        sendBroadcast(intent, permission);

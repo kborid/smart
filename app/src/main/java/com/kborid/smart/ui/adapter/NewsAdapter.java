@@ -81,6 +81,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.BaseViewHolder
         notifyDataSetChanged();
     }
 
+    public void addNewsData(List<NewsSummary> newsSummaryList) {
+        if (null != newsSummaryList) {
+            this.mNewsSummaries.addAll(newsSummaryList);
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
     public List<NewsSummary> getData() {
         return this.mNewsSummaries;

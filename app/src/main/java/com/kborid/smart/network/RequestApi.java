@@ -19,8 +19,8 @@ import retrofit2.http.Url;
 public interface RequestApi {
 
     // 新闻列表
-    @GET("nc/article/{type}/{id}/{startPage}-20.html")
-    Observable<Map<String, List<NewsSummary>>> getNewsList(@Path("type") String type, @Path("id") String id, @Path("startPage") int startPage);
+    @GET("nc/article/{type}/{id}/{startIndex}-{endIndex}.html")
+    Observable<Map<String, List<NewsSummary>>> getNewsList(@Path("type") String type, @Path("id") String id, @Path("startIndex") int startIndex, @Path("endIndex") int endIndex);
 
     // 新闻详情
     @GET("nc/article/{postId}/full.html")

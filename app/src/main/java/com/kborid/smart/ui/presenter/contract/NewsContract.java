@@ -9,10 +9,10 @@ import java.util.List;
 public class NewsContract {
 
     public interface View extends BaseView {
-        void refreshNewsList(List<NewsSummary> newsSummaryList);
+        void refreshNewsList(List<NewsSummary> newsSummaryList, boolean refresh);
     }
 
     public interface Presenter extends BasePresenter<View> {
-        void getNewsList(String type, String id, int start);
+        void getNewsList(String type, String id, int start, boolean refresh);
     }
 }

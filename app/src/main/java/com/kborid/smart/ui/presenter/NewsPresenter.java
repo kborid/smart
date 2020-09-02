@@ -18,11 +18,11 @@ public class NewsPresenter extends RxPresenter<NewsContract.View> implements New
     }
 
     @Override
-    public void getNewsList(String type, String id, int start) {
+    public void getNewsList(String type, String id, int start, boolean refresh) {
         Disposable disposable = ApiManager.getNewsList(type, id, start).subscribe(new Consumer<List<NewsSummary>>() {
             @Override
             public void accept(List<NewsSummary> newsSummaryList) throws Exception {
-                mView.refreshNewsList(newsSummaryList);
+                mView.refreshNewsList(newsSummaryList, refresh);
             }
         });
         addSubscribe(disposable);
