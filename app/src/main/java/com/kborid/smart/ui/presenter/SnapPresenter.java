@@ -15,8 +15,7 @@ import io.reactivex.functions.Consumer;
 public class SnapPresenter extends RxPresenter<SnapContract.View> implements SnapContract.Presenter {
 
     @Inject
-    public SnapPresenter(String name) {
-        System.out.println(name);
+    public SnapPresenter() {
     }
 
     @Override

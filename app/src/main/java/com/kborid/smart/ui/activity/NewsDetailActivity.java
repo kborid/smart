@@ -109,7 +109,6 @@ public class NewsDetailActivity extends AppActivity<NewsDetailPresenter> impleme
     private void setBody(NewsDetail newsDetail, String newsBody) {
         int imgTotal = newsDetail.getImg().size();
         if (isShowBody(newsBody, imgTotal)) {
-            System.out.println(newsBody);
             newsDetailBodyTV.setMovementMethod(LinkMovementMethod.getInstance());//加这句才能让里面的超链接生效,实测经常卡机崩溃
             mUrlImageGetter = new URLImageGetter(newsDetailBodyTV, newsBody, imgTotal);
             newsDetailBodyTV.setText(Html.fromHtml(newsBody, mUrlImageGetter, null));

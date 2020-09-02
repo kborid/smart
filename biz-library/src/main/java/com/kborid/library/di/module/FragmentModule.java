@@ -10,17 +10,12 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class FragmentModule extends CommonModule {
+public class FragmentModule {
 
     private Fragment fragment;
 
     public FragmentModule(Fragment fragment) {
         this.fragment = fragment;
-    }
-
-    public FragmentModule(Fragment fragment, String name) {
-        this.fragment = fragment;
-        this.name = name;
     }
 
     @Provides

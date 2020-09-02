@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.kborid.library.adapter.CommRVAdapter;
 import com.kborid.library.adapter.RViewHolder;
+import com.kborid.library.biz.BusinessServer;
 import com.kborid.library.listener.OnItemClickListener;
 import com.kborid.smart.R;
 import com.kborid.smart.base.AppFragment;
@@ -22,6 +23,8 @@ import com.thunisoft.common.tool.UIHandler;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 
 public class PhotoTabFragment extends AppFragment<PhotoTabPresenter> implements PhotoTabContract.View {
@@ -30,6 +33,9 @@ public class PhotoTabFragment extends AppFragment<PhotoTabPresenter> implements 
     Toolbar toolbar;
     @BindView(R.id.recycleView)
     RecyclerView recycleView;
+
+    @Inject
+    BusinessServer mBizServer;
 
     private static int SIZE = 500;
     private int mStartPage = 1;
@@ -78,6 +84,13 @@ public class PhotoTabFragment extends AppFragment<PhotoTabPresenter> implements 
                 return false;
             }
         });
+
+        UIHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mBizServer.test();
+            }
+        }, 2000);
     }
 
     @Override

@@ -8,16 +8,11 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ActivityModule extends CommonModule {
+public class ActivityModule {
     private final Activity mActivity;
 
     public ActivityModule(Activity activity) {
         this.mActivity = activity;
-    }
-
-    public ActivityModule(Activity activity, String name) {
-        this.mActivity = activity;
-        this.name = name;
     }
 
     @Provides

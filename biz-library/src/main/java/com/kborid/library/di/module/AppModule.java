@@ -18,7 +18,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    @ContextLife("Application")
+    @ContextLife
     BaseApplication provideApplicationContext() {
         return application;
     }

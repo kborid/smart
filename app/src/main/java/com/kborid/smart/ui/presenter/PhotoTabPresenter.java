@@ -20,12 +20,10 @@ public class PhotoTabPresenter extends RxPresenter<PhotoTabContract.View> implem
 
     @Override
     public void getPhotoList(int size, int page) {
-        System.out.println("getPhotoList();");
         ApiManager.getPhotoList(size, page)
                 .subscribe(RxUtil.createDefaultSubscriber(new Consumer<List<PhotoGirl>>() {
                     @Override
                     public void accept(List<PhotoGirl> photoGirls) throws Exception {
-                        System.out.println("photo reset");
                         mView.refreshPhotoList(photoGirls);
                     }
                 }));
