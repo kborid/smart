@@ -8,11 +8,7 @@ import dagger.Provides;
 @Module
 public class CommonModule {
 
-    private String name;
-
-    public CommonModule(String name) {
-        this.name = name;
-    }
+    protected String name;
 
     @ActivityScope
     @Provides

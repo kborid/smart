@@ -10,9 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kborid.library.adapter.CommRVAdapter;
 import com.kborid.library.adapter.RViewHolder;
-import com.kborid.library.base.BaseActivity;
 import com.kborid.smart.R;
-import com.kborid.smart.di.DaggerSnapComponent;
+import com.kborid.smart.base.AppActivity;
 import com.kborid.smart.entity.PhotoGirl;
 import com.kborid.smart.ui.presenter.SnapPresenter;
 import com.kborid.smart.ui.presenter.contract.SnapContract;
@@ -21,7 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class SnapHelpActivity extends BaseActivity<SnapPresenter> implements SnapContract.View {
+public class SnapHelpActivity extends AppActivity<SnapPresenter> implements SnapContract.View {
 
     private static final String TAG = SnapHelpActivity.class.getSimpleName();
 
@@ -34,10 +33,7 @@ public class SnapHelpActivity extends BaseActivity<SnapPresenter> implements Sna
 
     @Override
     protected void initInject() {
-        DaggerSnapComponent.builder()
-                .commonModule(getCommonModule("snap"))
-                .build()
-                .inject(this);
+        getComponent().inject(this);
     }
 
     @Override

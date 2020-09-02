@@ -3,14 +3,17 @@ package com.kborid.library.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kborid.library.di.module.CommonModule;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.kborid.library.di.component.DaggerFragmentComponent;
+import com.kborid.library.di.component.FragmentComponent;
+import com.kborid.library.di.module.FragmentModule;
 
 import javax.inject.Inject;
 
@@ -28,7 +31,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     private boolean isInited = false;
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         mActivity = (Activity) context;
         mContext = context;
         super.onAttach(context);
@@ -43,7 +46,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
         mUnBinder = ButterKnife.bind(this, view);
@@ -64,8 +67,15 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         }
     }
 
-    protected CommonModule getCommonModule(String name) {
-        return new CommonModule(name);
+    protected FragmentComponent getComponent() {
+        return DaggerFragmentComponent.builder()
+                .appComponent(BaseApplication.getAppComponent())
+                .fragmentModule(getModule())
+                .build();
+    }
+
+    protected FragmentModule getModule() {
+        return new FragmentModule(this);
     }
 
     @Override

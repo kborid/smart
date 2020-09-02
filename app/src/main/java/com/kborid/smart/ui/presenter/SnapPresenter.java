@@ -4,12 +4,13 @@ import com.kborid.library.base.RxPresenter;
 import com.kborid.smart.entity.PhotoGirl;
 import com.kborid.smart.network.ApiManager;
 import com.kborid.smart.ui.presenter.contract.SnapContract;
-import com.thunisoft.common.network.callback.ResponseCallback;
-import com.thunisoft.common.util.ToastUtils;
+import com.thunisoft.common.network.util.RxUtil;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.functions.Consumer;
 
 public class SnapPresenter extends RxPresenter<SnapContract.View> implements SnapContract.Presenter {
 
@@ -20,18 +21,12 @@ public class SnapPresenter extends RxPresenter<SnapContract.View> implements Sna
 
     @Override
     public void request() {
-        ApiManager.getPhotoList(20, 2, new ResponseCallback<List<PhotoGirl>>() {
-            @Override
-            public void failure(Throwable throwable) {
-                ToastUtils.showToast(throwable.getMessage());
-            }
-
-            @Override
-            public void success(List<PhotoGirl> girls) {
-                if (null != mView) {
-                    mView.updateData(girls);
-                }
-            }
-        });
+        ApiManager.getPhotoList(20, 2)
+                .subscribe(RxUtil.createDefaultSubscriber(new Consumer<List<PhotoGirl>>() {
+                    @Override
+                    public void accept(List<PhotoGirl> photoGirls) throws Exception {
+                        mView.updateData(photoGirls);
+                    }
+                }));
     }
 }

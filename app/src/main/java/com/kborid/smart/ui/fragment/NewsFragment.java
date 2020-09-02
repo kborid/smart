@@ -1,22 +1,18 @@
 package com.kborid.smart.ui.fragment;
 
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kborid.library.base.BaseFragment;
-import com.kborid.smart.R;
-import com.kborid.smart.constant.AppConstant;
-import com.kborid.smart.di.DaggerCommonComponent;
-import com.kborid.smart.entity.NewsSummary;
 import com.kborid.library.listener.RecyclerItemClickListener;
+import com.kborid.smart.R;
+import com.kborid.smart.base.AppFragment;
+import com.kborid.smart.constant.AppConstant;
+import com.kborid.smart.entity.NewsSummary;
 import com.kborid.smart.ui.activity.NewsDetailActivity;
 import com.kborid.smart.ui.adapter.NewsAdapter;
 import com.kborid.smart.ui.presenter.NewsPresenter;
@@ -31,7 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsContract.View {
+public class NewsFragment extends AppFragment<NewsPresenter> implements NewsContract.View {
 
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
@@ -46,10 +42,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     @Override
     protected void initInject() {
-        DaggerCommonComponent.builder()
-                .commonModule(getCommonModule("news"))
-                .build()
-                .inject(this);
+        getComponent().inject(this);
     }
 
     @Override

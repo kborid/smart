@@ -4,12 +4,13 @@ import com.kborid.library.base.RxPresenter;
 import com.kborid.smart.entity.NewsSummary;
 import com.kborid.smart.network.ApiManager;
 import com.kborid.smart.ui.presenter.contract.NewsContract;
-import com.thunisoft.common.network.callback.ResponseCallback;
-import com.thunisoft.common.util.ToastUtils;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 public class NewsPresenter extends RxPresenter<NewsContract.View> implements NewsContract.Presenter {
     @Inject
@@ -18,18 +19,12 @@ public class NewsPresenter extends RxPresenter<NewsContract.View> implements New
 
     @Override
     public void getNewsList(String type, String id, int start) {
-        ApiManager.getNewsList(type, id, start, new ResponseCallback<List<NewsSummary>>() {
+        Disposable disposable = ApiManager.getNewsList(type, id, start).subscribe(new Consumer<List<NewsSummary>>() {
             @Override
-            public void failure(Throwable throwable) {
-                ToastUtils.showToast(throwable.getMessage());
-            }
-
-            @Override
-            public void success(List<NewsSummary> newsSummaryList) {
-                if (null != mView) {
-                    mView.refreshNewsList(newsSummaryList);
-                }
+            public void accept(List<NewsSummary> newsSummaryList) throws Exception {
+                mView.refreshNewsList(newsSummaryList);
             }
         });
+        addSubscribe(disposable);
     }
 }

@@ -43,7 +43,6 @@ public class SampleApiManager {
         return api;
     }
 
-    @SuppressLint("CheckResult")
     public static void testPost(Object params, final ResponseCallback<Object> responseCallback) {
         getApi().post(params)
                 .map(new ResponseFunc<>())
@@ -57,7 +56,6 @@ public class SampleApiManager {
                 }));
     }
 
-    @SuppressLint("CheckResult")
     public static Observable<Object> testGet(String code) {
         return getApi().get(code)
                 .compose(RxUtil.handleResult())

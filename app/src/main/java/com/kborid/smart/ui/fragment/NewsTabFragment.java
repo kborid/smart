@@ -5,12 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
 import com.kborid.library.adapter.FragmentAdapter;
-import com.kborid.library.base.BaseFragment;
 import com.kborid.smart.R;
+import com.kborid.smart.base.AppFragment;
 import com.kborid.smart.constant.AppConstant;
-import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.NewsChannelBean;
 import com.kborid.smart.ui.presenter.NewsTabPresenter;
 import com.kborid.smart.ui.presenter.contract.NewsTabContract;
@@ -24,13 +27,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class NewsTabFragment extends BaseFragment<NewsTabPresenter> implements NewsTabContract.View {
+public class NewsTabFragment extends AppFragment<NewsTabPresenter> implements NewsTabContract.View {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -43,10 +43,7 @@ public class NewsTabFragment extends BaseFragment<NewsTabPresenter> implements N
 
     @Override
     protected void initInject() {
-        DaggerCommonComponent.builder()
-                .commonModule(getCommonModule("newsTab"))
-                .build()
-                .inject(this);
+        getComponent().inject(this);
     }
 
     @Override
@@ -137,9 +134,9 @@ public class NewsTabFragment extends BaseFragment<NewsTabPresenter> implements N
         int i = 0;
         while (cr != null && cr.moveToNext()) {
             String id = cr.getString(cr.getColumnIndex("_id"));
-            map.put("id"+i, id);
+            map.put("id" + i, id);
             String apn = cr.getString(cr.getColumnIndex("apn"));
-            map.put("apn"+i, apn);
+            map.put("apn" + i, apn);
         }
         return map;
     }

@@ -3,6 +3,9 @@ package com.kborid.library.base;
 import android.app.Application;
 import android.content.Context;
 
+import com.kborid.library.di.component.AppComponent;
+import com.kborid.library.di.component.DaggerAppComponent;
+import com.kborid.library.di.module.AppModule;
 import com.kborid.library.util.LogUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.thunisoft.common.ThunisoftCommon;
@@ -46,6 +49,12 @@ public class BaseApplication extends Application {
         ThunisoftCommon.init(this);
         ThunisoftUI.init(this);
 //        PackageManagerImpl.init(this);
+    }
+
+    public static AppComponent getAppComponent() {
+        return DaggerAppComponent.builder()
+                .appModule(new AppModule(instance))
+                .build();
     }
 
     protected static Observer<String> apply(Observable<String> observable, Observer<String> observer) {

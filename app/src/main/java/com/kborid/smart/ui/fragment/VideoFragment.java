@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kborid.library.adapter.CommRVAdapter;
 import com.kborid.library.adapter.RViewHolder;
-import com.kborid.library.base.BaseFragment;
 import com.kborid.library.util.ImageLoaderUtils;
 import com.kborid.smart.R;
+import com.kborid.smart.base.AppFragment;
 import com.kborid.smart.constant.AppConstant;
-import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.VideoData;
 import com.kborid.smart.ui.presenter.VideoPresenter;
 import com.kborid.smart.ui.presenter.contract.VideoContract;
@@ -23,7 +22,7 @@ import butterknife.BindView;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
-public class VideoFragment extends BaseFragment<VideoPresenter> implements VideoContract.View {
+public class VideoFragment extends AppFragment<VideoPresenter> implements VideoContract.View {
 
     @BindView(R.id.recycleView)
     RecyclerView recyclerView;
@@ -35,10 +34,7 @@ public class VideoFragment extends BaseFragment<VideoPresenter> implements Video
 
     @Override
     protected void initInject() {
-        DaggerCommonComponent.builder()
-                .commonModule(getCommonModule("video"))
-                .build()
-                .inject(this);
+        getComponent().inject(this);
     }
 
     @Override

@@ -2,9 +2,12 @@ package com.kborid.library.base;
 
 import android.app.Activity;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 
-import com.kborid.library.di.module.CommonModule;
+import com.kborid.library.di.component.ActivityComponent;
+import com.kborid.library.di.component.DaggerActivityComponent;
+import com.kborid.library.di.module.ActivityModule;
 
 import javax.inject.Inject;
 
@@ -40,8 +43,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends SwipeBackAct
         mUnBinder.unbind();
     }
 
-    protected CommonModule getCommonModule(String name) {
-        return new CommonModule(name);
+    protected ActivityComponent getComponent() {
+        return DaggerActivityComponent.builder()
+                .appComponent(BaseApplication.getAppComponent())
+                .activityModule(getModule())
+                .build();
+    }
+
+    protected ActivityModule getModule() {
+        return new ActivityModule(this);
     }
 
     protected abstract void initInject();

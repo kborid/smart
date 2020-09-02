@@ -10,6 +10,8 @@ import com.kborid.smart.entity.PhotoResBean;
 import com.kborid.smart.entity.VideoData;
 import com.thunisoft.common.network.OkHttpClientFactory;
 import com.thunisoft.common.network.callback.ResponseCallback;
+import com.thunisoft.common.network.func.ApiException;
+import com.thunisoft.common.network.util.RxUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,6 +21,9 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -51,9 +56,8 @@ public class ApiManager {
         return requestApi;
     }
 
-    @SuppressLint("CheckResult")
-    public static void getNewsList(String type, String id, int startPage, ResponseCallback<List<NewsSummary>> callback) {
-        getApi(HostType.NETEASE_NEWS_VIDEO).getNewsList(type, id, startPage)
+    public static Single<List<NewsSummary>> getNewsList(String type, String id, int startPage) {
+        return getApi(HostType.NETEASE_NEWS_VIDEO).getNewsList(type, id, startPage)
                 .flatMap(new Function<Map<String, List<NewsSummary>>, ObservableSource<NewsSummary>>() {
                     @Override
                     public ObservableSource<NewsSummary> apply(Map<String, List<NewsSummary>> map) throws Exception {
@@ -70,41 +74,30 @@ public class ApiManager {
                 .filter(newsSummary -> null != newsSummary && StringUtils.isNotBlank(newsSummary.getPostid()))
                 // 去重
                 .distinct(NewsSummary::getPostid)
+                .compose(RxUtil.rxSchedulerHelper())
                 // 排序
-                .toSortedList((newsSummary1, newsSummary2) -> newsSummary2.getPtime().compareTo(newsSummary1.getPtime()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(list -> {
-                    if (null != callback) {
-                        callback.success(list);
-                    }
-                }, throwable -> {
-                    if (null != callback) {
-                        callback.failure(throwable);
-                    }
-                });
+                .toSortedList((newsSummary1, newsSummary2) -> newsSummary2.getPtime().compareTo(newsSummary1.getPtime()));
     }
 
     @SuppressLint("CheckResult")
-    public static void getPhotoList(int size, int page, ResponseCallback<List<PhotoGirl>> callback) {
-        getApi(HostType.GANK_GIRL_PHOTO).getPhotoList(size, page)
-                .map(new Function<PhotoResBean, List<PhotoGirl>>() {
+    public static Observable<List<PhotoGirl>> getPhotoList(int size, int page) {
+        return getApi(HostType.GANK_GIRL_PHOTO).getPhotoList(size, page)
+                .compose(new ObservableTransformer<PhotoResBean, List<PhotoGirl>>() {
                     @Override
-                    public List<PhotoGirl> apply(PhotoResBean photoResBean) throws Exception {
-                        return photoResBean.getResults();
+                    public ObservableSource<List<PhotoGirl>> apply(Observable<PhotoResBean> upstream) {
+                        return upstream.flatMap(new Function<PhotoResBean, ObservableSource<List<PhotoGirl>>>() {
+                            @Override
+                            public ObservableSource<List<PhotoGirl>> apply(PhotoResBean photoResBean) throws Exception {
+                                if (null != photoResBean && !photoResBean.isError()) {
+                                    return RxUtil.createData(photoResBean.getResults());
+                                } else {
+                                    return Observable.error(new ApiException("出现错误"));
+                                }
+                            }
+                        });
                     }
                 })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(girls -> {
-                    if (null != callback) {
-                        callback.success(girls);
-                    }
-                }, throwable -> {
-                    if (null != callback) {
-                        callback.failure(throwable);
-                    }
-                });
+                .compose(RxUtil.rxSchedulerHelper());
     }
 
     @SuppressLint("CheckResult")
@@ -116,8 +109,7 @@ public class ApiManager {
                     }
                     return stringNewsDetailMap.get(postId);
                 })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxUtil.rxSchedulerHelper())
                 .subscribe(newsDetail -> {
                     if (null != callback) {
                         callback.success(newsDetail);
@@ -139,11 +131,11 @@ public class ApiManager {
                         return Observable.fromIterable(null != list ? list : new ArrayList<>());
                     }
                 })
-                .distinct() // 去重
+                // 去重
+                .distinct()
+                .compose(RxUtil.rxSchedulerHelper())
                 // 排序
                 .toSortedList((videoData1, videoData2) -> videoData2.getPtime().compareTo(videoData1.getPtime()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
                     if (null != callback) {
                         callback.success(list);

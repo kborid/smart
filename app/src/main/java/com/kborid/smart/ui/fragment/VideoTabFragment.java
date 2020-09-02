@@ -9,10 +9,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.kborid.library.adapter.FragmentAdapter;
-import com.kborid.library.base.BaseFragment;
 import com.kborid.smart.R;
+import com.kborid.smart.base.AppFragment;
 import com.kborid.smart.constant.AppConstant;
-import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.VideoChannelBean;
 import com.kborid.smart.ui.presenter.VideoTabPresenter;
 import com.kborid.smart.ui.presenter.contract.VideoTabContract;
@@ -23,7 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class VideoTabFragment extends BaseFragment<VideoTabPresenter> implements VideoTabContract.View {
+public class VideoTabFragment extends AppFragment<VideoTabPresenter> implements VideoTabContract.View {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -36,10 +35,7 @@ public class VideoTabFragment extends BaseFragment<VideoTabPresenter> implements
 
     @Override
     protected void initInject() {
-        DaggerCommonComponent.builder()
-                .commonModule(getCommonModule("videoTab"))
-                .build()
-                .inject(this);
+        getComponent().inject(this);
     }
 
     @Override

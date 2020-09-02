@@ -11,20 +11,20 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.kborid.library.adapter.CommRVAdapter;
 import com.kborid.library.adapter.RViewHolder;
-import com.kborid.library.base.BaseFragment;
 import com.kborid.library.listener.OnItemClickListener;
 import com.kborid.smart.R;
-import com.kborid.smart.di.DaggerCommonComponent;
+import com.kborid.smart.base.AppFragment;
 import com.kborid.smart.entity.PhotoGirl;
 import com.kborid.smart.ui.activity.PhotoDetailActivity;
 import com.kborid.smart.ui.presenter.PhotoTabPresenter;
 import com.kborid.smart.ui.presenter.contract.PhotoTabContract;
+import com.thunisoft.common.tool.UIHandler;
 
 import java.util.List;
 
 import butterknife.BindView;
 
-public class PhotoTabFragment extends BaseFragment<PhotoTabPresenter> implements PhotoTabContract.View {
+public class PhotoTabFragment extends AppFragment<PhotoTabPresenter> implements PhotoTabContract.View {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -38,10 +38,7 @@ public class PhotoTabFragment extends BaseFragment<PhotoTabPresenter> implements
 
     @Override
     protected void initInject() {
-        DaggerCommonComponent.builder()
-                .commonModule(getCommonModule("picTab"))
-                .build()
-                .inject(this);
+        getComponent().inject(this);
     }
 
     @Override

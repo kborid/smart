@@ -26,6 +26,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.internal.functions.Functions;
+import io.reactivex.internal.functions.ObjectHelper;
 import io.reactivex.internal.observers.LambdaObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.HttpException;
@@ -72,7 +74,7 @@ public class RxUtil {
                         if (ApiException.SUCCESS == resBean.getCode() || ApiException.OK == resBean.getCode()) {
                             return RxUtil.createData(resBean.getData());
                         } else {
-                            return Observable.error(new ApiException(resBean.getCode(), resBean.getMsg()));
+                            return Observable.error(new ApiException(resBean.getMsg()));
                         }
                     }
                 });
@@ -108,7 +110,7 @@ public class RxUtil {
      * @return
      */
     public static <T> Observer<T> createDefaultSubscriber(final Consumer<? super T> onNext) {
-        return createDefaultSubscriber(onNext, null);
+        return createDefaultSubscriber(onNext, Functions.EMPTY_ACTION);
     }
 
     /**
@@ -119,12 +121,12 @@ public class RxUtil {
      * @param <T>
      * @return
      */
-    public static <T> Observer<T> createDefaultSubscriber(final Consumer<? super T> onNext, final Consumer<? super T> onFinal) {
-        return createDefaultSubscriber(onNext, createDefaultErrorHandler(null), new Consumer<T>() {
+    public static <T> Observer<T> createDefaultSubscriber(final Consumer<? super T> onNext, Action onFinal) {
+        return createDefaultSubscriber(onNext, createDefaultErrorHandler(onFinal), new Action() {
             @Override
-            public void accept(T t) throws Exception {
+            public void run() throws Exception {
                 if (null != onFinal) {
-                    onFinal.accept(t);
+                    onFinal.run();
                 }
             }
         });
@@ -139,31 +141,24 @@ public class RxUtil {
      * @param <T>
      * @return
      */
-    public static <T> Observer<T> createDefaultSubscriber(final Consumer<? super T> onNext, final Consumer<Throwable> onError, final Consumer<? super T> onCompleted) {
-        if (onNext == null) {
-            throw new IllegalArgumentException("onNext can not be null");
-        }
-        if (onError == null) {
-            throw new IllegalArgumentException("onError can not be null");
-        }
-        if (onCompleted == null) {
-            throw new IllegalArgumentException("onComplete can not be null");
-        }
-        return new LambdaObserver<T>(onNext, onError, (Action) onCompleted, null);
-//        return new LambdaSubscriber<T>(onNext, onError, (Action) onCompleted, null);
+    public static <T> Observer<T> createDefaultSubscriber(final Consumer<? super T> onNext, final Consumer<Throwable> onError, final Action onCompleted) {
+        ObjectHelper.requireNonNull(onNext, "onNext is null");
+        ObjectHelper.requireNonNull(onError, "onError is null");
+        ObjectHelper.requireNonNull(onCompleted, "onComplete is null");
+        return new LambdaObserver<T>(onNext, onError, onCompleted, Functions.emptyConsumer());
     }
 
     /**
      * 创建默认的异常处理函数
      *
-     * @param consumer 异常处理完成后要调用的函数
+     * @param action 异常处理完成后要调用的函数
      * @return 异常处理函数
      */
-    public static Consumer<Throwable> createDefaultErrorHandler(final Consumer<Throwable> consumer) {
-        return createDefaultErrorHandler(consumer, null);
+    public static Consumer<Throwable> createDefaultErrorHandler(Action action) {
+        return createDefaultErrorHandler(action, null);
     }
 
-    public static Consumer<Throwable> createDefaultErrorHandler(final Consumer<Throwable> consumer, final Function<Throwable, Boolean> func) {
+    public static Consumer<Throwable> createDefaultErrorHandler(Action action, final Function<Throwable, Boolean> func) {
         return new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
@@ -212,8 +207,8 @@ public class RxUtil {
                         }
                     }
                 } finally {
-                    if (consumer != null) {
-                        consumer.accept(throwable);
+                    if (action != null) {
+                        action.run();
                     }
                 }
             }

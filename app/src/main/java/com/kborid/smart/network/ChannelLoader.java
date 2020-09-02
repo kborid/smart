@@ -11,6 +11,7 @@ import com.kborid.smart.entity.VideoChannelBean;
 import com.kborid.smart.util.StringResUtil;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.network.callback.ResponseCallback;
+import com.thunisoft.common.network.util.RxUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,8 +21,6 @@ import java.util.stream.Collectors;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class ChannelLoader {
 
@@ -47,8 +46,7 @@ public class ChannelLoader {
                 }
                 emitter.onNext(newsChannelBeans);
             }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        }).compose(RxUtil.rxSchedulerHelper())
                 .subscribe(o -> {
                     if (null != callback) {
                         callback.success(o);
@@ -80,8 +78,7 @@ public class ChannelLoader {
                 }
                 emitter.onNext(videoChannelBeans);
             }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        }).compose(RxUtil.rxSchedulerHelper())
                 .subscribe(o -> {
                     if (null != callback) {
                         callback.success(o);

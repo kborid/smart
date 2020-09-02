@@ -16,12 +16,11 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.kborid.library.base.BaseActivity;
 import com.kborid.library.util.ImageLoaderUtils;
 import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
+import com.kborid.smart.base.AppActivity;
 import com.kborid.smart.constant.AppConstant;
-import com.kborid.smart.di.DaggerCommonComponent;
 import com.kborid.smart.entity.NewsDetail;
 import com.kborid.smart.ui.presenter.NewsDetailPresenter;
 import com.kborid.smart.ui.presenter.contract.NewsDetailContract;
@@ -32,7 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class NewsDetailActivity extends BaseActivity<NewsDetailPresenter> implements NewsDetailContract.View {
+public class NewsDetailActivity extends AppActivity<NewsDetailPresenter> implements NewsDetailContract.View {
 
     @BindView(R.id.app_bar)
     AppBarLayout appBarLayout;
@@ -51,10 +50,7 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailPresenter> implem
 
     @Override
     protected void initInject() {
-        DaggerCommonComponent.builder()
-                .commonModule(getCommonModule("newsDetail"))
-                .build()
-                .inject(this);
+        getComponent().inject(this);
     }
 
     @Override
@@ -132,7 +128,7 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailPresenter> implem
 //        if (imgSrcs != null && imgSrcs.size() > 0) {
 //            imgSrc = imgSrcs.get(0).getSrc();
 //        } else {
-            imgSrc = getIntent().getStringExtra(AppConstant.NEWS_IMG_RES);
+        imgSrc = getIntent().getStringExtra(AppConstant.NEWS_IMG_RES);
 //        }
         return imgSrc;
     }

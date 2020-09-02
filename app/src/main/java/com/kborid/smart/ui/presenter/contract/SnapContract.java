@@ -7,8 +7,8 @@ import java.util.List;
 
 public class SnapContract {
 
-    public interface View<T> extends BaseView {
-        void updateData(List<T> data);
+    public interface View extends BaseView {
+        <T> void updateData(List<T> data);
     }
 
     public interface Presenter extends BasePresenter<View> {

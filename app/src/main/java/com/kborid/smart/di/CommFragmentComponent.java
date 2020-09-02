@@ -1,27 +1,23 @@
 package com.kborid.smart.di;
 
-import com.kborid.library.di.ActivityScope;
-import com.kborid.library.di.module.CommonModule;
-import com.kborid.smart.ui.activity.MainFragmentActivity;
-import com.kborid.smart.ui.activity.NewsDetailActivity;
+import com.kborid.library.di.FragmentScope;
+import com.kborid.library.di.component.AppComponent;
+import com.kborid.library.di.component.FragmentComponent;
+import com.kborid.library.di.module.FragmentModule;
 import com.kborid.smart.ui.fragment.NewsFragment;
 import com.kborid.smart.ui.fragment.NewsTabFragment;
 import com.kborid.smart.ui.fragment.PhotoTabFragment;
-import com.kborid.smart.ui.fragment.VideoTabFragment;
 import com.kborid.smart.ui.fragment.VideoFragment;
+import com.kborid.smart.ui.fragment.VideoTabFragment;
 
 import dagger.Component;
 
-@ActivityScope
-@Component(modules = CommonModule.class)
-public interface CommonComponent {
-    void inject(MainFragmentActivity activity);
-
+@FragmentScope
+@Component(dependencies = AppComponent.class, modules = FragmentModule.class)
+public interface CommFragmentComponent extends FragmentComponent {
     void inject(NewsTabFragment fragment);
 
     void inject(NewsFragment fragment);
-
-    void inject(NewsDetailActivity activity);
 
     void inject(PhotoTabFragment fragment);
 
