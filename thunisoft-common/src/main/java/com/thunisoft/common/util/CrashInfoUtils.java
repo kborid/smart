@@ -88,7 +88,6 @@ public class CrashInfoUtils {
             outStream.write(sb.toString().getBytes());
         } catch (Exception e) {
             Logger.t(TAG).e(e, "保存Crash信息到文件出错");
-            CrashInfoUtils.collectDeviceInfo(e);
         } finally {
             CloseUtil.closeQuietly(outStream);
         }
@@ -112,8 +111,7 @@ public class CrashInfoUtils {
                 infos.put("versionCode", versionCode);
             }
         } catch (PackageManager.NameNotFoundException e) {
-            Logger.t(TAG).e(e, "an error occurred when collect package info");
-            CrashInfoUtils.collectDeviceInfo(e);
+            Logger.t(TAG).e(e, "收集package信息发生错误");
         }
 
         Field[] fields = Build.class.getDeclaredFields();
@@ -122,8 +120,7 @@ public class CrashInfoUtils {
                 field.setAccessible(true);
                 infos.put(field.getName(), field.get(null).toString());
             } catch (Exception e) {
-                Logger.t(TAG).e(e, "an error occurred when collect crash info");
-                CrashInfoUtils.collectDeviceInfo(e);
+                Logger.t(TAG).e(e, "收集系统build信息发生错误");
             }
         }
         saveCrashInfo2File(throwable, infos);

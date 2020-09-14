@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.kborid.kotlin.constant.Constant
 import com.kborid.kotlin.pojo.Address
 import com.kborid.setting.databinding.FragmentNotificationsBinding
+import com.kborid.setting.ui.ThirdActivity
 import com.kborid.setting.ui.TransActivity
 import com.kborid.setting.vm.MainViewModel
 import com.thunisoft.common.util.ToastUtils
@@ -60,7 +61,8 @@ class NotificationsFragment : Fragment() {
     }
 
     fun onBtnClick() {
-        startActivity(Intent(context, TransActivity::class.java))
+//        startActivity(Intent(context, TransActivity::class.java))
+        startActivity(Intent(context, ThirdActivity::class.java))
     }
 
     override fun onDestroy() {

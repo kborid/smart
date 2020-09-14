@@ -3,29 +3,29 @@ package com.kborid.setting.ui.lock;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
 import com.kborid.setting.R;
-import com.kborid.setting.ui.TestActivity;
 import com.thunisoft.common.base.BaseSimpleActivity;
-import com.thunisoft.common.network.api.SampleApiManager;
-import com.thunisoft.common.network.util.RxUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import io.reactivex.functions.Consumer;
 
 public class LockDemoActivity extends BaseSimpleActivity {
 
     private static final Logger logger = LoggerFactory.getLogger(LockDemoActivity.class.getSimpleName());
 
     private static final int SHOW_TOP_OF_SCREEN_FLAGS = WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
+
+    private Context mRemoteContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,14 +65,14 @@ public class LockDemoActivity extends BaseSimpleActivity {
     }
 
     public void onClick(View view) {
-        SampleApiManager.testGet("1")
-                .subscribe(RxUtil.createDefaultSubscriber(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object t) throws Exception {
-                    }
-                }));
-        startActivity(new Intent(this, TestActivity.class));
-        finish();
+        try {
+            mRemoteContext = createPackageContext("com.kborid.app", CONTEXT_IGNORE_SECURITY);
+            ImageView iv_icon = (ImageView) view;
+            Resources remoteRes = mRemoteContext.getResources();
+            iv_icon.setImageDrawable(remoteRes.getDrawable(remoteRes.getIdentifier("scan_light", "drawable", "com.kborid.app")));
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -73,7 +73,7 @@ public class NewsFragment extends AppFragment<NewsPresenter> implements NewsCont
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutAnimationListener(null);
         recyclerView.setAdapter(mNewsAdapter);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener<>(getContext(), new RecyclerItemClickListener.OnItemClickListener<NewsSummary>() {
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener<>(getContext(), mNewsAdapter, new RecyclerItemClickListener.OnItemClickListener<NewsSummary>() {
             @Override
             public void onItemClick(View view, NewsSummary entity, int position) {
                 if (null == entity) {

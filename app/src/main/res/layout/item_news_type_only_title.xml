@@ -15,13 +15,6 @@
         android:orientation="vertical"
         android:padding="5dp">
 
-        <ImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:transitionName="@string/news_detail_shared_iv"
-            android:scaleType="centerCrop" />
-
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
@@ -40,5 +33,11 @@
             android:textSize="14sp"
             tools:text="2020-05-28 20:09" />
 
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:transitionName="@string/news_detail_shared_iv" />
     </LinearLayout>
 </FrameLayout>

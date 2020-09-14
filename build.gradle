@@ -7,8 +7,9 @@ buildscript {
     ext.anko_version = "0.9"
 
     repositories {
-        google()
+        mavenCentral()
         jcenter()
+        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
@@ -19,7 +20,7 @@ buildscript {
         // in the individual module build.gradle files
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.uber:okbuck:0.50.3'
+//        classpath 'com.uber:okbuck:0.50.3'
         classpath "io.realm:realm-gradle-plugin:3.1.0"
     }
 }
@@ -27,8 +28,9 @@ buildscript {
 allprojects {
     repositories {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        google()
+        mavenCentral()
         jcenter()
+        google()
 //        maven { url "http://repo.thunisoft.com/maven2/content/repositories/releases/" }
         maven { url "https://jitpack.io" }
         maven { url "https://raw.github.com/kborid/Maven/master" }
@@ -59,5 +61,5 @@ ext {
     permissionDispatcherVersion = "3.3.2"
 }
 //apply from: "sonar.gradle"
-apply plugin: 'com.uber.okbuck'
+//apply plugin: 'com.uber.okbuck'
 

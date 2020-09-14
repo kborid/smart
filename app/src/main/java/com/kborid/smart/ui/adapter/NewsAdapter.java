@@ -28,6 +28,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.BaseViewHolder
 
     private static final int NORMAL = 1;
     private static final int TITLE_ONLY = 2;
+    private static final int THREE_IMG = 3;
 
     private Context mContext;
     private List<NewsSummary> mNewsSummaries = new ArrayList<>();
@@ -48,17 +49,20 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.BaseViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
-        int type = getItemViewType(position);
         NewsSummary newsSummary = mNewsSummaries.get(position);
         int width = ScreenUtils.mScreenWidth;
-        if (NORMAL == type) {
+        if (holder instanceof NewsNormalViewHolder) {
+            NewsNormalViewHolder newsNormalViewHolder = (NewsNormalViewHolder) holder;
             if (StringUtils.isNotBlank(newsSummary.getDigest())) {
-                ((NewsNormalViewHolder) holder).summaryTV.setVisibility(View.VISIBLE);
-                ((NewsNormalViewHolder) holder).summaryTV.setText(newsSummary.getDigest());
+                newsNormalViewHolder.summaryTV.setVisibility(View.VISIBLE);
+                newsNormalViewHolder.summaryTV.setText(newsSummary.getDigest());
             } else {
-                ((NewsNormalViewHolder) holder).summaryTV.setVisibility(View.GONE);
+                newsNormalViewHolder.summaryTV.setVisibility(View.GONE);
             }
             width = 500;
+            ImageLoaderUtils.display(mContext, holder.iconIV, newsSummary.getImgsrc(), width, width / 4 * 3);
+        } else if (holder instanceof NewsOnlyTitleViewHolder) {
+            NewsOnlyTitleViewHolder newsOnlyTitleViewHolder = (NewsOnlyTitleViewHolder) holder;
         }
         holder.titleTV.setText(newsSummary.getTitle());
         holder.timeTV.setText(newsSummary.getPtime());
@@ -67,8 +71,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.BaseViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        List<NewsSummary.ImgextraBean> imgextraBeans = mNewsSummaries.get(position).getImgextra();
-        return null != imgextraBeans && imgextraBeans.size() > 0 ? TITLE_ONLY : NORMAL;
+        return mNewsSummaries.get(position).getHasImg() == 1 ? TITLE_ONLY : NORMAL;
     }
 
     @Override

@@ -50,9 +50,6 @@ dependencies {
     //fastjson
     api 'com.alibaba:fastjson:1.2.56'
 
-    //gson
-    api 'com.google.code.gson:gson:2.8.5'
-
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
@@ -66,7 +63,7 @@ dependencies {
     //retrofit
     api 'com.squareup.retrofit2:retrofit:2.4.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:converter-gson:2.5.0'
     api 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
 
     //dragger2

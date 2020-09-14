@@ -14,17 +14,17 @@ import static com.kborid.setting.constant.CodeTypeConst.CODE_TYPE2;
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class CustomThread extends Thread {
 
-    private static Handler innerHandler = new Handler(new Handler.Callback() {
+    private static Handler innerHandler = new Handler(Looper.myLooper(), new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            System.out.println("Handler's callback");
+            System.out.println("我是Handler的callback，是我在处理消息" + ", 消息:" + msg.what);
             return false;
         }
     }) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            System.out.println("Handler's handleMessage()");
+            System.out.println("我是Handler的handleMessage，我在处理消息" + ", 消息:" + msg.what);
             getCodeTest(CODE_TYPE1);
         }
     };
