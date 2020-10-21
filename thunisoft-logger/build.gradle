@@ -50,6 +50,6 @@ uploadArchives {
         }
         pom.groupId = 'com.thunisoft.android'
         pom.artifactId = 'logger'
-        pom.version = '2.0.0'
+        pom.version = '2.0.1'
     }
 }

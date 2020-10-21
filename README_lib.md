@@ -20,6 +20,8 @@
 
 #### 2. `Thunisoft-logger`（日志工具库）
 - `ReleaseNotes`：
+  - `2.0.1`
+    - 增加logback
   - `2.0.0`
     - 适配androidX
   - `1.0.2`
