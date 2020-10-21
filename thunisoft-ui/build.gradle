@@ -46,6 +46,6 @@ uploadArchives {
         }
         pom.artifactId = 'ui'
         pom.groupId = 'com.thunisoft.android'
-        pom.version = '2.0.0'
+        pom.version = '2.0.1'
     }
 }

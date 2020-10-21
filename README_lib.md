@@ -34,6 +34,8 @@
   - `1.0.0`
 #### 3. `Thunisoft-ui`（UI组件库）
 - `ReleaseNotes`：
+  - `2.0.1`
+    - 增加通用color
   - `2.0.0`
     - 适配androidX
   - `1.0.9`
