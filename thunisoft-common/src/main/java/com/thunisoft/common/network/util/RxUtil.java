@@ -6,22 +6,7 @@ import com.thunisoft.common.network.func.ApiException;
 import com.thunisoft.common.network.func.NetworkException;
 import com.thunisoft.common.network.func.ServiceException;
 import com.thunisoft.common.util.ToastUtils;
-
-import java.io.EOFException;
-import java.net.ConnectException;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.security.cert.CertPathValidatorException;
-
-import javax.net.ssl.SSLHandshakeException;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
-import io.reactivex.Observer;
+import io.reactivex.*;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -31,6 +16,14 @@ import io.reactivex.internal.functions.ObjectHelper;
 import io.reactivex.internal.observers.LambdaObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.HttpException;
+
+import javax.net.ssl.SSLHandshakeException;
+import java.io.EOFException;
+import java.net.ConnectException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.security.cert.CertPathValidatorException;
 
 /**
  * RxUtil
@@ -42,11 +35,11 @@ import retrofit2.HttpException;
  * @date: 2020/8/28
  */
 public class RxUtil {
+
     /**
      * 统一线程处理
      *
-     * @param <T>
-     * @return
+     * @return ObservableTransformer
      */
     public static <T> ObservableTransformer<T, T> rxSchedulerHelper() {    //compose简化线程
         return new ObservableTransformer<T, T>() {
@@ -56,6 +49,36 @@ public class RxUtil {
                         .observeOn(AndroidSchedulers.mainThread());
             }
         };
+    }
+
+    /**
+     * 切换到主线程
+     *
+     * @return ObservableTransformer
+     */
+    public static <T> ObservableTransformer<T, T> rxSchedulerMain() {   //compose简化线程
+        return upstream -> upstream.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 切换到io线程
+     *
+     * @return ObservableTransformer
+     */
+    public static <T> ObservableTransformer<T, T> rxSchedulerIo() { //compose简化线程
+        return upstream -> upstream.subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io());
+    }
+
+    /**
+     * 切换到计算线程
+     *
+     * @return ObservableTransformer
+     */
+    public static <T> ObservableTransformer<T, T> rxSchedulerComputation() {    //compose简化线程
+        return upstream -> upstream.subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation());
     }
 
     /**
@@ -149,6 +172,26 @@ public class RxUtil {
     }
 
     /**
+     * 创建自定义的订阅者
+     *
+     * @param onNext  数据处理方法
+     * @param onFinal 最终执行方法（正常/异常都调用）
+     * @param onError 自定义异常处理
+     * @param <T>
+     * @return
+     */
+    public static <T> Observer<T> createCustomSubscriber(final Consumer<? super T> onNext, final Action onFinal, final Function<Throwable, Boolean> onError) {
+        return createDefaultSubscriber(onNext, createDefaultErrorHandler(onFinal, onError), new Action() {
+            @Override
+            public void run() throws Exception {
+                if (onFinal != null) {
+                    onFinal.run();
+                }
+            }
+        });
+    }
+
+    /**
      * 创建默认的异常处理函数
      *
      * @param action 异常处理完成后要调用的函数
@@ -158,6 +201,13 @@ public class RxUtil {
         return createDefaultErrorHandler(action, null);
     }
 
+    /**
+     * 创建默认的异常处理函数
+     *
+     * @param action 异常处理完成后要调用的函数
+     * @param func   异常处理之前调用的函数
+     * @return 异常处理函数
+     */
     public static Consumer<Throwable> createDefaultErrorHandler(Action action, final Function<Throwable, Boolean> func) {
         return new Consumer<Throwable>() {
             @Override
@@ -201,8 +251,6 @@ public class RxUtil {
                         Logger.e(throwable, "未知系统错误");
                     } else {
                         if (throwable != null) {
-                            // 暂时去掉提示
-                            // ToastUtils.showToast("未知系统错误");
                             Logger.e(throwable, "未知系统错误");
                         }
                     }
