@@ -4,11 +4,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 import com.google.android.material.tabs.TabLayout;
 import com.kborid.library.adapter.FragmentAdapter;
 import com.kborid.smart.R;
@@ -26,9 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 public class NewsTabFragment extends AppFragment<NewsTabPresenter> implements NewsTabContract.View {
 

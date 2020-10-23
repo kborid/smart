@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-
+import butterknife.BindView;
 import com.kborid.library.util.LogUtils;
 import com.kborid.smart.R;
 import com.kborid.smart.widget.MainTitleLayout;
@@ -18,14 +18,8 @@ import com.orhanobut.logger.Logger;
 import com.tencent.smtt.export.external.interfaces.JsPromptResult;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
-import com.tencent.smtt.sdk.CookieSyncManager;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
+import com.tencent.smtt.sdk.*;
 import com.thunisoft.common.util.ToastUtils;
-
-import butterknife.BindView;
 
 public class X5WebViewActivity extends SimpleActivity {
 

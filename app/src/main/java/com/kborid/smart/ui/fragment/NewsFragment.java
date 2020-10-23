@@ -1,13 +1,13 @@
 package com.kborid.smart.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import butterknife.BindView;
 import com.kborid.library.listener.RecyclerItemClickListener;
 import com.kborid.smart.R;
 import com.kborid.smart.base.AppFragment;
@@ -22,12 +22,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.thunisoft.common.util.ToastUtils;
-
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
-
-import butterknife.BindView;
+import java.util.Optional;
 
 public class NewsFragment extends AppFragment<NewsPresenter> implements NewsContract.View {
 
@@ -74,16 +72,16 @@ public class NewsFragment extends AppFragment<NewsPresenter> implements NewsCont
         recyclerView.setLayoutAnimationListener(null);
         recyclerView.setAdapter(mNewsAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener<>(getContext(), mNewsAdapter, new RecyclerItemClickListener.OnItemClickListener<NewsSummary>() {
+            @SuppressLint("NewApi")
             @Override
             public void onItemClick(View view, NewsSummary entity, int position) {
-                if (null == entity) {
-                    return;
-                }
-                String postId = entity.getPostid();
-                List<NewsSummary.ImgextraBean> imageExtra = entity.getImgextra();
-                if (StringUtils.isNotBlank(postId) && (null == imageExtra || imageExtra.size() == 0)) {
-                    NewsDetailActivity.startAction(getContext(), view.findViewById(R.id.iv_icon), entity.getPostid(), entity.getImgsrc());
-                }
+                Optional.ofNullable(entity).ifPresent(newsSummary -> {
+                    String postId = entity.getPostid();
+                    List<NewsSummary.ImgextraBean> imageExtra = entity.getImgextra();
+                    if (StringUtils.isNotBlank(postId) && (null == imageExtra || imageExtra.size() == 0)) {
+                        NewsDetailActivity.startAction(getContext(), view.findViewById(R.id.iv_icon), entity.getPostid(), entity.getImgsrc());
+                    }
+                });
             }
 
             @Override

@@ -1,13 +1,9 @@
 package com.kborid.smart.ui.presenter;
 
 import com.kborid.library.base.RxPresenter;
-import com.kborid.smart.entity.NewsChannelBean;
 import com.kborid.smart.network.ChannelLoader;
 import com.kborid.smart.ui.presenter.contract.NewsTabContract;
-import com.thunisoft.common.network.callback.ResponseCallback;
-import com.thunisoft.common.util.ToastUtils;
-
-import java.util.List;
+import com.thunisoft.common.network.util.RxUtil;
 
 import javax.inject.Inject;
 
@@ -19,18 +15,7 @@ public class NewsTabPresenter extends RxPresenter<NewsTabContract.View> implemen
 
     @Override
     public void loadNewsChannel() {
-        ChannelLoader.loadNewsChannel(new ResponseCallback<List<NewsChannelBean>>() {
-            @Override
-            public void failure(Throwable throwable) {
-                ToastUtils.showToast(throwable.getMessage());
-            }
-
-            @Override
-            public void success(List<NewsChannelBean> newsChannelBeans) {
-                if (null != mView) {
-                    mView.updateNewsChannel(newsChannelBeans);
-                }
-            }
-        });
+        ChannelLoader.loadNewsChannel()
+                .subscribe(RxUtil.createDefaultSubscriber(newsChannelBeans -> mView.updateNewsChannel(newsChannelBeans)));
     }
 }

@@ -1,18 +1,13 @@
 package com.kborid.library.hand2eventbus;
 
 import android.os.Looper;
-
 import com.kborid.library.util.LogUtils;
 import com.orhanobut.logger.Logger;
 import com.thunisoft.common.tool.MultiTaskHandler;
 import com.thunisoft.common.tool.UIHandler;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class EventBusss {
 
@@ -37,7 +32,7 @@ public class EventBusss {
 
     private List<SubscribeMethod> findSubscribeMethods(Object object) {
         List<SubscribeMethod> list = new ArrayList<>();
-        Class clazz = object.getClass();
+        Class<?> clazz = object.getClass();
         while (clazz != null) {
             String className = clazz.getName();
             if (className.startsWith("java.") || className.startsWith("javax.") || className.startsWith("android.")) {
@@ -50,7 +45,7 @@ public class EventBusss {
                 if (subscribe == null) {
                     continue;
                 }
-                Class[] paramTypes = m.getParameterTypes();
+                Class<?>[] paramTypes = m.getParameterTypes();
                 if (paramTypes.length != 1) {
                     Logger.t("==>eventbus").d("参数列表数>1");
                 } else {

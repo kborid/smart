@@ -1,10 +1,13 @@
 apply plugin: 'com.android.library'
+apply plugin: 'realm-android'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion mCompileSdkVersion
 
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion mMinSdkVersion
         targetSdkVersion mTargetSdkVersion
         versionCode 1
         versionName "1.0.0"
@@ -29,7 +32,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation project(path: ':stub')
     //support
     api 'androidx.legacy:legacy-support-v4:1.0.0'
     api 'androidx.appcompat:appcompat:1.1.0'
@@ -73,9 +76,9 @@ dependencies {
     implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
 
     //thunisoft
-//    api 'com.thunisoft.android:ui:2.0.0'
-//    api 'com.thunisoft.android:common:2.0.0'
-//    api 'com.thunisoft.android:logger:2.0.0'
+    api 'com.thunisoft.android:ui:2.0.1'
+    api 'com.thunisoft.android:common:2.0.1'
+    api 'com.thunisoft.android:logger:2.0.1'
 //    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 //    implementation 'com.thunisoft.android:jsbridge:1.0.1'
 //    implementation 'com.kborid.smart:jsbridge:1.0.3'
@@ -88,10 +91,6 @@ dependencies {
 
     //filedownloader
     api 'com.liulishuo.filedownloader:library:1.7.7'
-    api project(path: ':thunisoft-ui')
-    api project(path: ':thunisoft-common')
-    api project(path: ':thunisoft-logger')
-    implementation project(path: ':stub')
 
     // 内存泄漏和卡顿监测
     debugApi 'com.github.markzhai:blockcanary-android:1.5.0'
