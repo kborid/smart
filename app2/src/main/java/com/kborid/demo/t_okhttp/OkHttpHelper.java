@@ -1,5 +1,7 @@
 package com.kborid.demo.t_okhttp;
 
+import okhttp3.*;
+import okhttp3.logging.HttpLoggingInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,21 +9,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.Authenticator;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * OkHttpHelper
@@ -149,40 +136,5 @@ public class OkHttpHelper {
         if (null != okHttpClient) {
             okHttpClient.dispatcher().cancelAll();
         }
-    }
-
-    /**
-     * 切换到主线程
-     *
-     * @return observable原始对象
-     */
-    public static <T> ObservableTransformer<T, T> rxSchedulerMain() {
-        return upstream -> upstream.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    /**
-     * 切换到io线程
-     *
-     * @return observable原始对象
-     */
-    public static <T> ObservableTransformer<T, T> rxSchedulerIo() {
-        return upstream -> upstream.subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io());
-    }
-
-    /**
-     * 切换到计算线程
-     *
-     * @return observable原始对象
-     */
-    public static <T> ObservableTransformer<T, T> rxSchedulerComputation() {
-        return new ObservableTransformer<T, T>() {
-            @Override
-            public ObservableSource<T> apply(Observable<T> upstream) {
-                return upstream.subscribeOn(Schedulers.io())
-                        .observeOn(Schedulers.computation());
-            }
-        };
     }
 }

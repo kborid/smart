@@ -126,7 +126,7 @@ public class RxUtil {
     }
 
     /**
-     * 创建默认的订阅者
+     * 创建默认的订阅者1
      *
      * @param onNext 数据处理方法
      * @param <T>
@@ -137,7 +137,7 @@ public class RxUtil {
     }
 
     /**
-     * 创建默认的订阅者
+     * 创建默认的订阅者2
      *
      * @param onNext  数据处理方法
      * @param onFinal 最终执行方法（正常/异常都调用）
@@ -156,7 +156,7 @@ public class RxUtil {
     }
 
     /**
-     * 创建默认的订阅者
+     * 创建默认的订阅者3
      *
      * @param onNext      数据处理方法
      * @param onError     错误处理
@@ -172,7 +172,19 @@ public class RxUtil {
     }
 
     /**
-     * 创建自定义的订阅者
+     * 创建自定义的订阅者1
+     *
+     * @param onNext  数据处理方法
+     * @param onError 自定义异常处理
+     * @param <T>
+     * @return
+     */
+    public static <T> Observer<T> createCustomSubscriber(final Consumer<? super T> onNext, final Function<Throwable, Boolean> onError) {
+        return createCustomSubscriber(onNext, Functions.EMPTY_ACTION, onError);
+    }
+
+    /**
+     * 创建自定义的订阅者2
      *
      * @param onNext  数据处理方法
      * @param onFinal 最终执行方法（正常/异常都调用）
@@ -192,7 +204,7 @@ public class RxUtil {
     }
 
     /**
-     * 创建默认的异常处理函数
+     * 创建默认的异常处理函数1
      *
      * @param action 异常处理完成后要调用的函数
      * @return 异常处理函数
@@ -202,7 +214,7 @@ public class RxUtil {
     }
 
     /**
-     * 创建默认的异常处理函数
+     * 创建默认的异常处理函数2
      *
      * @param action 异常处理完成后要调用的函数
      * @param func   异常处理之前调用的函数

@@ -4,11 +4,7 @@ import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.util.Log;
-
 import com.kborid.setting.constant.Constants;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,6 +131,7 @@ public class LaunchLockerBroadcastReceiver extends BroadcastReceiver {
                 continue;
             }
             if (task.getTaskInfo().baseActivity.getPackageName().equals(context.getPackageName())) {
+                manager.moveTaskToFront(task.getTaskInfo().id, 0);
                 task.moveToFront();
                 break;
             }

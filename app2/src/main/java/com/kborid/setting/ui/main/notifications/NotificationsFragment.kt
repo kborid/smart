@@ -13,7 +13,6 @@ import com.kborid.kotlin.constant.Constant
 import com.kborid.kotlin.pojo.Address
 import com.kborid.setting.databinding.FragmentNotificationsBinding
 import com.kborid.setting.ui.ThirdActivity
-import com.kborid.setting.ui.TransActivity
 import com.kborid.setting.vm.MainViewModel
 import com.thunisoft.common.util.ToastUtils
 import org.slf4j.LoggerFactory
@@ -63,6 +62,14 @@ class NotificationsFragment : Fragment() {
     fun onBtnClick() {
 //        startActivity(Intent(context, TransActivity::class.java))
         startActivity(Intent(context, ThirdActivity::class.java))
+//        val intent = Intent("com.thunisoft.cocall.intent.action.meetingIncoming")
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//        val bundle = Bundle()
+//        bundle.putInt("meeting_creator", 718201)
+//        bundle.putString("meeting_id", "87250643")
+//        bundle.putString("meeting_name", "我是测试123")
+//        intent.putExtras(bundle)
+//        startActivity(intent)
     }
 
     override fun onDestroy() {

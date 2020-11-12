@@ -1,19 +1,14 @@
 package com.kborid.setting;
 
-import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.StrictMode;
-
 import com.kborid.demo.t_flutter.FlutterTest;
 import com.kborid.library.base.BaseApplication;
 import com.kborid.setting.broadcast.LaunchLockerBroadcastReceiver;
 import com.kborid.setting.constant.Constants;
-import com.kborid.setting.service.CoCallService;
 import com.thunisoft.ThunisoftLogger;
 import com.thunisoft.common.ThunisoftCommon;
 import com.thunisoft.common.util.SystemInfoUtils;
 import com.thunisoft.logger.LoggerConfig;
-
 import io.reactivex.plugins.RxJavaPlugins;
 import io.realm.Realm;
 
