@@ -83,10 +83,10 @@ android {
     }
 
     lintOptions {
-        checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
+        // 即使报错也不会停止打包
         abortOnError false
+        // 打包release版本的时候是否进行检测
+        checkReleaseBuilds false
     }
 
     applicationVariants.all { variant ->
@@ -108,9 +108,14 @@ android {
         }
     }
 
-//    dexOptions {
-//        preDexLibraries false
-//    }
+    // multiDex的一些相关配置，这样配置可以让你的编译速度更快
+    dexOptions {
+        // 让它不要对Lib做preDexing
+        preDexLibraries = false
+        // 开启incremental dexing,优化编译效率，这个功能android studio默认是关闭的。
+//        incremental true
+        javaMaxHeapSize "4g" // 增加java堆内存大小
+    }
 
 //      效果等同于通过implementation引用libs目录
 //    repositories {
