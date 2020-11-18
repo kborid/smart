@@ -9,7 +9,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kborid.library.adapter.FragmentAdapter;
-import com.kborid.smart.PRJApplication;
 import com.kborid.smart.R;
 import com.kborid.smart.ui.fragment.NewsTabFragment;
 import com.kborid.smart.ui.fragment.PhotoTabFragment;
@@ -26,8 +25,6 @@ import butterknife.BindView;
 public class MainFragmentActivity extends BaseSimpleActivity {
 
     private static final int DEFAULT_INDEX = 0;
-    private static final String[] mBottomBarTitles = PRJApplication.getInstance().getResources().getStringArray(R.array.BottomBarTitle);
-
     @BindView(R.id.viewpager)
     CustomViewPager viewPager;
     @BindView(R.id.bottomBar)
@@ -49,14 +46,15 @@ public class MainFragmentActivity extends BaseSimpleActivity {
     }
 
     private void initFragment() {
-        List<Fragment> fragments = new ArrayList<>(mBottomBarTitles.length);
-        fragments.add(NewsTabFragment.newInstance(mBottomBarTitles[0]));
-        fragments.add(PhotoTabFragment.newInstance(mBottomBarTitles[1]));
-        fragments.add(VideoTabFragment.newInstance(mBottomBarTitles[2]));
-        fragments.add(UserTabFragment.newInstance(mBottomBarTitles[3]));
-        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), mBottomBarTitles, fragments));
+        String[] titles = getResources().getStringArray(R.array.BottomBarTitle);
+        List<Fragment> fragments = new ArrayList<>(titles.length);
+        fragments.add(NewsTabFragment.newInstance(titles[0]));
+        fragments.add(PhotoTabFragment.newInstance(titles[1]));
+        fragments.add(VideoTabFragment.newInstance(titles[2]));
+        fragments.add(UserTabFragment.newInstance(titles[3]));
+        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), titles, fragments));
         viewPager.setCurrentItem(DEFAULT_INDEX);
-        viewPager.setOffscreenPageLimit(mBottomBarTitles.length);
+        viewPager.setOffscreenPageLimit(titles.length);
         viewPager.setSlidingEnabled(false);
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override

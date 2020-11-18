@@ -80,9 +80,12 @@ dependencies {
     implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
 
     //thunisoft
-    api 'com.thunisoft.android:ui:2.0.1'
-    api 'com.thunisoft.android:common:2.0.1'
-    api 'com.thunisoft.android:logger:2.0.1'
+    api project(path: ':thunisoft-ui')
+    api project(path: ':thunisoft-logger')
+    api project(path: ':thunisoft-common')
+//    api 'com.thunisoft.android:ui:2.0.1'
+//    api 'com.thunisoft.android:common:2.0.1'
+//    api 'com.thunisoft.android:logger:2.0.1'
 //    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 //    implementation 'com.thunisoft.android:jsbridge:1.0.1'
 //    implementation 'com.kborid.smart:jsbridge:1.0.3'
@@ -104,10 +107,10 @@ dependencies {
 }
 
 repositories {
-    maven { url "https://github.com/kborid/Maven/tree/master" }
-    maven { url "https://raw.githubusercontent.com/kborid/Maven/master" }
+//    maven { url "https://github.com/kborid/Maven/tree/master" }
+//    maven { url "https://raw.githubusercontent.com/kborid/Maven/master" }
 //    maven { url "https://raw.github.com/kborid/Maven/master" }
-    maven { url 'file:///D:/Maven/' }
+//    maven { url 'file:///D:/Maven/' }
 }
 
 apply from: '../upload.gradle'

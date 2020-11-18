@@ -36,6 +36,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_gradle_plugin_version"
 //        classpath 'com.uber:okbuck:0.50.3'
         classpath "io.realm:realm-gradle-plugin:3.1.0"
+        classpath 'com.novoda:bintray-release:0.8.1'
     }
 }
 
@@ -44,7 +45,7 @@ allprojects {
         def ALIYUN_MAVENCENTRAL_REPO = 'http://maven.aliyun.com/nexus/content/groups/public'
         def ALIYUN_JCENTER_REPO = 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
         all { ArtifactRepository repo ->
-            if(repo instanceof MavenArtifactRepository){
+            if (repo instanceof MavenArtifactRepository) {
                 def url = repo.url.toString()
                 if (url.startsWith('https://repo1.maven.org/maven2')) {
                     project.logger.lifecycle "Repository ${repo.url} replaced by $ALIYUN_MAVENCENTRAL_REPO."
@@ -63,6 +64,11 @@ allprojects {
             url 'http://maven.google.com'
         }
         maven { url "https://jitpack.io" }
+    }
+
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
     }
 }
 
