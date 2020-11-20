@@ -36,7 +36,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_gradle_plugin_version"
 //        classpath 'com.uber:okbuck:0.50.3'
         classpath "io.realm:realm-gradle-plugin:3.1.0"
-        classpath 'com.novoda:bintray-release:0.8.1'
+        classpath 'com.novoda:bintray-release:0.9.1'
     }
 }
 
@@ -64,6 +64,7 @@ allprojects {
             url 'http://maven.google.com'
         }
         maven { url "https://jitpack.io" }
+        maven { url 'https://dl.bintray.com/duanwei/maven' }
     }
 
     tasks.withType(Javadoc) {

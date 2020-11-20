@@ -53,3 +53,14 @@ uploadArchives {
         pom.version = '2.0.1'
     }
 }
+
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+    userOrg = 'duanwei' //bintray账户下某个组织id
+    groupId = 'com.thunisoft.android' //maven仓库下库的包名，一般为模块包名
+    artifactId = 'logger' //项目名称
+    publishVersion = '2.0.1' //版本号
+    desc = 'logger for android' //项目介绍，可以不写
+    website = 'https://github.com/kborid/smart' //项目主页，可以不写
+}

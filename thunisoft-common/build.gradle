@@ -29,8 +29,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    // ViewModel and LiveData
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     //rxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
@@ -70,10 +69,10 @@ uploadArchives {
 apply plugin: 'com.novoda.bintray-release'
 
 publish {
-    userOrg = 'k-Organ' //bintray账户下某个组织id
+    userOrg = 'duanwei' //bintray账户下某个组织id
     groupId = 'com.thunisoft.android' //maven仓库下库的包名，一般为模块包名
     artifactId = 'common' //项目名称
     publishVersion = '2.0.1' //版本号
     desc = 'common for android' //项目介绍，可以不写
-    website = '' //项目主页，可以不写
+    website = 'https://github.com/kborid/smart' //项目主页，可以不写
 }

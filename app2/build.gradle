@@ -5,18 +5,15 @@ android {
     compileSdkVersion mCompileSdkVersion
 
     //关闭Android Studio的PNG合法性检查
-    aaptOptions.cruncherEnabled = false
-    aaptOptions.useNewCruncher = false
+    aaptOptions {
+        cruncherEnabled false
+    }
 
     lintOptions {
         // 即使报错也不会停止打包
         abortOnError false
         // 打包release版本的时候是否进行检测
         checkReleaseBuilds false
-    }
-
-    dataBinding {
-        enabled = true
     }
 
     // multiDex的一些相关配置，这样配置可以让你的编译速度更快
@@ -46,6 +43,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 
@@ -55,10 +53,15 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/MANIFEST.MF'
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //可以包含多种格式lib包
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     implementation project(':biz-library')
 //    implementation project(':flutter')
     // guava
