@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.kborid.kotlin.classT.T
 import com.kborid.setting.R
 import org.slf4j.LoggerFactory
 

@@ -11,10 +11,6 @@ import com.thunisoft.common.ThunisoftCommon;
 import com.thunisoft.common.tool.CrashHandler;
 import com.thunisoft.ui.ThunisoftUI;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-
 public class BaseApplication extends Application {
 
     private static final String TAG = BaseApplication.class.getSimpleName();
@@ -38,51 +34,31 @@ public class BaseApplication extends Application {
         LogUtils.init();
         LogUtils.d(TAG, "onCreate()");
 
+        ThunisoftCommon.init(this);
+        ThunisoftUI.init(this);
+
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
-        // This process is dedicated to LeakCanary for heap analysis.
-        // You should not init your app in this process.
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
 //            return;
 //        }
 //        LeakCanary.install(this);
-
-        ThunisoftCommon.init(this);
-        ThunisoftUI.init(this);
 //        PackageManagerImpl.init(this);
+//        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+//                .detectAll()
+//                .penaltyLog()
+//                .build());
+//        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+//                .detectLeakedSqlLiteObjects()
+//                .detectLeakedClosableObjects()
+//                .penaltyLog()
+//                .penaltyDeath()
+//                .build());
     }
 
     public static AppComponent getAppComponent() {
         return DaggerAppComponent.builder()
                 .appModule(new AppModule(instance))
                 .build();
-    }
-
-    protected static Observer<String> apply(Observable<String> observable, Observer<String> observer) {
-        System.out.println("小马卧槽，apply()");
-        return new Observer<String>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                System.out.println("小马卧槽，onSubscribe()");
-                System.out.println(observable);
-                observer.onSubscribe(d);
-            }
-
-            @Override
-            public void onNext(String o) {
-                System.out.println("小马卧槽，onNext()");
-                observer.onNext(o);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                System.out.println("小马卧槽，onError)");
-                observer.onError(e);
-            }
-
-            @Override
-            public void onComplete() {
-                System.out.println("小马卧槽，onComplete)");
-                observer.onComplete();
-            }
-        };
     }
 }

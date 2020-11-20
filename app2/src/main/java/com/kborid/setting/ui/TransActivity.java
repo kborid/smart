@@ -18,7 +18,6 @@ import androidx.core.view.LayoutInflaterCompat;
 
 import com.kborid.demo.t_okhttp.OkHttpHelper;
 import com.kborid.demo.t_realm.entity.User;
-import com.kborid.demo.t_rxjava.RxJavaTest;
 import com.kborid.setting.R;
 import com.thunisoft.common.base.BaseSimpleActivity;
 
@@ -78,7 +77,6 @@ public class TransActivity extends BaseSimpleActivity {
 
     @Override
     protected void initDataAndEvent(@Nullable Bundle bundle) {
-        RxJavaTest.test();
         new Thread(requestRunnable).start();
     }
 

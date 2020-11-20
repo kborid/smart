@@ -16,8 +16,8 @@ import com.kborid.setting.databinding.ActNavigationBinding
 
 class BottomNavigationActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var mBinding: ActNavigationBinding
-    lateinit var navController: NavController
+    private lateinit var mBinding: ActNavigationBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +34,7 @@ class BottomNavigationActivity : AppCompatActivity(), BottomNavigationView.OnNav
     }
 
     override fun onNavigationItemSelected(@NonNull item: MenuItem): Boolean {
-        val itemId: Int = item.getItemId()
-        when (itemId) {
+        when (item.itemId) {
             R.id.navigation_home -> {
                 if (item.isChecked) {
                     return true

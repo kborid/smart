@@ -9,17 +9,22 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModelProvider
 import com.kborid.demo.SimpleLifecycleObserver
 import com.kborid.setting.R
+import com.kborid.setting.databinding.FragmentDashboardBinding
 import com.kborid.setting.databinding.FragmentHomeBinding
 import com.kborid.setting.tool.TestDataHelper
 import com.kborid.setting.ui.main.adapter.MainAdapter
 import com.thunisoft.common.base.BaseSimpleFragment
+import org.slf4j.LoggerFactory
 
 class HomeFragment : BaseSimpleFragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private val logger = LoggerFactory.getLogger(HomeFragment::class.java)
 
-    var adapter: MainAdapter? = null
-    var mBinding: FragmentHomeBinding? = null
+    private var mBinding: FragmentHomeBinding? = null
+    private var lifecycleObserver: LifecycleObserver? = null
+
+    private lateinit var homeViewModel: HomeViewModel
+    private var adapter: MainAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentHomeBinding.inflate(inflater)
@@ -28,7 +33,7 @@ class HomeFragment : BaseSimpleFragment() {
 
     override fun initEventAndData(savedInstanceState: Bundle?) {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        adapter = MainAdapter(context!!, TestDataHelper.getTestStringData())
+        adapter = MainAdapter(requireContext(), TestDataHelper.getTestStringData())
         mBinding?.listview!!.adapter = adapter
     }
 
@@ -36,15 +41,14 @@ class HomeFragment : BaseSimpleFragment() {
         return R.layout.fragment_home
     }
 
-    val lifecycleObserver: LifecycleObserver = SimpleLifecycleObserver(this.javaClass.simpleName)
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        lifecycle.addObserver(lifecycleObserver)
+        lifecycleObserver = SimpleLifecycleObserver(this.javaClass.simpleName)
+        lifecycle.addObserver(lifecycleObserver!!)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        lifecycle.removeObserver(lifecycleObserver)
+        lifecycle.removeObserver(lifecycleObserver!!)
     }
 }

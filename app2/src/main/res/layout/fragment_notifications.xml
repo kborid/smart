@@ -10,20 +10,12 @@
             type="com.kborid.setting.vm.MainViewModel" />
 
         <variable
-            name="address"
-            type="com.kborid.kotlin.pojo.Address" />
-
-        <variable
             name="notificationViewModel"
             type="com.kborid.setting.ui.main.notifications.NotificationsViewModel" />
 
         <variable
             name="fragment"
             type="com.kborid.setting.ui.main.notifications.NotificationsFragment" />
-
-        <variable
-            name="constant"
-            type="com.kborid.kotlin.constant.Constant" />
     </data>
 
 
@@ -51,8 +43,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:onClick="@{() -> fragment.doClick(fragment.getString(R.string.app_name))}"
-            android:text="@{address.p}"
+            android:onClick="@{() -> fragment.doClick()}"
+            android:text="@{notificationViewModel.p}"
             android:textSize="45sp"
             android:textStyle="bold|italic" />
 
@@ -67,7 +59,7 @@
             android:textStyle="bold|italic" />
 
         <ImageView
-            imgUrl="@{constant.imgUrl}"
+            imgUrl="@{notificationViewModel.imgUrl}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"

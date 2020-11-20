@@ -19,31 +19,31 @@ public class SimpleLifecycleObserver implements LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void create() {
-        logger.info("执行{}的Create生命周期方法", actName);
+        logger.info("执行{}的OnCreate生命周期方法", actName);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     void start() {
-        logger.info("执行{}的Start生命周期方法", actName);
+        logger.info("执行{}的OnStart生命周期方法", actName);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     void resume() {
-        logger.info("执行{}的Resume生命周期方法", actName);
+        logger.info("执行{}的OnResume生命周期方法", actName);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     void pause() {
-        logger.info("执行{}的Pause生命周期方法", actName);
+        logger.info("执行{}的OnPause生命周期方法", actName);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     void stop() {
-        logger.info("执行{}的Stop生命周期方法", actName);
+        logger.info("执行{}的OnStop生命周期方法", actName);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     void destroy() {
-        logger.info("执行{}的Destroy生命周期方法", actName);
+        logger.info("执行{}的OnDestroy生命周期方法", actName);
     }
 }

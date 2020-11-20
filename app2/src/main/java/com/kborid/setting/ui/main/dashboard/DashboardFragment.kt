@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kborid.demo.SimpleLifecycleObserver
+import com.kborid.demo.t_rxjava.RxJavaTest
 import com.kborid.library.adapter.CommRVAdapter
 import com.kborid.library.adapter.RViewHolder
 import com.kborid.library.listener.OnItemClickListener
@@ -29,12 +30,15 @@ class DashboardFragment : Fragment() {
         mBinding.recycleView.layoutManager = LinearLayoutManager(context)
 //        mBinding.recycleView.setItemViewCacheSize(50)
         val adapter = DashAdapter(context, R.layout.item_dash, TestDataHelper.getTestStringData())
-        adapter.setOnItemClickListener(object :OnItemClickListener<String> {
+        adapter.setOnItemClickListener(object : OnItemClickListener<String> {
             override fun onItemClick(parent: ViewGroup?, view: View?, entity: String?, position: Int) {
                 if (position == 1) {
-                    adapter.notifyDataSetChanged()
+                    RxJavaTest.test()
+//                    adapter.notifyDataSetChanged()
 //                    adapter.dataIO.get(position).plus("jdf")
 //                    adapter.notifyItemChanged(1)
+                } else if (position == 2) {
+                    RxJavaTest.test()
                 }
             }
 
