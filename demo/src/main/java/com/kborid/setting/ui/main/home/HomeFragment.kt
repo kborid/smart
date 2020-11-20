@@ -9,7 +9,6 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModelProvider
 import com.kborid.demo.SimpleLifecycleObserver
 import com.kborid.setting.R
-import com.kborid.setting.databinding.FragmentDashboardBinding
 import com.kborid.setting.databinding.FragmentHomeBinding
 import com.kborid.setting.tool.TestDataHelper
 import com.kborid.setting.ui.main.adapter.MainAdapter

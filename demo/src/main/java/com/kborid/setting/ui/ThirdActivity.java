@@ -2,18 +2,20 @@ package com.kborid.setting.ui;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.os.MessageQueue;
+import android.os.*;
 import android.view.View;
-
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import com.google.android.material.appbar.AppBarLayout;
 import com.kborid.setting.R;
 import com.kborid.setting.widget.CustomThread;
+import com.kborid.setting.widget.ToolbarArcBackground;
 import com.thunisoft.common.base.BaseSimpleActivity;
 
 public class ThirdActivity extends BaseSimpleActivity {
+
+    private ToolbarArcBackground mToolbarArcBackground;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.act_third;
@@ -21,6 +23,31 @@ public class ThirdActivity extends BaseSimpleActivity {
 
     @Override
     protected void initDataAndEvent(Bundle savedInstanceState) {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+
+
+        AppBarLayout appBarLayout = findViewById(R.id.appbar);
+        mToolbarArcBackground = findViewById(R.id.toolbarArcBackground);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                float scale = (float) Math.abs(verticalOffset) / scrollRange;
+                mToolbarArcBackground.setScale(1 - scale);
+            }
+        });
+        getWindow().getDecorView().post(new Runnable() {
+            @Override
+            public void run() {
+                mToolbarArcBackground.startAnimate();
+            }
+        });
     }
 
     /**
@@ -55,6 +82,7 @@ public class ThirdActivity extends BaseSimpleActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         startActivity(intent);
     }
+
     public void onAnr(View view) {
 //        String uri = "ccm://pull.ccm.join/ccjm?inviteAble=true&roomNo=oooo";
 //        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));

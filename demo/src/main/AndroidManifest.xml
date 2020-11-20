@@ -19,7 +19,7 @@
     <!-- 向SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    
+
     <uses-permission android:name="com.thunisoft.cocallmobile.permission.CHOOSECONTACTS"/>
 
     <application
@@ -63,7 +63,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.ThirdActivity"/>
+        <activity
+            android:name=".ui.ThirdActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <service android:name=".service.CoCallService" />
         <service android:name=".service.CoCallService$CoCallInnerService" />
