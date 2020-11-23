@@ -6,7 +6,7 @@
             android:gravity="center"
             android:mipMap="true"
             android:filter="true"
-            android:tintMode="src_over"
+            android:tintMode="screen"
             android:src="@mipmap/launch_bg" />
     </item>
 </layer-list>

@@ -22,10 +22,11 @@ public class MainViewModel extends ViewModel {
     public void onClick() {
         Random random = new Random();
         int value = random.nextInt(100);
-        if (value == 88)
+        if (value == 88) {
             title.setValue("Congratulation~~!");
-        else
+        } else {
             title.setValue(String.valueOf(value));
+        }
         ToastUtils.showToast(String.valueOf(value));
     }
 

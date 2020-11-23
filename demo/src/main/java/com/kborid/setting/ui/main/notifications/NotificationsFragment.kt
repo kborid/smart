@@ -41,7 +41,7 @@ class NotificationsFragment : Fragment() {
         mBinding.notificationViewModel = notificationsViewModel
         mBinding.lifecycleOwner = this
         dynamicValue.observe(viewLifecycleOwner, Observer {
-            ToastUtils.showToast("value changed：旧：$dynamicValue.value, 新：$it")
+            ToastUtils.showToast("value changed：旧：${dynamicValue.value}, 新：$it")
         })
     }
 

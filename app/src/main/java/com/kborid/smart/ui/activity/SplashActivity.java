@@ -6,14 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.kborid.smart.R;
 import com.kborid.smart.activity.MainActivity;
 import com.thunisoft.common.base.BaseSimpleActivity;
 import com.thunisoft.common.tool.UIHandler;
 
+import androidx.annotation.NonNull;
 import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnPermissionDenied;
@@ -22,33 +20,9 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class SplashActivity extends BaseSimpleActivity {
 
-    private static final long DELAY_TIME = 0;
+    private static final long DELAY_TIME = 10000;
 
     private boolean isGotoTest = false;
-
-    private static long sInflateViewTime = 0L;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        LayoutInflaterCompat.setFactory2(LayoutInflater.from(this), new LayoutInflater.Factory2() {
-//            @Override
-//            public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-//                long startTime = System.currentTimeMillis();
-//                View v = getDelegate().createView(parent, name, context, attrs);
-//                long spend = System.currentTimeMillis() - startTime;
-//                sInflateViewTime += spend;
-//                System.out.println("创建" + name + "\n花费时间：" + spend + "ms," + "total:" + sInflateViewTime + "ms");
-//                return v;
-//            }
-//
-//            @Override
-//            public View onCreateView(String name, Context context, AttributeSet attrs) {
-//                return null;
-//            }
-//        });
-        super.onCreate(savedInstanceState);
-        getWindow().setBackgroundDrawable(null);
-    }
 
     @Override
     protected int getLayoutResId() {
