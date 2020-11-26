@@ -2,40 +2,27 @@ package com.kborid.setting.ui;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.LayoutInflaterCompat;
-
-import com.kborid.demo.t_okhttp.OkHttpHelper;
 import com.kborid.demo.t_realm.entity.User;
 import com.kborid.setting.R;
 import com.thunisoft.common.base.BaseSimpleActivity;
-
+import io.realm.Realm;
+import io.realm.RealmResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
-import okhttp3.Response;
 
 public class TransActivity extends BaseSimpleActivity {
 
@@ -77,25 +64,7 @@ public class TransActivity extends BaseSimpleActivity {
 
     @Override
     protected void initDataAndEvent(@Nullable Bundle bundle) {
-        new Thread(requestRunnable).start();
     }
-
-    private Runnable requestRunnable = () -> {
-        Response res = OkHttpHelper.getInstance().syncGet(T_URL);
-        logger.info(res.toString());
-        URL url = null;
-        try {
-            url = new URL(T_URL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            if (connection.getResponseCode() == 200) {
-                logger.info("res = {}", connection.getResponseMessage());
-            }
-        } catch (MalformedURLException e) {
-            logger.error("url失败", e);
-        } catch (IOException ioe) {
-            logger.error("IO失败", ioe);
-        }
-    };
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onClick(View view) {
@@ -119,19 +88,6 @@ public class TransActivity extends BaseSimpleActivity {
         } catch (Exception e) {
             logger.error("插入数据库失败", e);
         }
-
-        try {
-            File storage = Environment.getExternalStorageDirectory();
-            File file = new File(storage, "test_demo.log");
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            OutputStream outputStream = new FileOutputStream(file, true);
-            outputStream.write("测试内容".getBytes());
-            outputStream.flush();
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        startActivity(new Intent(this, ThirdActivity.class));
     }
 }

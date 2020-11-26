@@ -81,5 +81,11 @@ public class ThirdActivity extends BaseSimpleActivity {
     }
 
     public void onAnr(View view) {
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

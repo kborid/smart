@@ -50,43 +50,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="onIntent"
-                    android:text="隐式Intent"
-                    android:textAllCaps="false" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="onScheme"
-                    android:text="Scheme"
-                    android:textAllCaps="false" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="onMeetingScheme"
-                    android:text="meeting"
-                    android:textAllCaps="false" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="onAnr"
-                    android:text="ANR"
-                    android:textAllCaps="false" />
-            </LinearLayout>
+                android:layout_weight="1"
+                android:onClick="onAnr"
+                android:text="ANR"
+                android:textAllCaps="false" />
 
             <com.kborid.setting.widget.EventViewGroup2
                 android:layout_width="match_parent"

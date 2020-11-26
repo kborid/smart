@@ -55,7 +55,7 @@ class NotificationsFragment : Fragment() {
     }
 
     fun onBtnClick() {
-        startActivity(Intent(context, ThirdActivity::class.java))
+//        startActivity(Intent(context, ThirdActivity::class.java))
         startActivity(Intent(context, TransActivity::class.java))
     }
 
