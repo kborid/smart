@@ -4,9 +4,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.util.ArrayMap;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -14,8 +14,6 @@ import androidx.annotation.Nullable;
 
 import com.kborid.library.util.PackageUtils;
 import com.kborid.smart.R;
-
-import java.util.HashMap;
 
 public class ThirdLayout extends LinearLayout {
     private static final String WX_PKG = "com.tencent.mm";
@@ -25,22 +23,14 @@ public class ThirdLayout extends LinearLayout {
     private static final String ALIPAY_PKG = "com.eg.android.AlipayGphone";
     private static final String ALIPAY_CLASS = "com.eg.android.AlipayGphone.AlipayLogin";
 
-    private static final HashMap<String, String> packageName = new HashMap<String, String>() {
-        String tt = "tt";
+    private static final ArrayMap<String, String> packageName;
 
-        {
-            put(tt, tt);
-            put(WX_PKG, WX_CLASS);
-            put(QQ_PKG, QQ_CLASS);
-            put(ALIPAY_PKG, ALIPAY_CLASS);
-        }
-    };
-
-//    static {
-//        packageName.put(WX_PKG, WX_CLASS);
-//        packageName.put(QQ_PKG, QQ_CLASS);
-//        packageName.put(ALIPAY_PKG, ALIPAY_CLASS);
-//    }
+    static {
+        packageName = new ArrayMap<>();
+        packageName.put(WX_PKG, WX_CLASS);
+        packageName.put(QQ_PKG, QQ_CLASS);
+        packageName.put(ALIPAY_PKG, ALIPAY_CLASS);
+    }
 
     private Context mContext;
 
@@ -60,33 +50,25 @@ public class ThirdLayout extends LinearLayout {
 
     private void init() {
         LayoutInflater.from(mContext).inflate(R.layout.layout_third, this);
-        initThirdLoginLayout();
-    }
-
-    private void initThirdLoginLayout() {
         LinearLayout third = (LinearLayout) findViewById(R.id.third);
-        third.removeAllViews();
-        try {
-            for (final String key : packageName.keySet()) {
-                if (PackageUtils.isInstalled(key)) {
-                    ImageView icon = new ImageView(mContext);
-                    LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(100, 100);
-                    llp.setMargins(10, 10, 10, 10);
-                    third.addView(icon, llp);
-                    icon.setImageDrawable(mContext.getPackageManager().getApplicationIcon(key));
-                    icon.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+        packageName.entrySet().stream()
+                .filter(entry -> PackageUtils.isInstalled(entry.getKey()))
+                .forEach(entry -> {
+                    try {
+                        ImageView icon = new ImageView(mContext);
+                        LayoutParams llp = new LayoutParams(100, 100);
+                        llp.setMargins(10, 10, 10, 10);
+                        third.addView(icon, llp);
+                        icon.setImageDrawable(mContext.getPackageManager().getApplicationIcon(entry.getKey()));
+                        icon.setOnClickListener(v -> {
                             Intent intent = new Intent();
-                            intent.setComponent(new ComponentName(key, packageName.get(key)));
+                            intent.setComponent(new ComponentName(entry.getKey(), entry.getValue()));
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             mContext.startActivity(intent);
-                        }
-                    });
-                }
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+                        });
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 }

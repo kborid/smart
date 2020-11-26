@@ -10,6 +10,6 @@ package com.kborid.library.enums;
  * @date: 2020/8/14
  */
 public interface EnumConst {
-    public static final String TYPE_TEST = "TEST";
-    public static final String TYPE_SUBJECT = "SUBJECT";
+    String TYPE_TEST = "TEST";
+    String TYPE_SUBJECT = "SUBJECT";
 }

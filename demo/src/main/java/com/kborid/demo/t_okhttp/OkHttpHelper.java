@@ -1,5 +1,8 @@
 package com.kborid.demo.t_okhttp;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.kborid.setting.BuildConfig;
+
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.slf4j.Logger;
@@ -47,6 +50,9 @@ public class OkHttpHelper {
 
             builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS));
             builder.addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS));
+            if (BuildConfig.DEBUG) {
+                builder.addNetworkInterceptor(new StethoInterceptor());
+            }
             okHttpClient = builder.build();
         }
     }

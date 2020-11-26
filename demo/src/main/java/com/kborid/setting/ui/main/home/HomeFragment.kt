@@ -9,7 +9,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModelProvider
 import com.kborid.demo.SimpleLifecycleObserver
 import com.kborid.setting.R
-import com.kborid.setting.databinding.FragmentHomeBinding
+import com.kborid.setting.databinding.FragHomeBinding
 import com.kborid.setting.tool.TestDataHelper
 import com.kborid.setting.ui.main.adapter.MainAdapter
 import com.thunisoft.common.base.BaseSimpleFragment
@@ -19,14 +19,14 @@ class HomeFragment : BaseSimpleFragment() {
 
     private val logger = LoggerFactory.getLogger(HomeFragment::class.java)
 
-    private var mBinding: FragmentHomeBinding? = null
+    private var mBinding: FragHomeBinding? = null
     private var lifecycleObserver: LifecycleObserver? = null
 
     private lateinit var homeViewModel: HomeViewModel
     private var adapter: MainAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mBinding = FragmentHomeBinding.inflate(inflater)
+        mBinding = FragHomeBinding.inflate(inflater)
         return mBinding?.root
     }
 
@@ -37,7 +37,7 @@ class HomeFragment : BaseSimpleFragment() {
     }
 
     override fun getLayoutResId(): Int {
-        return R.layout.fragment_home
+        return R.layout.frag_home
     }
 
     override fun onAttach(context: Context) {

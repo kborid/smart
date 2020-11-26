@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import com.kborid.smart.R;
 import com.kborid.smart.activity.MainActivity;
 import com.thunisoft.common.base.BaseSimpleActivity;
 import com.thunisoft.common.tool.UIHandler;
 
-import androidx.annotation.NonNull;
 import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnPermissionDenied;
@@ -37,6 +38,8 @@ public class SplashActivity extends BaseSimpleActivity {
     @OnClick(R.id.test)
     void onClickBtn(View view) {
         isGotoTest = true;
+        startActivity(new Intent(view.getContext(), MainActivity.class));
+        finish();
     }
 
     @NeedsPermission({Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -49,7 +52,6 @@ public class SplashActivity extends BaseSimpleActivity {
             @Override
             public void run() {
                 go();
-                finish();
             }
         }, DELAY_TIME);
     }
@@ -71,9 +73,9 @@ public class SplashActivity extends BaseSimpleActivity {
 
     private void go() {
         if (isGotoTest) {
-            startActivity(new Intent(this, MainActivity.class));
-        } else {
-            startActivity(new Intent(this, MainFragmentActivity.class));
+            return;
         }
+        startActivity(new Intent(this, MainFragmentActivity.class));
+        finish();
     }
 }

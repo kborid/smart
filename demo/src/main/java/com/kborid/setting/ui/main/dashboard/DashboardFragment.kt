@@ -1,6 +1,7 @@
 package com.kborid.setting.ui.main.dashboard
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,25 +15,25 @@ import com.kborid.library.adapter.CommRVAdapter
 import com.kborid.library.adapter.RViewHolder
 import com.kborid.library.listener.OnItemClickListener
 import com.kborid.setting.R
-import com.kborid.setting.databinding.FragmentDashboardBinding
+import com.kborid.setting.databinding.FragDashboardBinding
 import com.kborid.setting.tool.TestDataHelper
-import org.slf4j.LoggerFactory
+import com.kborid.setting.ui.LifeCycleActivity
 
 class DashboardFragment : Fragment() {
 
-    private val logger = LoggerFactory.getLogger(DashboardFragment::class.java)
-
-    private lateinit var mBinding: FragmentDashboardBinding
+    private lateinit var mBinding: FragDashboardBinding
     private var lifecycleObserver: LifecycleObserver? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mBinding = FragmentDashboardBinding.inflate(inflater)
+        mBinding = FragDashboardBinding.inflate(inflater)
         mBinding.recycleView.layoutManager = LinearLayoutManager(context)
 //        mBinding.recycleView.setItemViewCacheSize(50)
         val adapter = DashAdapter(context, R.layout.item_dash, TestDataHelper.getTestStringData())
         adapter.setOnItemClickListener(object : OnItemClickListener<String> {
             override fun onItemClick(parent: ViewGroup?, view: View?, entity: String?, position: Int) {
-                if (position == 1) {
+                if (position == 0) {
+                    startActivity(Intent(context, LifeCycleActivity::class.java))
+                } else if (position == 1) {
                     RxJavaTest.test()
 //                    adapter.notifyDataSetChanged()
 //                    adapter.dataIO.get(position).plus("jdf")

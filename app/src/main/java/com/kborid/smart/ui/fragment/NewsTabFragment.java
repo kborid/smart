@@ -1,14 +1,12 @@
 package com.kborid.smart.ui.fragment;
 
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import butterknife.BindView;
-import butterknife.OnClick;
+
 import com.google.android.material.tabs.TabLayout;
 import com.kborid.library.adapter.FragmentAdapter;
 import com.kborid.smart.R;
@@ -23,9 +21,10 @@ import com.liulishuo.filedownloader.FileDownloader;
 import com.thunisoft.ui.util.ScreenUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 public class NewsTabFragment extends AppFragment<NewsTabPresenter> implements NewsTabContract.View {
 
@@ -123,18 +122,5 @@ public class NewsTabFragment extends AppFragment<NewsTabPresenter> implements Ne
         DownloadHelper.getInstance().download3("TT.apk", "https://cocall.thunisfot.com:8443/update/download");
 //        Intent intent = new Intent(Settings.ACTION_APN_SETTINGS);
 //        startActivity(intent);
-    }
-
-    public Map<String, String> checkAPN() {
-        Map<String, String> map = new HashMap<String, String>();
-        Cursor cr = mContext.getContentResolver().query(Uri.parse("content://telephony/carriers"), null, null, null, null);
-        int i = 0;
-        while (cr != null && cr.moveToNext()) {
-            String id = cr.getString(cr.getColumnIndex("_id"));
-            map.put("id" + i, id);
-            String apn = cr.getString(cr.getColumnIndex("apn"));
-            map.put("apn" + i, apn);
-        }
-        return map;
     }
 }

@@ -45,7 +45,7 @@ public class TransActivity extends BaseSimpleActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_trans;
+        return R.layout.act_trans;
     }
 
     @Override
@@ -133,14 +133,5 @@ public class TransActivity extends BaseSimpleActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        final String permission = "com.kborid.smart.permission.BROADCAST.TT";
-//        Intent intent = new Intent("com.kborid.smart.ACTION.TT");
-//        sendBroadcast(intent, permission);
-//        sendOrderedBroadcast(intent, permission);
     }
 }
