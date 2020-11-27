@@ -67,7 +67,7 @@ public class SnapHelpActivity extends AppActivity<SnapPresenter> implements Snap
     }
 
     @Override
-    public void updateData(List data) {
+    public void updateData(List<PhotoGirl> data) {
         if (null != adapter) {
             adapter.getDataIO().set(data);
         }
