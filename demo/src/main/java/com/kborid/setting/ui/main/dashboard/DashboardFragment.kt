@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.kborid.demo.SimpleLifecycleObserver
 import com.kborid.demo.t_rxjava.RxJavaTest
 import com.kborid.library.adapter.CommRVAdapter
@@ -24,7 +26,7 @@ class DashboardFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragDashboardBinding.inflate(inflater)
-        mBinding.recycleView.layoutManager = LinearLayoutManager(context)
+        mBinding.recycleView.layoutManager = StaggeredGridLayoutManager(3, RecyclerView.VERTICAL)
 //        mBinding.recycleView.setItemViewCacheSize(50)
         val adapter = DashAdapter(context, R.layout.item_dash, TestDataHelper.getTestStringData())
         adapter.setOnItemClickListener(object : OnItemClickListener<String> {
@@ -63,9 +65,20 @@ class DashboardFragment : Fragment() {
      * 内部adapter实现类
      */
     class DashAdapter constructor(context: Context?, resId: Int, data: List<String>) : CommRVAdapter<String>(context, resId, data) {
-
-        override fun convert(r: RViewHolder?, t: String?) {
-            r!!.setText(R.id.fruit_name, t)
+        override fun convert(viewHolder: RViewHolder?, position: Int, t: String?) {
+            if (viewHolder != null) {
+                val arr = t?.split("-");
+                if (arr != null) {
+                    if (position.rem(2) == 0) {
+                        viewHolder.getView<TextView>(R.id.tv_index).visibility = View.VISIBLE;
+                        viewHolder.setText(R.id.tv_name, arr[0])
+                        viewHolder.setText(R.id.tv_index, arr[1])
+                    } else {
+                        viewHolder.getView<TextView>(R.id.tv_index).visibility = View.GONE;
+                        viewHolder.setText(R.id.tv_name, t)
+                    }
+                }
+            }
         }
     }
 }

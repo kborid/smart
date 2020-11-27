@@ -66,7 +66,7 @@ public class PhotoTabFragment extends AppFragment<PhotoTabPresenter> implements 
         mPresenter.getPhotoList(SIZE, mStartPage);
         adapter = new CommRVAdapter<PhotoGirl>(getContext(), R.layout.item_photo) {
             @Override
-            protected void convert(RViewHolder helper, PhotoGirl photoGirl) {
+            protected void convert(RViewHolder helper, int position, PhotoGirl photoGirl) {
                 helper.setImageUrl(R.id.iv_pic, photoGirl.getUrl(), 1024, 1024 * 4 / 3);
             }
         };

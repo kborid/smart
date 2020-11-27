@@ -43,7 +43,6 @@ public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<RViewHolder>
     }
 
     public CommRVAdapter(Context context, int layoutId, List<T> mDatas) {
-
         this.mContext = context;
         this.mLayoutId = layoutId;
         this.mDataIO = new SimpleDataIOImpl<>(mDatas, this);
@@ -68,10 +67,10 @@ public abstract class CommRVAdapter<T> extends RecyclerView.Adapter<RViewHolder>
         holder.updatePosition(position);
         //添加动画
         addAnimation(holder);
-        convert(holder, mDataIO.get(position));
+        convert(holder, position, mDataIO.get(position));
     }
 
-    protected abstract void convert(RViewHolder viewHolder, T t);
+    protected abstract void convert(RViewHolder viewHolder, int position, T t);
 
     private int getPosition(RecyclerView.ViewHolder viewHolder) {
         return viewHolder.getAdapterPosition();

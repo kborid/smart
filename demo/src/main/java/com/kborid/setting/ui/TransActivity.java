@@ -10,19 +10,23 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.LayoutInflaterCompat;
+
 import com.kborid.demo.t_realm.entity.User;
 import com.kborid.setting.R;
 import com.thunisoft.common.base.BaseSimpleActivity;
-import io.realm.Realm;
-import io.realm.RealmResults;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class TransActivity extends BaseSimpleActivity {
 
@@ -64,17 +68,6 @@ public class TransActivity extends BaseSimpleActivity {
 
     @Override
     protected void initDataAndEvent(@Nullable Bundle bundle) {
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void onClick(View view) {
-        ContentResolver resolver = getContentResolver();
-        try {
-            resolver.openFileDescriptor(Uri.parse("content://tt/t.txt"), "r");
-        } catch (FileNotFoundException e) {
-            logger.error("文件不存在", e);
-        }
-
         try (Realm realm = Realm.getDefaultInstance()) {
             realm.executeTransaction(realm1 -> {
                 User user = realm.createObject(User.class);
@@ -88,6 +81,17 @@ public class TransActivity extends BaseSimpleActivity {
         } catch (Exception e) {
             logger.error("插入数据库失败", e);
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void onClick(View view) {
+        ContentResolver resolver = getContentResolver();
+        try {
+            resolver.openFileDescriptor(Uri.parse("content://tt/t.txt"), "r");
+        } catch (FileNotFoundException e) {
+            logger.error("文件不存在", e);
+        }
+
         startActivity(new Intent(this, ThirdActivity.class));
     }
 }

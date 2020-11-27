@@ -47,6 +47,8 @@ public class CustomThread extends Thread {
                 break;
             case CODE_TYPE2:
                 break;
+            default:
+                break;
         }
     }
 }

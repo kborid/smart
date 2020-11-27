@@ -1,14 +1,19 @@
 package com.kborid.demo.t_rxjava;
 
 import com.thunisoft.common.network.util.RxUtil;
-import io.reactivex.*;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.Optional;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.functions.Function;
 
 public class RxJavaTest {
 
@@ -20,15 +25,9 @@ public class RxJavaTest {
         Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-                logger.info("Observable created.【{}】", Thread.currentThread().getName());
+                logger.info("Observable created.【{}】", emitter);
                 emitter.onNext("1");
                 emitter.onNext("2");
-                Optional.ofNullable(emitter).ifPresent(new java.util.function.Consumer<ObservableEmitter<String>>() {
-                    @Override
-                    public void accept(ObservableEmitter<String> stringObservableEmitter) {
-
-                    }
-                });
             }
         })
                 .compose(new ObservableTransformer<String, String>() {
@@ -50,9 +49,7 @@ public class RxJavaTest {
                 .compose(RxUtil.rxSchedulerIo())
                 .flatMap((Function<String, ObservableSource<String>>) o -> {
                     logger.info("Observable flatmap. Receiver:{}", o);
-                    logger.info("Observable flatmap.【{}】", Thread.currentThread().getName());
                     return (ObservableSource<String>) observer -> {
-                        logger.info("Observable flatmap reobservable.【{}】", Thread.currentThread().getName());
                         String[] ret = o.split(COMMA);
                         ret[1] += "000";
                         observer.onNext(Arrays.toString(ret));
@@ -60,21 +57,9 @@ public class RxJavaTest {
                     };
                 })
                 .compose(RxUtil.rxSchedulerComputation())
-                .doOnNext(s -> {
-                    logger.info("Observer doOnNext. Receiver:{}", s);
-                    logger.info("Observer doOnNext.【{}】", Thread.currentThread().getName());
-                })
-                .doAfterNext(s -> {
-                    logger.info("Observer doAfterNext. Receiver:{}", s);
-                    logger.info("Observer doAfterNext.【{}】", Thread.currentThread().getName());
-                })
+                .doOnNext(s -> logger.info("Observer doOnNext. Receiver:{}", s))
+                .doAfterNext(s -> logger.info("Observer doAfterNext. Receiver:{}", s))
                 .compose(RxUtil.rxSchedulerMain())
-                .subscribe(RxUtil.createDefaultSubscriber(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        logger.info("Observer Consumer. Receiver:{}", s);
-                        logger.info("Observer Consumer.【{}】", Thread.currentThread().getName());
-                    }
-                }));
+                .subscribe(RxUtil.createDefaultSubscriber(s -> logger.info("Observer Consumer. Receiver:{}", s)));
     }
 }

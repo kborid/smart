@@ -50,10 +50,10 @@ public class VideoFragment extends AppFragment<VideoPresenter> implements VideoC
         mPresenter.getVideoList(mVideoType, mStartPage);
         adapter = new CommRVAdapter<VideoData>(getContext(), R.layout.item_video_layout) {
             @Override
-            protected void convert(RViewHolder viewHolder, VideoData videoData) {
+            protected void convert(RViewHolder viewHolder, int position, VideoData videoData) {
                 viewHolder.setImageUrl(R.id.iv_logo, videoData.getTopicImg());
                 viewHolder.setText(R.id.tv_from, videoData.getTopicName());
-                viewHolder.setText(R.id.tv_play_time, String.format("%1$s次播放", String.valueOf(videoData.getPlayCount())));
+                viewHolder.setText(R.id.tv_play_time, String.format("%1$s次播放", videoData.getPlayCount()));
                 JCVideoPlayerStandard vp = viewHolder.getView(R.id.videoplayer);
                 vp.setUp(
                         videoData.getMp4_url(), JCVideoPlayer.SCREEN_LAYOUT_LIST,

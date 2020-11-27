@@ -53,7 +53,7 @@ public class SnapHelpActivity extends AppActivity<SnapPresenter> implements Snap
         if (null == adapter) {
             adapter = new CommRVAdapter<PhotoGirl>(this, R.layout.lv_recycle_item) {
                 @Override
-                protected void convert(RViewHolder helper, PhotoGirl photoGirl) {
+                protected void convert(RViewHolder helper, int position, PhotoGirl photoGirl) {
                     helper.setImageUrl(R.id.iv_pic, photoGirl.getUrl());
                 }
             };

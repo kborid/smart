@@ -2,6 +2,7 @@ package com.kborid.setting;
 
 import android.content.IntentFilter;
 
+import com.facebook.stetho.Stetho;
 import com.kborid.demo.t_flutter.FlutterTest;
 import com.kborid.library.base.BaseApplication;
 import com.kborid.setting.broadcast.LaunchLockerBroadcastReceiver;
@@ -10,23 +11,39 @@ import com.thunisoft.ThunisoftLogger;
 import com.thunisoft.common.ThunisoftCommon;
 import com.thunisoft.logger.LoggerConfig;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.realm.Realm;
 
 public class PRJApplication extends BaseApplication {
 
+    private static final Logger logger = LoggerFactory.getLogger(PRJApplication.class);
+
     @Override
     public void onCreate() {
         super.onCreate();
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+        }
         ThunisoftCommon.init(this);
         ThunisoftLogger.initLogger(this, LoggerConfig.createLoggerConfig(BuildConfig.APPLICATION_ID, BuildConfig.DEBUG));
         FlutterTest.init();
         Realm.init(this);
 
         RxJavaPlugins.setOnObservableSubscribe(PRJApplication::apply);
+        RxJavaPlugins.setOnObservableAssembly(new Function<Observable, Observable>() {
+            @Override
+            public Observable apply(Observable observable) throws Exception {
+                System.out.println("只为测试");
+                return observable;
+            }
+        });
 
         initRegisterBroadcast();
     }
@@ -38,30 +55,28 @@ public class PRJApplication extends BaseApplication {
     }
 
     protected static Observer<String> apply(Observable<String> observable, Observer<String> observer) {
-        System.out.println("小马卧槽，apply()");
         return new Observer<String>() {
             @Override
             public void onSubscribe(Disposable d) {
-                System.out.println("小马卧槽，onSubscribe()");
-                System.out.println(observable);
+                logger.info("小马卧槽，onSubscribe thread:【{}】", Thread.currentThread().getName());
                 observer.onSubscribe(d);
             }
 
             @Override
             public void onNext(String o) {
-                System.out.println("小马卧槽，onNext()");
+                logger.info("小马卧槽，onNext thread:【{}】", Thread.currentThread().getName());
                 observer.onNext(o);
             }
 
             @Override
             public void onError(Throwable e) {
-                System.out.println("小马卧槽，onError)");
+                logger.info("小马卧槽，onError thread:【{}】", Thread.currentThread().getName());
                 observer.onError(e);
             }
 
             @Override
             public void onComplete() {
-                System.out.println("小马卧槽，onComplete)");
+                logger.info("小马卧槽，onComplete thread:【{}】", Thread.currentThread().getName());
                 observer.onComplete();
             }
         };

@@ -20,7 +20,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="com.thunisoft.cocallmobile.permission.CHOOSECONTACTS"/>
+    <uses-permission android:name="com.thunisoft.cocallmobile.permission.CHOOSECONTACTS" />
 
     <application
         android:name=".PRJApplication"
@@ -40,18 +40,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- <activity android:name=".ui.TransActivity" -->
-        <!-- android:theme="@style/AppTheme.TranslateTheme"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
-        <!--        <activity-->
-        <!--                android:name="io.flutter.embedding.android.FlutterActivity"-->
-        <!--                android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"-->
-        <!--                android:hardwareAccelerated="true"-->
-        <!--                android:windowSoftInputMode="adjustResize"/>-->
+        </activity>
+
+        <!--<activity
+            android:name="io.flutter.embedding.android.FlutterActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize" />-->
         <activity
             android:name=".ui.TransActivity"
             android:configChanges="orientation|keyboard|screenSize"
@@ -70,6 +65,8 @@
         <activity
             android:name=".ui.ThirdActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity android:name=".ui.LifeCycleActivity" />
 
         <service android:name=".service.CoCallService" />
         <service android:name=".service.CoCallService$CoCallInnerService" />
