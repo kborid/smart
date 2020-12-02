@@ -1,37 +1,46 @@
 package com.kborid.smart.constant;
 
-/**
- * des:
- * Created by xsf
- * on 2016.09.10:44
- */
-public class AppConstant {
+import com.kborid.smart.BuildConfig;
 
-    public static final String HOME_CURRENT_TAB_POSITION="HOME_CURRENT_TAB_POSITION";
-    public static final String MENU_SHOW_HIDE="MENU_SHOW_HIDE";
+/**
+ * AppConstant
+ *
+ * @description: 常量定义
+ * @author: duanwei
+ * @email: duanwei@thunisoft.com
+ * @version: 1.0.0
+ * @date: 2020/12/2
+ */
+public interface AppConstant {
+
+    /*broadcast*/
+    String UNLOGIN_ACTION = BuildConfig.APPLICATION_ID + ".action.UNLOGIN"; // 未登录广播
+
+    String HOME_CURRENT_TAB_POSITION = "HOME_CURRENT_TAB_POSITION";
+    String MENU_SHOW_HIDE = "MENU_SHOW_HIDE";
 
     /* 新闻*/
-    public static final String NEWS_ID = "news_id";
-    public static final String NEWS_TYPE = "news_type";
-    public static final String CHANNEL_POSITION = "channel_position";
-    public static final String CHANNEL_MINE = "CHANNEL_MINE";
-    public static final String CHANNEL_MORE = "CHANNEL_MORE";
-    public static final String CHANNEL_SWAP = "CHANNEL_SWAP";
-    public static final String NEWS_CHANNEL_CHANGED = "NEWS_CHANNEL_CHANGED";
+    String NEWS_ID = "news_id";
+    String NEWS_TYPE = "news_type";
+    String CHANNEL_POSITION = "channel_position";
+    String CHANNEL_MINE = "CHANNEL_MINE";
+    String CHANNEL_MORE = "CHANNEL_MORE";
+    String CHANNEL_SWAP = "CHANNEL_SWAP";
+    String NEWS_CHANNEL_CHANGED = "NEWS_CHANNEL_CHANGED";
 
     /* 视频*/
-    public static final String VIDEO_TYPE = "VIDEO_TYPE";
+    String VIDEO_TYPE = "VIDEO_TYPE";
 
-    public static String NEWS_LIST_TO_TOP = "NEWS_LIST_TO_TOP";//列表返回顶部
-    public static String ZONE_PUBLISH_ADD = "ZONE_PUBLISH_ADD";//发布说说
+    String NEWS_LIST_TO_TOP = "NEWS_LIST_TO_TOP";//列表返回顶部
+    String ZONE_PUBLISH_ADD = "ZONE_PUBLISH_ADD";//发布说说
 
-    public static String NEWS_POST_ID = "NEWS_POST_ID";//新闻详情id
-    public static String NEWS_LINK = "NEWS_LINK";
-    public static String NEWS_TITLE = "NEWS_TITLE";
+    String NEWS_POST_ID = "NEWS_POST_ID";//新闻详情id
+    String NEWS_LINK = "NEWS_LINK";
+    String NEWS_TITLE = "NEWS_TITLE";
 
-    public static final String PHOTO_DETAIL_IMGSRC = "photo_detail_imgsrc";
-    public static final String PHOTO_DETAIL = "photo_detail";
-    public static final String PHOTO_TAB_CLICK = "PHOTO_TAB_CLICK";
+    String PHOTO_DETAIL_IMGSRC = "photo_detail_imgsrc";
+    String PHOTO_DETAIL = "photo_detail";
+    String PHOTO_TAB_CLICK = "PHOTO_TAB_CLICK";
 
-    public static final String NEWS_IMG_RES = "news_img_res";
+    String NEWS_IMG_RES = "news_img_res";
 }

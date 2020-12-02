@@ -32,6 +32,7 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <com.thunisoft.ui.widget.CircleImageView
+                    android:id="@+id/iv_avatar"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:scaleType="centerCrop"
@@ -40,13 +41,14 @@
                     app:border_width="2dp" />
 
                 <TextView
+                    android:id="@+id/tv_nickname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:text="呆未厶"
                     android:textColor="@color/text_black"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <androidx.appcompat.widget.Toolbar
@@ -97,10 +99,23 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/selector_rect_with_shadow"
+                android:onClick="login"
+                android:text="登录" />
+
+            <Button
                 android:id="@+id/btn_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/selector_rect_with_shadow"
                 android:onClick="logout"
                 android:text="退出" />

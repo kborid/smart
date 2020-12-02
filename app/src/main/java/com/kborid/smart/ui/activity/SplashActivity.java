@@ -21,7 +21,7 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class SplashActivity extends BaseSimpleActivity {
 
-    private static final long DELAY_TIME = 10000;
+    private static final long DELAY_TIME = 1000;
 
     private boolean isGotoTest = false;
 

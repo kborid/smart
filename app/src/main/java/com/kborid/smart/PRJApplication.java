@@ -1,14 +1,19 @@
 package com.kborid.smart;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Environment;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.multidex.MultiDex;
 
 import com.kborid.library.base.BaseApplication;
 import com.kborid.library.util.ConfigUtils;
 import com.kborid.library.util.LogUtils;
+import com.kborid.smart.broadcast.UnLoginBroadcastReceiver;
+import com.kborid.smart.constant.AppConstant;
+import com.kborid.smart.constant.GlobalThirdManager;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -77,7 +82,16 @@ public class PRJApplication extends BaseApplication {
         CrashReport.initCrashReport(this, "6b298e7c56", BuildConfig.DEBUG, userStrategy);
         initImageLoaderConfig();
         registerActivityLifecycleCallbacks(LifeCycleCallback.activityLifecycleCallbacks);
+        registerUnLoginBroadcast();
 //        MainThreadWatchDog.defaultInstance().stopWatch();
+        GlobalThirdManager.init();
+    }
+
+    private void registerUnLoginBroadcast() {
+        // 动态注册登录广播
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(AppConstant.UNLOGIN_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(new UnLoginBroadcastReceiver(), intentFilter);
     }
 
     private void initImageLoaderConfig() {
