@@ -15,7 +15,7 @@ public class SnapPresenter extends RxPresenter<SnapContract.View> implements Sna
 
     @Override
     public void request() {
-        ApiManager.getPhotoList(20, 2)
+        ApiManager.getPhotoList(50, 2)
                 .subscribe(RxUtil.createDefaultSubscriber(photoGirls -> mView.updateData(photoGirls)));
     }
 }

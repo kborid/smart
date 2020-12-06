@@ -21,7 +21,7 @@ import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.sdk.*;
 import com.thunisoft.common.util.ToastUtils;
 
-public class X5WebViewActivity extends SimpleActivity {
+public class X5WebViewActivity extends AbstractSimpleActivity {
 
     private static final long DURATION_PRESS_TWO = 1000;
 

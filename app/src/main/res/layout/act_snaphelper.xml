@@ -16,5 +16,5 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:navigationIcon="@mipmap/ic_arrow_back" />
+        app:navigationIcon="@drawable/ic_arrow_back_24dp" />
 </FrameLayout>

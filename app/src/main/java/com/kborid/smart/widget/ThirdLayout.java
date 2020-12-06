@@ -10,10 +10,10 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
-
 import com.kborid.library.util.PackageUtils;
 import com.kborid.smart.R;
+
+import androidx.annotation.Nullable;
 
 public class ThirdLayout extends LinearLayout {
     private static final String WX_PKG = "com.tencent.mm";
@@ -51,18 +51,19 @@ public class ThirdLayout extends LinearLayout {
     private void init() {
         LayoutInflater.from(mContext).inflate(R.layout.layout_third, this);
         LinearLayout third = (LinearLayout) findViewById(R.id.third);
-        packageName.entrySet().stream()
-                .filter(entry -> PackageUtils.isInstalled(entry.getKey()))
-                .forEach(entry -> {
+        packageName.keySet().stream()
+                .filter(PackageUtils::isInstalled)
+                .forEach(key -> {
                     try {
                         ImageView icon = new ImageView(mContext);
                         LayoutParams llp = new LayoutParams(100, 100);
                         llp.setMargins(10, 10, 10, 10);
                         third.addView(icon, llp);
-                        icon.setImageDrawable(mContext.getPackageManager().getApplicationIcon(entry.getKey()));
+                        icon.setImageDrawable(mContext.getPackageManager().getApplicationIcon(key));
                         icon.setOnClickListener(v -> {
+                            System.out.println(packageName.get(key));
                             Intent intent = new Intent();
-                            intent.setComponent(new ComponentName(entry.getKey(), entry.getValue()));
+                            intent.setComponent(new ComponentName(key, packageName.get(key)));
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             mContext.startActivity(intent);
                         });
@@ -70,5 +71,6 @@ public class ThirdLayout extends LinearLayout {
                         e.printStackTrace();
                     }
                 });
+        System.out.println(third.getChildCount());
     }
 }

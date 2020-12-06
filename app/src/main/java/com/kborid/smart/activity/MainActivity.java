@@ -11,14 +11,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Message;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.content.FileProvider;
 
 import com.kborid.library.hand2eventbus.EventBusss;
 import com.kborid.library.sample.TestSettings;
@@ -38,9 +34,11 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.content.FileProvider;
 import butterknife.BindView;
 
-public class MainActivity extends SimpleActivity {
+public class MainActivity extends AbstractSimpleActivity {
 
     private static Drawable mDrawable;
 
@@ -87,8 +85,9 @@ public class MainActivity extends SimpleActivity {
                     onTextShare();
                     break;
                 case ACTION_CODE:
-//                    onQRCode();
-                    download();
+                    onQRCode();
+                    break;
+                default:
                     break;
             }
         });
@@ -263,19 +262,15 @@ public class MainActivity extends SimpleActivity {
     public static long[] getBytesAndStatus(long downloadId) {
         long[] bytesAndStatus = new long[]{-1, -1, 0};
         DownloadManager.Query query = new DownloadManager.Query().setFilterById(downloadId);
-        Cursor c = null;
-        try {
-            DownloadManager manager = (DownloadManager) PRJApplication.getInstance().getSystemService(Context.DOWNLOAD_SERVICE);
-            c = manager.query(query);
+        DownloadManager manager = (DownloadManager) PRJApplication.getInstance().getSystemService(Context.DOWNLOAD_SERVICE);
+        try (Cursor c = manager.query(query)){
             if (c != null && c.moveToFirst()) {
                 bytesAndStatus[0] = c.getInt(c.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
                 bytesAndStatus[1] = c.getInt(c.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
                 bytesAndStatus[2] = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
             }
-        } finally {
-            if (c != null) {
-                c.close();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return bytesAndStatus;
     }

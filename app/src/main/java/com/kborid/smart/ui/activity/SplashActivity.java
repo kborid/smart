@@ -38,8 +38,6 @@ public class SplashActivity extends BaseSimpleActivity {
     @OnClick(R.id.test)
     void onClickBtn(View view) {
         isGotoTest = true;
-        startActivity(new Intent(view.getContext(), MainActivity.class));
-        finish();
     }
 
     @NeedsPermission({Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -73,9 +71,10 @@ public class SplashActivity extends BaseSimpleActivity {
 
     private void go() {
         if (isGotoTest) {
-            return;
+            startActivity(new Intent(this, MainActivity.class));
+        } else {
+            startActivity(new Intent(this, MainFragmentActivity.class));
         }
-        startActivity(new Intent(this, MainFragmentActivity.class));
         finish();
     }
 }

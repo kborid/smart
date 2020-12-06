@@ -33,7 +33,7 @@ public class RViewHolder extends RecyclerView.ViewHolder {
         mCurrentView = itemView;
         mPosition = position;
         mViews = new SparseArray<>();
-        mCurrentView.setTag(this);
+//        mCurrentView.setTag(this);
     }
 
     public static RViewHolder get(Context context, View convertView, ViewGroup parent, int layoutId, int position) {

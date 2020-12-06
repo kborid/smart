@@ -12,7 +12,7 @@ import com.kborid.smart.widget.MainTitleLayout;
  *
  * @author kborid
  */
-public abstract class SimpleActivity extends BaseSimpleActivity {
+public abstract class AbstractSimpleActivity extends BaseSimpleActivity {
 
     protected MainTitleLayout titleView;
 

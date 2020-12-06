@@ -20,7 +20,7 @@ import java.io.File;
 
 import butterknife.BindView;
 
-public class ReaderViewActivity extends SimpleActivity implements TbsReaderView.ReaderCallback {
+public class ReaderViewActivity extends AbstractSimpleActivity implements TbsReaderView.ReaderCallback {
 
     @BindView(R.id.content)
     FrameLayout content;
