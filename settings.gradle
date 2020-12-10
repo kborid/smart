@@ -1,6 +1,6 @@
 include ':app', ':demo'
-include ':biz-library'
-include ':stub'
+include ':lib-biz'
+include ':lib-stub'
 include ':thunisoft-common'
 include ':thunisoft-logger'
 include ':thunisoft-ui'
