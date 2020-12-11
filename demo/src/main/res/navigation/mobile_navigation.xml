@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/mobile_navigation"
-            app:startDestination="@+id/navigation_home">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_demo">
 
     <fragment
-            android:id="@+id/navigation_home"
-            android:name="com.kborid.setting.ui.main.home.HomeFragment"
-            android:label="@string/title_home"
-            tools:layout="@layout/frag_home"/>
+        android:id="@+id/navigation_demo"
+        android:name="com.kborid.setting.ui.main.demo.DemoFragment"
+        android:label="@string/title_demo"
+        tools:layout="@layout/frag_demo" />
 
     <fragment
-            android:id="@+id/navigation_dashboard"
-            android:name="com.kborid.setting.ui.main.dashboard.DashboardFragment"
-            android:label="@string/title_dashboard"
-            tools:layout="@layout/frag_dashboard"/>
+        android:id="@+id/navigation_home"
+        android:name="com.kborid.setting.ui.main.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/frag_home" />
 
     <fragment
-            android:id="@+id/navigation_notifications"
-            android:name="com.kborid.setting.ui.main.notifications.NotificationsFragment"
-            android:label="@string/title_notifications"
-            tools:layout="@layout/frag_notifications"/>
+        android:id="@+id/navigation_dashboard"
+        android:name="com.kborid.setting.ui.main.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/frag_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.kborid.setting.ui.main.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/frag_notifications" />
 </navigation>

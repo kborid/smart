@@ -1,7 +1,6 @@
 package com.kborid.setting.ui;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
@@ -47,14 +46,5 @@ public class ThirdActivity extends BaseSimpleActivity {
                 mToolbarArcBackground.startAnimate();
             }
         });
-    }
-
-    public void onAnr(View view) {
-        finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

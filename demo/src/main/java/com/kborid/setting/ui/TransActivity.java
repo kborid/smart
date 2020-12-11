@@ -32,8 +32,6 @@ public class TransActivity extends BaseSimpleActivity {
 
     private final static Logger logger = LoggerFactory.getLogger(TransActivity.class);
 
-    private final static String T_URL = "http://publicobject.com/helloworld.txt";
-
     @Override
     protected int getLayoutResId() {
         return R.layout.act_trans;

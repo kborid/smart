@@ -13,11 +13,8 @@ import com.kborid.setting.databinding.FragHomeBinding
 import com.kborid.setting.tool.TestDataHelper
 import com.kborid.setting.ui.main.adapter.MainAdapter
 import com.thunisoft.common.base.BaseSimpleFragment
-import org.slf4j.LoggerFactory
 
 class HomeFragment : BaseSimpleFragment() {
-
-    private val logger = LoggerFactory.getLogger(HomeFragment::class.java)
 
     private var mBinding: FragHomeBinding? = null
     private var lifecycleObserver: LifecycleObserver? = null
