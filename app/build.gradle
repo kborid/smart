@@ -147,7 +147,7 @@ android {
 dependencies {
     //可以包含多种格式lib包
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
-    implementation project(':biz-library')
+    implementation project(':lib-biz')
 
     //glide
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
