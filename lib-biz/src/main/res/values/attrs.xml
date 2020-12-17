@@ -21,4 +21,13 @@
         <attr name="letterNormalColor" format="color" />
         <attr name="letterTouchBackground" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="FMTransmitterSeekBar">
+        <attr name="thumb" format="reference"/>
+        <attr name="selectedColor" format="color"/>
+        <attr name="selectedColor1" format="color"/>
+        <attr name="unSelectedColor" format="color"/>
+        <attr name="selectedAlpha" format="float"/>
+        <attr name="unSelectedAlpha" format="float"/>
+    </declare-styleable>
 </resources>
