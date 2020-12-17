@@ -1,10 +1,17 @@
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+def mKeyAlias = properties.getProperty('store.keyAlias')
+def mKeyPwd = properties.getProperty('store.keyPassword')
+def mStorePassword = properties.getProperty('store.storePassword')
+
 android {
     signingConfigs {
         config {
-            keyAlias 'kborid'
-            keyPassword '123456'
+            keyAlias sKeyAlias
+            keyPassword sKeyPassword
             storeFile file('../sign/sign.jks')
-            storePassword '123456'
+            storePassword sStorePassword
         }
     }
 }

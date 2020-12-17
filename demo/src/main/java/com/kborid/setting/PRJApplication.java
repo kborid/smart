@@ -2,7 +2,6 @@ package com.kborid.setting;
 
 import android.content.IntentFilter;
 
-import com.facebook.stetho.Stetho;
 import com.kborid.demo.t_flutter.FlutterTest;
 import com.kborid.library.base.BaseApplication;
 import com.kborid.setting.broadcast.LaunchLockerBroadcastReceiver;
@@ -28,9 +27,6 @@ public class PRJApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (BuildConfig.DEBUG) {
-            Stetho.initializeWithDefaults(this);
-        }
         ThunisoftCommon.init(this);
         ThunisoftLogger.initLogger(this, LoggerConfig.createLoggerConfig(BuildConfig.APPLICATION_ID, BuildConfig.DEBUG));
         FlutterTest.init();

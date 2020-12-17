@@ -3,6 +3,8 @@ package com.kborid.library.base;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.stetho.Stetho;
+import com.kborid.library.BuildConfig;
 import com.kborid.library.di.component.AppComponent;
 import com.kborid.library.di.component.DaggerAppComponent;
 import com.kborid.library.di.module.AppModule;
@@ -36,6 +38,10 @@ public class BaseApplication extends Application {
 
         ThunisoftCommon.init(this);
         ThunisoftUI.init(this);
+
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+        }
 
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            // This process is dedicated to LeakCanary for heap analysis.
