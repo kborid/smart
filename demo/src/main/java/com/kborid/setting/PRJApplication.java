@@ -27,7 +27,6 @@ public class PRJApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        ThunisoftCommon.init(this);
         ThunisoftLogger.initLogger(this, LoggerConfig.createLoggerConfig(BuildConfig.APPLICATION_ID, BuildConfig.DEBUG));
         FlutterTest.init();
         Realm.init(this);

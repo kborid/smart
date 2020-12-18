@@ -1,10 +1,11 @@
 package com.kborid.demo.t_realm.entity;
 
-import io.realm.RealmModel;
-import io.realm.annotations.RealmClass;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-@RealmClass
-public class User implements RealmModel {
+public class User extends RealmObject {
+    @PrimaryKey
+    private int id;
     private String name;
     private int age;
     private String address;
@@ -16,6 +17,14 @@ public class User implements RealmModel {
                 ", age=" + age +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

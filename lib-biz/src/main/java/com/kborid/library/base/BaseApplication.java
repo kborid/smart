@@ -12,6 +12,7 @@ import com.kborid.library.util.LogUtils;
 import com.thunisoft.common.ThunisoftCommon;
 import com.thunisoft.common.tool.CrashHandler;
 import com.thunisoft.ui.ThunisoftUI;
+import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 public class BaseApplication extends Application {
 
@@ -40,7 +41,10 @@ public class BaseApplication extends Application {
         ThunisoftUI.init(this);
 
         if (BuildConfig.DEBUG) {
-            Stetho.initializeWithDefaults(this);
+            Stetho.initialize(Stetho.newInitializerBuilder(this)
+                    .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                    .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).withMetaTables().build())
+                    .build());
         }
 
 //        if (LeakCanary.isInAnalyzerProcess(this)) {

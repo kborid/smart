@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'realm-android'
 
 android {
     compileSdkVersion mCompileSdkVersion
@@ -97,6 +96,7 @@ dependencies {
     //stetho 调试工具
     api 'com.facebook.stetho:stetho:1.5.0'
     api 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    api 'com.uphyca:stetho_realm:2.1.0'
 
     // 内存泄漏和卡顿监测
     debugApi 'com.github.markzhai:blockcanary-android:1.5.0'
