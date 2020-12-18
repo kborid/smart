@@ -11,41 +11,77 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 import com.thunisoft.logger.DiskFormatStrategy;
 import com.thunisoft.logger.LoggerConfig;
 
+/**
+ * ThunisoftLogger
+ *
+ * @description: logger entrypoint
+ * @author: duanwei
+ * @email: duanwei@thunisoft.com
+ * @version: 1.0.0
+ * @date: 2020/12/18
+ */
 public class ThunisoftLogger {
 
+    private static Context mContext;
+
+    public static Context getContext() {
+        if (null == mContext) {
+            throw new NullPointerException("context is null, need manual invoke init() in your application before use it!");
+        }
+        return mContext;
+    }
+
     /**
-     * logger初始化封装
+     * 通过默认配置初始化
      *
-     * @param context
-     * @param config
+     * @param context application
      */
-    public static void initLogger(Context context, LoggerConfig config) {
+    public static void initWithDefaultConfig(Context context) {
+        initWithLoggerConfig(context, LoggerConfig.defaultLoggerConfig());
+    }
 
-        if (!(context instanceof Application)) {
-            throw new IllegalArgumentException("must be use application context init it");
-        }
-
-        // logger打印策略
+    /**
+     * 初始化logger配置
+     *
+     * @param config 配置
+     */
+    public static void initWithLoggerConfig(Context context, final LoggerConfig config) {
+        checkContext(context);
         if (null == config) {
-            config = LoggerConfig.defaultLoggerConfig();
+            throw new NullPointerException("LoggerConfig implementation must not be NULL");
         }
+        // logger打印策略
         FormatStrategy mFormatStrategy = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(true)   // (Optional) Whether to show thread info or not. Default true
-                .methodCount(2)         // (Optional) How many method line to show. Default 2
-                .methodOffset(0)        // (Optional) Hides internal method calls up to offset. Default 5
+                // (Optional) Whether to show thread info or not. Default true
+                .showThreadInfo(true)
+                // (Optional) How many method line to show. Default 2
+                .methodCount(2)
+                // (Optional) Hides internal method calls up to offset. Default 5
+                .methodOffset(0)
                 .tag(config.getTag())
                 .build();
 
         // android log设置
-        boolean isDebug = config.isDebug();
         Logger.addLogAdapter(new AndroidLogAdapter(mFormatStrategy) {
             @Override
             public boolean isLoggable(int priority, String tag) {
-                return isDebug;
+                return config.isDebug();
             }
         });
 
         // logger存储文件格式策略
-        Logger.addLogAdapter(new DiskLogAdapter(DiskFormatStrategy.newBuilder().build(context)));
+        Logger.addLogAdapter(new DiskLogAdapter(DiskFormatStrategy.newBuilder().build(getContext())));
+    }
+
+    /**
+     * 检查context是否是application
+     *
+     * @param context application
+     */
+    private static void checkContext(Context context) {
+        if (!(context instanceof Application)) {
+            throw new IllegalArgumentException("must be use application context init it");
+        }
+        mContext = context;
     }
 }

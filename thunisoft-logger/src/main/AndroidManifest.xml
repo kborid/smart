@@ -1,1 +1,10 @@
-<manifest package="com.thunisoft.logger" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.thunisoft.logger">
+
+    <application>
+        <provider
+            android:name="com.thunisoft.ThunisoftLoggerProvider"
+            android:authorities="com.thunisoft.logger.init.provider"
+            android:exported="false" />
+    </application>
+</manifest>

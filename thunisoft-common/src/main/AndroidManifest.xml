@@ -1,1 +1,10 @@
-<manifest package="com.thunisoft.common" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.thunisoft.common">
+
+    <application>
+        <provider
+            android:name="com.thunisoft.common.ThunisoftCommonProvider"
+            android:authorities="com.thunisoft.common.init.provider"
+            android:exported="false" />
+    </application>
+</manifest>

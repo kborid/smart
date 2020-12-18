@@ -2,7 +2,6 @@ package com.thunisoft.common.tool;
 
 import android.os.Looper;
 import android.os.Process;
-import android.util.Log;
 
 import com.thunisoft.common.util.CrashInfoUtils;
 import com.thunisoft.common.util.ToastUtils;
@@ -25,12 +24,11 @@ public class CrashHandler implements UncaughtExceptionHandler {
     // 系统默认的 UncaughtException 处理类
     private UncaughtExceptionHandler mDefaultHandler;
 
+    private final static Object mLock = new Object();
+
     private CrashHandler() {
     }
 
-    /**
-     * 获取 CrashHandler 实例 ,单例模式
-     */
     public static CrashHandler getInstance() {
         return INSTANCE;
     }
@@ -50,22 +48,15 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     @Override
     public void uncaughtException(Thread thread, Throwable e) {
-        showCrashToast();
-
-        if (!handleException(e) && mDefaultHandler != null) {
-            // 如果用户没有处理则让系统默认的异常处理器来处理
-            mDefaultHandler.uncaughtException(thread, e);
-        } else {
-            // 等待处理完成
-            // TODO 为什么要等？ 等什么？
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ex) {
-                Log.e(TAG, "出现中断异常", e);
-            }
+        if (handleException(e)) {
             // 退出程序
             System.exit(1);
             Process.killProcess(Process.myPid());
+        } else {
+            // 如果用户没有处理则让系统默认的异常处理器来处理
+            if (null != mDefaultHandler) {
+                mDefaultHandler.uncaughtException(thread, e);
+            }
         }
     }
 
@@ -75,24 +66,30 @@ public class CrashHandler implements UncaughtExceptionHandler {
      * @param e 异常
      * @return true：如果处理了该异常信息；否则返回 false
      */
-    private boolean handleException(Throwable e) {
-        BundleNavi.getInstance().putInt("testKey", 123);
-        BundleNavi.getInstance().getInt("testKey");
-        if (null != e) {
-            CrashInfoUtils.collectDeviceInfo(e);
-            return true;
+    private boolean handleException(final Throwable e) {
+        if (null == e) {
+            return false;
         }
-        return false;
-    }
 
-    private void showCrashToast() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                ToastUtils.showToast("很抱歉，程序发生异常，即将退出！");
-                Looper.loop();
+        new Thread(() -> {
+            Looper.prepare();
+            ToastUtils.showToast("很抱歉，程序发生异常，即将退出！");
+            synchronized (mLock) {
+                CrashInfoUtils.collectDeviceInfo(e);
+                mLock.notifyAll();
             }
-        }).start();
+            Looper.loop();
+        }, "Collector-Thread").start();
+
+        synchronized (mLock) {
+            try {
+                mLock.wait();
+                // 等待2s， 给toast足够时间显示
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                // ignore
+            }
+        }
+        return true;
     }
 }

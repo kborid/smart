@@ -3,6 +3,7 @@ package com.thunisoft.common.util;
 import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
@@ -19,8 +20,8 @@ public class ReflectUtil {
     /**
      * 判断类是否存在
      *
-     * @param className
-     * @return
+     * @param className 类名-全路径
+     * @return boolean
      */
     public static boolean hasClass(String className) {
         try {
@@ -34,15 +35,15 @@ public class ReflectUtil {
     /**
      * 反射调用静态方法
      *
-     * @param className
-     * @param methodName
-     * @param paramTypes
-     * @param paramValues
-     * @return
+     * @param className   类名。全路径
+     * @param methodName  方法名
+     * @param paramTypes  参数类型
+     * @param paramValues 参数
+     * @return 方法调用结果
      */
-    public static Object invokeStaticMethod(String className, String methodName, Class[] paramTypes, Object[] paramValues) {
+    public static Object invokeStaticMethod(String className, String methodName, Class<?>[] paramTypes, Object[] paramValues) {
         try {
-            Class clazz = Class.forName(className);
+            Class<?> clazz = Class.forName(className);
             Method method = clazz.getDeclaredMethod(methodName, paramTypes);
             method.setAccessible(true);
             return method.invoke(null, paramValues);
@@ -55,15 +56,15 @@ public class ReflectUtil {
     /**
      * 反射调用非静态方法
      *
-     * @param className
-     * @param methodName
-     * @param paramTypes
-     * @param paramValues
-     * @return
+     * @param className   类名。全路径
+     * @param methodName  方法名
+     * @param paramTypes  参数类型
+     * @param paramValues 参数
+     * @return 方法调用结果
      */
-    public static Object invokeMethod(String className, String methodName, Class[] paramTypes, Object[] paramValues) {
+    public static Object invokeMethod(String className, String methodName, Class<?>[] paramTypes, Object[] paramValues) {
         try {
-            Class clazz = Class.forName(className);
+            Class<?> clazz = Class.forName(className);
             Object obj = clazz.newInstance();
             Method method = clazz.getDeclaredMethod(methodName, paramTypes);
             method.setAccessible(true);
@@ -77,25 +78,47 @@ public class ReflectUtil {
     /**
      * 反射实例化对象
      *
-     * @param className
-     * @param paramType
-     * @param param
+     * @param className 类名。全路径
+     * @param paramType 参数类型
+     * @param param     参数
      * @param <T>
-     * @return
+     * @return obj
      */
-    public static <T> T newInstance(String className, Class paramType, Object param) {
+    public static <T> T newInstance(String className, Class<?> paramType, Object param) {
         Class<?> clazz = null;
         try {
             clazz = Class.forName(className);
             Constructor<?> cons = clazz.getDeclaredConstructor(paramType);
-            if (cons == null) {
-                Logger.w("新建实例失败(%s)，没有指定构造函数(%s)", className, paramType);
-                return null;
-            }
             return (T) cons.newInstance(param);
         } catch (Exception e) {
             Logger.e(e, "新建实例失败(%s)", className);
             return null;
         }
+    }
+
+    /**
+     * 反射获取字段值
+     *
+     * @param className 类名。全路径
+     * @param fieldName 字段名
+     * @param isStatic  是否静态字段
+     * @return obj
+     */
+    public static Object getField(String className, String fieldName, boolean isStatic) {
+        Object ret = null;
+        try {
+            Class<?> clazz = Class.forName(className);
+            Field field = clazz.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            if (isStatic) {
+                ret = field.get(null);
+            } else {
+                Object obj = clazz.newInstance();
+                ret = field.get(obj);
+            }
+        } catch (Exception e) {
+            Logger.e(e, "反射获取字段值出错");
+        }
+        return ret;
     }
 }

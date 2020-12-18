@@ -2,7 +2,7 @@ package com.thunisoft.logger;
 
 public class LoggerConfig {
     //默认TAG
-    static final String TAG_DEFAULT = "TAG_DEFAULT";
+    static final String TAG_DEFAULT = "TAG_KBORID_DEFAULT";
 
     private String mTag;
     private boolean mIsDebug;

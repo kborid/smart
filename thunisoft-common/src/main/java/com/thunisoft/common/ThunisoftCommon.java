@@ -6,6 +6,15 @@ import android.content.Context;
 import com.thunisoft.common.tool.CrashHandler;
 import com.thunisoft.common.util.SystemParamUtil;
 
+/**
+ * ThunisoftCommon
+ *
+ * @description: common entrypoint
+ * @author: duanwei
+ * @email: duanwei@thunisoft.com
+ * @version: 1.0.0
+ * @date: 2020/12/18
+ */
 public class ThunisoftCommon {
 
     private static Context mContext;
@@ -13,8 +22,9 @@ public class ThunisoftCommon {
     /**
      * library初始化方法，invoke in application onCreate
      *
-     * @param context
+     * @param context application
      */
+    @Deprecated
     public static void init(Context context) {
         if (!(context instanceof Application)) {
             throw new IllegalArgumentException("must be use application context init it");
@@ -25,9 +35,16 @@ public class ThunisoftCommon {
         CrashHandler.getInstance().init();
     }
 
+
+    static void setContext(Context context) {
+        mContext = context;
+        SystemParamUtil.init(context);
+        CrashHandler.getInstance().init();
+    }
+
     public static Context getContext() {
         if (null == mContext) {
-            throw new NullPointerException("must be invoked init() in your application before use it!");
+            throw new NullPointerException("context is null, need manual invoke init() in your application before use it!");
         }
         return mContext;
     }

@@ -1,1 +1,10 @@
-<manifest package="com.thunisoft.ui" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.thunisoft.ui">
+
+    <application>
+        <provider
+            android:name="com.thunisoft.ui.ThunisoftUIProvider"
+            android:authorities="com.thunisoft.ui.init.provider"
+            android:exported="false" />
+    </application>
+</manifest>

@@ -1,8 +1,11 @@
 package com.thunisoft.common.base;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +16,7 @@ import butterknife.Unbinder;
 /**
  * BaseSimpleFragment
  *
- * @description: 简单fragment基类封装,带ButterKnife
+ * @description: 简单fragment基类封装, 带ButterKnife
  * @date: 2019/9/25
  * @author: duanwei
  * @email: duanwei@thunisoft.com
@@ -35,7 +38,7 @@ public abstract class BaseSimpleFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mUnBinder = ButterKnife.bind(this, view);
         if (savedInstanceState == null) {
@@ -53,7 +56,7 @@ public abstract class BaseSimpleFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(IS_SUPPORT_HIDE_STATE, isHidden());
     }
@@ -94,5 +97,5 @@ public abstract class BaseSimpleFragment extends Fragment {
 
     protected abstract int getLayoutResId();
 
-    protected abstract void initEventAndData(Bundle savedInstanceState);
+    protected abstract void initEventAndData(@Nullable Bundle savedInstanceState);
 }
