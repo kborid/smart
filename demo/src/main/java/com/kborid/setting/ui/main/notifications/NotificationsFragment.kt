@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.kborid.setting.databinding.FragNotificationsBinding
-import com.kborid.setting.ui.ThirdActivity
+import com.kborid.setting.ui.TransActivity
 import com.kborid.setting.vm.MainViewModel
 import com.thunisoft.common.util.ToastUtils
 import org.slf4j.LoggerFactory
@@ -54,7 +54,7 @@ class NotificationsFragment : Fragment() {
     }
 
     fun onBtnClick() {
-        startActivity(Intent(context, ThirdActivity::class.java))
+        startActivity(Intent(context, TransActivity::class.java))
     }
 
     override fun onDestroyView() {

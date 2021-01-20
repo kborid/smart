@@ -1,24 +1,21 @@
 package com.kborid.setting;
 
 import android.content.IntentFilter;
-
+import android.os.Debug;
 import com.kborid.demo.t_flutter.FlutterTest;
 import com.kborid.library.base.BaseApplication;
 import com.kborid.setting.broadcast.LaunchLockerBroadcastReceiver;
 import com.kborid.setting.constant.Constants;
 import com.thunisoft.ThunisoftLogger;
-import com.thunisoft.common.ThunisoftCommon;
 import com.thunisoft.logger.LoggerConfig;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.realm.Realm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PRJApplication extends BaseApplication {
 
@@ -27,11 +24,12 @@ public class PRJApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        ThunisoftLogger.initLogger(this, LoggerConfig.createLoggerConfig(BuildConfig.APPLICATION_ID, BuildConfig.DEBUG));
+        ThunisoftLogger.initLogger(this,
+                LoggerConfig.createLoggerConfig(BuildConfig.APPLICATION_ID, BuildConfig.DEBUG));
         FlutterTest.init();
         Realm.init(this);
 
-        RxJavaPlugins.setOnObservableSubscribe(PRJApplication::apply);
+//        RxJavaPlugins.setOnObservableSubscribe(PRJApplication::apply);
         RxJavaPlugins.setOnObservableAssembly(new Function<Observable, Observable>() {
             @Override
             public Observable apply(Observable observable) throws Exception {
@@ -41,6 +39,8 @@ public class PRJApplication extends BaseApplication {
         });
 
         initRegisterBroadcast();
+
+        Debug.startMethodTracing();
     }
 
     private void initRegisterBroadcast() {
@@ -49,7 +49,8 @@ public class PRJApplication extends BaseApplication {
         registerReceiver(new LaunchLockerBroadcastReceiver(), intentFilter);
     }
 
-    protected static Observer<String> apply(Observable<String> observable, Observer<String> observer) {
+    protected static Observer<String> apply(Observable<String> observable,
+            Observer<String> observer) {
         return new Observer<String>() {
             @Override
             public void onSubscribe(Disposable d) {

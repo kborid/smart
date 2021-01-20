@@ -10,9 +10,11 @@ import com.kborid.demo.IntentServiceDemo
 import com.kborid.setting.R
 import com.kborid.setting.constant.CodeType
 import com.kborid.setting.constant.CodeTypeConst
+import com.kborid.setting.network.DemoManager
 import com.kborid.setting.ui.LifeCycleActivity
 import com.kborid.setting.widget.CustomThread
 import com.thunisoft.common.base.BaseSimpleFragment
+import com.thunisoft.common.network.util.RxUtil
 import org.slf4j.LoggerFactory
 
 class DemoFragment : BaseSimpleFragment(), View.OnClickListener {
@@ -46,6 +48,7 @@ class DemoFragment : BaseSimpleFragment(), View.OnClickListener {
         mRootView.findViewById<View>(R.id.btn_handler).setOnClickListener(this)
         mRootView.findViewById<View>(R.id.btn_lifeCycle).setOnClickListener(this)
         mRootView.findViewById<View>(R.id.btn_intent).setOnClickListener(this)
+        mRootView.findViewById<View>(R.id.btn_other).setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -66,6 +69,7 @@ class DemoFragment : BaseSimpleFragment(), View.OnClickListener {
             }
             R.id.btn_lifeCycle -> startActivity(Intent(context, LifeCycleActivity::class.java))
             else -> {
+                DemoManager.getWsListByMbbh("111").subscribe(RxUtil.createDefaultSubscriber { objects -> println(objects) })
             }
         }
     }

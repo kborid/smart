@@ -2,16 +2,23 @@ package com.kborid.demo.t_okhttp;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.kborid.setting.BuildConfig;
-
-import okhttp3.*;
-import okhttp3.logging.HttpLoggingInterceptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.kborid.setting.network.intercept.AddCookiesInterceptor;
+import com.kborid.setting.network.intercept.ReceivedCookiesInterceptor;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
+import okhttp3.Authenticator;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * OkHttpHelper
@@ -37,6 +44,10 @@ public class OkHttpHelper {
         return instance;
     }
 
+    public OkHttpClient getOkHttpClient() {
+        return okHttpClient;
+    }
+
     private OkHttpHelper() {
         if (null == okHttpClient) {
             Authenticator authenticator = (route, response) -> response.request().newBuilder()
@@ -48,8 +59,12 @@ public class OkHttpHelper {
                     .writeTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS);
 
-            builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS));
-            builder.addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS));
+            builder.addInterceptor(new ReceivedCookiesInterceptor());
+            builder.addInterceptor(new AddCookiesInterceptor());
+//            builder.addInterceptor(
+//                    new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS));
+            builder.addNetworkInterceptor(
+                    new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS));
             if (BuildConfig.DEBUG) {
                 builder.addNetworkInterceptor(new StethoInterceptor());
             }
@@ -84,7 +99,7 @@ public class OkHttpHelper {
     /**
      * 异步get
      *
-     * @param url      请求地址
+     * @param url 请求地址
      * @param callback 异步回调
      */
     public void asyncGet(String url, Callback callback) {
@@ -95,13 +110,14 @@ public class OkHttpHelper {
     /**
      * 同步post Json请求
      *
-     * @param url  请求地址
+     * @param url 请求地址
      * @param json 请求参数
      * @return 响应体
      */
     public Response syncPostJson(String url, String json) {
         Response res = null;
-        RequestBody reqBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
+        RequestBody reqBody = RequestBody
+                .create(MediaType.parse("application/json; charset=utf-8"), json);
         Request req = new Request.Builder().url(url).tag(url).post(reqBody).build();
         try {
             res = okHttpClient.newCall(req).execute();
@@ -114,7 +130,7 @@ public class OkHttpHelper {
     /**
      * 同步post 表单请求
      *
-     * @param url    请求地址
+     * @param url 请求地址
      * @param params 请求参数
      * @return res响应
      */

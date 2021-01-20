@@ -1,9 +1,6 @@
 package com.kborid.setting.ui;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -16,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.LayoutInflaterCompat;
 
+import com.kborid.demo.t_okhttp.OkHttpHelper;
 import com.kborid.demo.t_realm.entity.User;
 import com.kborid.setting.R;
 import com.thunisoft.common.base.BaseSimpleActivity;
@@ -23,10 +21,9 @@ import com.thunisoft.common.base.BaseSimpleActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
-
 import io.realm.Realm;
 import io.realm.RealmResults;
+import okhttp3.Response;
 
 public class TransActivity extends BaseSimpleActivity {
 
@@ -67,8 +64,8 @@ public class TransActivity extends BaseSimpleActivity {
     @Override
     protected void initDataAndEvent(@Nullable Bundle bundle) {
         try (Realm realm = Realm.getDefaultInstance()) {
-            realm.executeTransaction(realm1 -> {
-                User user = realm.createObject(User.class);
+            realm.executeTransaction(r -> {
+                User user = r.createObject(User.class);
                 user.setName("呆未厶");
                 user.setAge(10);
                 user.setAddress("山东省威海市");
@@ -83,13 +80,33 @@ public class TransActivity extends BaseSimpleActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void onClick(View view) {
-        ContentResolver resolver = getContentResolver();
+//        ContentResolver resolver = getContentResolver();
+//        try {
+//            resolver.openFileDescriptor(Uri.parse("content://tt/t.txt"), "r");
+//        } catch (FileNotFoundException e) {
+//            logger.error("文件不存在", e);
+//        }
+//
+//        startActivity(new Intent(this, ThirdActivity.class));
+        new Thread(() -> {
+            logger.info("url req start");
+            Response res = OkHttpHelper.getInstance().syncGet(T_URL);
+            logger.info("url req enddd");
+            logger.info("{}", res);
+        /*URL url = null;
         try {
-            resolver.openFileDescriptor(Uri.parse("content://tt/t.txt"), "r");
-        } catch (FileNotFoundException e) {
-            logger.error("文件不存在", e);
-        }
-
-        startActivity(new Intent(this, ThirdActivity.class));
+            url = new URL(T_URL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            if (connection.getResponseCode() == 200) {
+                logger.info("res = {}", connection.getResponseMessage());
+            }
+        } catch (MalformedURLException e) {
+            logger.error("url失败", e);
+        } catch (IOException ioe) {
+            logger.error("IO失败", ioe);
+        }*/
+        }).start();
     }
+
+    private final static String T_URL = "http://publicobjecct.com/helloworld.txt";
 }
