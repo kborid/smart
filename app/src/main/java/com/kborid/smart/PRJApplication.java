@@ -44,7 +44,7 @@ public class PRJApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-//        MainThreadWatchDog.defaultInstance().startWatch();
+
         ThunisoftLogger.initLogger(this, LoggerConfig.createLoggerConfig(getString(R.string.app_name), BuildConfig.DEBUG));
         LogUtils.d("=======================" + ConfigUtils.getConfigX());
         LogUtils.d("=======================" + ConfigUtils.getConfigY());
@@ -83,7 +83,6 @@ public class PRJApplication extends BaseApplication {
         initImageLoaderConfig();
         registerActivityLifecycleCallbacks(LifeCycleCallback.activityLifecycleCallbacks);
         registerUnLoginBroadcast();
-//        MainThreadWatchDog.defaultInstance().stopWatch();
         GlobalThirdManager.init();
     }
 

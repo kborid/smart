@@ -27,16 +27,15 @@ public class BinderDemoImpl {
         MultiTaskHandler.post(new Runnable() {
             @Override
             public void run() {
-                ContentResolver contentResolver = PRJApplication.getInstance().getContentResolver();
-                Uri uri = Uri.parse("content://" + AUTHORITY);
-                Bundle bundle = null;
                 try {
-                    bundle = contentResolver.call(uri, METHOD_GET_SESSION, null, null);
+                    ContentResolver contentResolver = PRJApplication.getInstance().getContentResolver();
+                    Uri uri = Uri.parse("content://" + AUTHORITY);
+                    Bundle bundle = contentResolver.call(uri, METHOD_GET_SESSION, null, null);
+                    if (null != bundle) {
+                        logger.info("session = " + bundle.getString(KEY_SESSION));
+                    }
                 } catch (Exception e) {
                     logger.error("ContentProvider调用失败", e);
-                }
-                if (null != bundle) {
-                    com.orhanobut.logger.Logger.d("session = " + bundle.getString(KEY_SESSION));
                 }
             }
         });
@@ -44,8 +43,9 @@ public class BinderDemoImpl {
 
     public static IBinder getBinder(Cursor cursor) {
         Bundle extras = cursor.getExtras();
-        extras.setClassLoader(BinderParcelable.class.getClassLoader()); //目的是获取PathClassLoader加载自定义类，默认Parcel类的classloader是BootClassLoader
-        BinderParcelable binderParcelable = extras.getParcelable("binder");
+        //目的是获取PathClassLoader加载自定义类，默认Parcel类的classloader是BootClassLoader
+        extras.setClassLoader(BinderParcelable.class.getClassLoader());
+        BinderParcelable binderParcelable = extras.getParcelable(BinderCursor.KEY_BINDER);
         if (null != binderParcelable) {
             return binderParcelable.getBinder();
         }

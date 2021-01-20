@@ -8,11 +8,14 @@ import com.kborid.library.BuildConfig;
 import com.kborid.library.di.component.AppComponent;
 import com.kborid.library.di.component.DaggerAppComponent;
 import com.kborid.library.di.module.AppModule;
+import com.kborid.library.tools.MainThreadWatchDog;
 import com.kborid.library.util.LogUtils;
 import com.thunisoft.common.ThunisoftCommon;
 import com.thunisoft.common.tool.CrashHandler;
 import com.thunisoft.ui.ThunisoftUI;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
+
+import io.realm.Realm;
 
 public class BaseApplication extends Application {
 
@@ -33,6 +36,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        MainThreadWatchDog.defaultInstance().startWatch();
         CrashHandler.getInstance().init();
         LogUtils.init();
         LogUtils.d(TAG, "onCreate()");
@@ -40,6 +44,7 @@ public class BaseApplication extends Application {
         ThunisoftCommon.init(this);
         ThunisoftUI.init(this);
 
+        Realm.init(this);
         if (BuildConfig.DEBUG) {
             Stetho.initialize(Stetho.newInitializerBuilder(this)
                     .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
@@ -64,6 +69,7 @@ public class BaseApplication extends Application {
 //                .penaltyLog()
 //                .penaltyDeath()
 //                .build());
+        MainThreadWatchDog.defaultInstance().stopWatch();
     }
 
     public static AppComponent getAppComponent() {

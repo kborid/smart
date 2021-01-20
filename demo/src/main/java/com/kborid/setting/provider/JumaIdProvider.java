@@ -4,14 +4,14 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
+
+import com.orhanobut.logger.Logger;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.orhanobut.logger.Logger;
 
 public class JumaIdProvider extends ContentProvider {
 
@@ -33,7 +33,7 @@ public class JumaIdProvider extends ContentProvider {
         mUriMatcher.addURI(AUTHORITY, PATH_SESSION_GETTER_BINDER, CODE_SESSION_GETTER_BINDER);
     }
 
-    private IBinder mSessionGetterBinder = null;
+    private SessionGetterImpl mSessionGetterBinder = null;
 
     @Override
     public boolean onCreate() {
@@ -48,7 +48,8 @@ public class JumaIdProvider extends ContentProvider {
         int flag = mUriMatcher.match(uri);
         if (flag == CODE_SESSION_GETTER_BINDER) {
             Logger.t(TAG).d("query() binder SessionGetter");
-            cursor = new BinderCursor(new String[]{BinderCursor.KEY_BINDER}, mSessionGetterBinder);
+            cursor = new MatrixCursor(new String[]{"binder"}, 1);
+            cursor.getExtras().putParcelable("binder", mSessionGetterBinder);
         }
         return cursor;
     }

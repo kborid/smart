@@ -27,7 +27,6 @@ public class PRJApplication extends BaseApplication {
         ThunisoftLogger.initLogger(this,
                 LoggerConfig.createLoggerConfig(BuildConfig.APPLICATION_ID, BuildConfig.DEBUG));
         FlutterTest.init();
-        Realm.init(this);
 
 //        RxJavaPlugins.setOnObservableSubscribe(PRJApplication::apply);
         RxJavaPlugins.setOnObservableAssembly(new Function<Observable, Observable>() {

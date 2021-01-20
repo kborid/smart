@@ -33,29 +33,9 @@ buildscript {
 
 allprojects {
     repositories {
-        def MAVENCENTRAL_REPO = 'https://maven.aliyun.com/nexus/content/groups/public/'
-        def JCENTER_REPO = 'https://maven.aliyun.com/nexus/content/repositories/jcenter/'
-        def GOOGLE_REPO = 'https://maven.aliyun.com/repository/google/'
-        all { ArtifactRepository repo ->
-            if (repo instanceof MavenArtifactRepository) {
-                def url = repo.url.toString()
-                if (url.startsWith('https://repo1.maven.org/maven2')) {
-                    project.logger.lifecycle "Repository ${repo.url} replaced by $MAVENCENTRAL_REPO."
-                    remove repo
-                }
-                if (url.startsWith('https://jcenter.bintray.com/')) {
-                    project.logger.lifecycle "Repository ${repo.url} replaced by $JCENTER_REPO."
-                    remove repo
-                }
-                if (url.startsWith('https://dl.google.com/dl/android/maven2/') || url.startsWith('http://maven.google.com/')) {
-                    project.logger.lifecycle "Repository ${repo.url} replaced by $GOOGLE_REPO."
-                    remove repo
-                }
-            }
-        }
-        maven { url MAVENCENTRAL_REPO }
-        maven { url JCENTER_REPO }
-        maven { url GOOGLE_REPO }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter/' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/google/' }
         maven { url "https://jitpack.io" }
         maven { url 'https://dl.bintray.com/duanwei/maven' }
     }

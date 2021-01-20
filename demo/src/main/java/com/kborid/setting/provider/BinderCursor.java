@@ -8,19 +8,15 @@ public class BinderCursor extends MatrixCursor {
 
     public static final String KEY_BINDER = "binder";
 
-    private Bundle mExtras = new Bundle();
+    public BinderCursor(ISession session) {
+        this(new String[]{KEY_BINDER}, session);
+    }
 
-    public BinderCursor(String[] columnNames, IBinder binder) {
-        super(columnNames);
+    public BinderCursor(String[] columnNames, ISession session) {
+        super(columnNames, 1);
 
-        if (binder != null) {
-            mExtras.putBinder(KEY_BINDER, binder);
+        if (session != null) {
+            getExtras().putParcelable(columnNames[0], session);
         }
     }
-
-    @Override
-    public Bundle getExtras() {
-        return mExtras;
-    }
-
 }

@@ -1,9 +1,7 @@
 package com.kborid.setting.provider;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.os.RemoteException;
-import android.support.v4.os.IResultReceiver;
+import android.os.Parcel;
 
 /**
  * SessionGetterImpl
@@ -14,13 +12,28 @@ import android.support.v4.os.IResultReceiver;
  * @version: 1.0.0
  * @date: 2020/7/21
  */
-public class SessionGetterImpl extends IResultReceiver.Stub {
+public class SessionGetterImpl implements ISession {
 
     public SessionGetterImpl(Context context) {
     }
 
     @Override
-    public void send(int i, Bundle bundle) throws RemoteException {
+    public void method1() {
+
+    }
+
+    @Override
+    public int method2() {
+        return 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
 
     }
 }
