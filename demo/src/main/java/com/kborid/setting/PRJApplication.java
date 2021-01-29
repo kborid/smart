@@ -38,8 +38,6 @@ public class PRJApplication extends BaseApplication {
         });
 
         initRegisterBroadcast();
-
-        Debug.startMethodTracing();
     }
 
     private void initRegisterBroadcast() {

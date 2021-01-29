@@ -1,6 +1,7 @@
 package com.kborid.setting.network;
 
 import com.kborid.setting.entity.WsVO;
+import com.kborid.setting.network.annotation.CustomAnno;
 import io.reactivex.Observable;
 import java.util.List;
 import retrofit2.Call;
@@ -16,9 +17,11 @@ public interface DemoApi {
     @GET("/user/info2/{id}")
     Call<String> getUserInfo2(@Path("id") String id);
 
+    @CustomAnno(value = "duanwei")
     @GET("/api/v1/ws/{mbbh}/list")
     Observable<List<WsVO>> getWsListByMbbh(@Path("mbbh") String mbbh);
 
+    @CustomAnno("nihao")
     @PATCH("/api/v1/patch")
     Call<String> updateInfo();
 }
