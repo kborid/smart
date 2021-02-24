@@ -55,6 +55,7 @@
 
         <activity
             android:name=".ui.lock.LockDemoActivity"
+            android:taskAffinity="com.kborid.setting.lock"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.launchIatSpeech" />

@@ -12,8 +12,6 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
 import com.kborid.demo.t_okhttp.OkHttpHelper;
 import com.kborid.setting.entity.WsVO;
-import retrofit2.converter.fastjson.FastJsonConverterFactory;
-import retrofit2.converter.gson.CustomConverterFactory;
 import com.thunisoft.common.network.util.RxUtil;
 import io.reactivex.Observable;
 import java.lang.reflect.Type;
@@ -21,6 +19,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.CustomConverterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -43,7 +42,7 @@ public final class DemoManager {
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(CustomConverterFactory.create())
-//                .addConverterFactory(GsonConverterFactory.create(buildGson()))
+                .addConverterFactory(GsonConverterFactory.create(buildGson()))
                 .client(OkHttpHelper.getInstance().getOkHttpClient())
                 .baseUrl(BASE_URL)
                 .build();

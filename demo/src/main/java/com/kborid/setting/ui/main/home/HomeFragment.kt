@@ -31,6 +31,7 @@ class HomeFragment : BaseSimpleFragment() {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         adapter = MainAdapter(requireContext(), TestDataHelper.getTestStringData())
         mBinding?.listview!!.adapter = adapter
+        adapter?.notifyDataSetChanged()
     }
 
     override fun getLayoutResId(): Int {
