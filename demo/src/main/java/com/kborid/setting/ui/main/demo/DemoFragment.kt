@@ -6,17 +6,25 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Message
 import android.view.View
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.kborid.demo.IntentServiceDemo
 import com.kborid.setting.R
 import com.kborid.setting.constant.CodeType
 import com.kborid.setting.constant.CodeTypeConst
-import com.kborid.setting.network.DemoManager
 import com.kborid.setting.ui.LifeCycleActivity
 import com.kborid.setting.widget.CustomThread
 import com.thunisoft.common.base.BaseSimpleFragment
-import com.thunisoft.common.network.util.RxUtil
 import org.slf4j.LoggerFactory
 
+/**
+ * DemoFragment.kt
+ *
+ * @description: dddd
+ * @author: duanwei
+ * @email: duanwei@thunisoft.com
+ * @date: 2021/2/26
+ */
 class DemoFragment : BaseSimpleFragment(), View.OnClickListener {
     var mCustomThread: CustomThread? = null
     var mHandlerThread: HandlerThread? = null
@@ -69,7 +77,10 @@ class DemoFragment : BaseSimpleFragment(), View.OnClickListener {
             }
             R.id.btn_lifeCycle -> startActivity(Intent(context, LifeCycleActivity::class.java))
             else -> {
-                DemoManager.getWsListByMbbh("111").subscribe(RxUtil.createDefaultSubscriber { objects -> println(objects) })
+//                DemoManager.getWsListByMbbh("111").subscribe(RxUtil.createDefaultSubscriber { objects -> println(objects) })
+                Glide.with(this)
+                        .load("")
+                        .into(mRootView.findViewById<ImageView>(R.id.iv_glide))
             }
         }
     }
@@ -79,12 +90,16 @@ class DemoFragment : BaseSimpleFragment(), View.OnClickListener {
         fun getCodeTest(@CodeType code: Int) {
             when (code) {
                 CodeTypeConst.CODE_TYPE1 -> {
+                    println("1")
                 }
                 CodeTypeConst.CODE_TYPE2 -> {
+                    println("2")
                 }
                 4 -> {
+                    println("3")
                 }
                 else -> {
+                    println("else")
                 }
             }
         }
