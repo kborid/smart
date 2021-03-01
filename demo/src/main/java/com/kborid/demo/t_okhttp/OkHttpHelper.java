@@ -66,6 +66,8 @@ public class OkHttpHelper {
             builder.addNetworkInterceptor(
                     new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS));
             if (BuildConfig.DEBUG) {
+                builder.addInterceptor(new HttpLoggingInterceptor()
+                        .setLevel(HttpLoggingInterceptor.Level.BODY));
                 builder.addNetworkInterceptor(new StethoInterceptor());
             }
             okHttpClient = builder.build();

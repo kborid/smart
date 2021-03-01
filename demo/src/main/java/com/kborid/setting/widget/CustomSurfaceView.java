@@ -1,4 +1,4 @@
-package com.kborid.smart.widget;
+package com.kborid.setting.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,6 +7,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.kborid.library.util.LogUtils;
+
+import java.util.Random;
 
 public class CustomSurfaceView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
 
@@ -62,10 +64,13 @@ public class CustomSurfaceView extends SurfaceView implements SurfaceHolder.Call
         }
     }
 
+    private final Random mRandom = new Random(1);
+
     private void drawInner() {
         LogUtils.d("drawInner()");
         try {
             mCanvas = mHolder.lockCanvas();
+            mCanvas.drawRGB(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.kborid.setting">
+    package="com.kborid.setting"
+    android:sharedUserId="com.kborid.sharedId">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- SDCard中创建与删除文件权限 -->
@@ -31,9 +32,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name="com.kborid.setting.ui.main.MainActivity"
-            android:alwaysRetainTaskState="true"
+        <activity
+            android:name="com.kborid.setting.ui.main.MainActivity"
             android:allowTaskReparenting="true"
+            android:alwaysRetainTaskState="true"
             android:clearTaskOnLaunch="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,8 +57,8 @@
 
         <activity
             android:name=".ui.lock.LockDemoActivity"
-            android:taskAffinity="com.kborid.setting.lock"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:taskAffinity="com.kborid.setting.lock">
             <intent-filter>
                 <action android:name="android.intent.action.launchIatSpeech" />
                 <category android:name="android.intent.category.DEFAULT" />

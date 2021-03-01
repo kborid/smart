@@ -54,7 +54,6 @@ dependencies {
 
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
 
     //rxJava
     api 'io.reactivex.rxjava2:rxjava:2.2.7'

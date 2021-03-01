@@ -1,7 +1,6 @@
 package com.kborid.setting;
 
 import android.content.IntentFilter;
-import android.os.Debug;
 import com.kborid.demo.t_flutter.FlutterTest;
 import com.kborid.library.base.BaseApplication;
 import com.kborid.setting.broadcast.LaunchLockerBroadcastReceiver;
@@ -13,7 +12,6 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;
-import io.realm.Realm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
