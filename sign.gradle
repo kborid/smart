@@ -1,17 +1,23 @@
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
 
-def mKeyAlias = properties.getProperty('store.keyAlias')
-def mKeyPwd = properties.getProperty('store.keyPassword')
-def mStorePassword = properties.getProperty('store.storePassword')
+def keyStoreAlias = localProperties.getProperty('keyStore.alias')
+def keyStorePassword = localProperties.getProperty('keyStore.password')
+def keyStoreFile = localProperties.getProperty('keyStore.file')
+def keyStoreFilePassword = localProperties.getProperty('keyStore.storePassword')
 
 android {
     signingConfigs {
-        config {
-            keyAlias sKeyAlias
-            keyPassword sKeyPassword
-            storeFile file('../sign/sign.jks')
-            storePassword sStorePassword
+        release {
+            keyAlias keyStoreAlias
+            keyPassword keyStorePassword
+            storeFile file(keyStoreFile)
+            storePassword keyStoreFilePassword
         }
     }
 }
